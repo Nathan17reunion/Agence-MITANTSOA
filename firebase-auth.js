@@ -149,14 +149,13 @@ function getFriendlyError(errorCode) {
 }
 
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Utilisateur connecté :", user.email);
-  } else {
-    console.log("Utilisateur non connecté.");
+  const pageEspace = window.location.pathname.endsWith("mon-espace.html");
+  if (!user && pageEspace) {
+    window.location.replace("connexion.html");   // personne de connecté : retour à la connexion
   }
 });
 
-loginForm.addEventListener("submit", async (event) => {
+loginForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const email = emailInput.value.trim();
@@ -187,7 +186,7 @@ loginForm.addEventListener("submit", async (event) => {
   }
 });
 
-googleLoginButton.addEventListener("click", async () => {
+googleLoginButton?.addEventListener("click", async () => {
   const provider = new GoogleAuthProvider();
 
   try {
