@@ -335,7 +335,7 @@ img, svg { max-width: 100%; display: block; }
 
 .hero-art svg { width: 100%; height: auto; }
 
-.hero-logo {
+.hero-art.hero-art-framed.hero-logo {
   overflow: hidden;              /* garde les coins arrondis du cadre */
   padding: var(--space-2);       /* épaisseur du cadre vert autour du logo */
 }
