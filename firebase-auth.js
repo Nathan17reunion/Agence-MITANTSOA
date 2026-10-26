@@ -30,35 +30,26 @@ const auth = getAuth(app);
 
 let deconnexionEnCours = false;
 
-const boutonDeconnexion =
-  document.getElementById("bouton-deconnexion");
-
-const messageDeconnexion =
-  document.getElementById("message-deconnexion");
-
-boutonDeconnexion.addEventListener("click", async () => {
-  deconnexionEnCours = true;
-  boutonDeconnexion.disabled = true;
-  boutonDeconnexion.textContent = "Déconnexion…";
-  messageDeconnexion.textContent = "";
-
-  try {
-    await signOut(auth);
-
-    // La session Firebase est fermée : retour à l’accueil.
-    window.location.replace("index.html");
-
-  } catch (erreur) {
-    deconnexionEnCours = false;
-    boutonDeconnexion.disabled = false;
-    boutonDeconnexion.textContent = "Se déconnecter";
-
-    messageDeconnexion.textContent =
-      "La déconnexion a échoué. Veuillez réessayer.";
-
-    console.error("Erreur de déconnexion :", erreur);
-  }
-});
+const boutonDeconnexion = document.getElementById("bouton-deconnexion");
+const messageDeconnexion = document.getElementById("message-deconnexion");
+if (boutonDeconnexion && messageDeconnexion) {
+  boutonDeconnexion.addEventListener("click", async () => {
+    deconnexionEnCours = true;
+    boutonDeconnexion.disabled = true;
+    boutonDeconnexion.textContent = "Déconnexion…";
+    messageDeconnexion.textContent = "";
+    try {
+      await signOut(auth);
+      window.location.replace("index.html");
+    } catch (erreur) {
+      deconnexionEnCours = false;
+      boutonDeconnexion.disabled = false;
+      boutonDeconnexion.textContent = "Se déconnecter";
+      messageDeconnexion.textContent = "La déconnexion a échoué. Veuillez réessayer.";
+      console.error("Erreur de déconnexion :", erreur);
+    }
+  });
+}
 
 const loginForm = document.getElementById("login-form");
 const emailInput = document.getElementById("login-email");
@@ -79,7 +70,7 @@ const boutonReinitialisation =
 const messageReinitialisation =
   document.getElementById("message-reinitialisation");
 
-const champEmail = document.getElementById("email");
+const champEmail = document.getElementById("login-email");
 
 if (
   boutonReinitialisation &&
