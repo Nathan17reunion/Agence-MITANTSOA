@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposer un article — Agence Mitantsoa</title>
+<meta name="description" content="Proposez votre article pour le blog de l'Agence Mitantsoa.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- Fond d'écran personnalisé pour la page "Proposer un article" -->
+<style>
+  body {
+    /* Image de fond */
+    background-image: url('https://raw.githubusercontent.com/Nathan17reunion/MitantsoaAgency/main/Aide_APA_Fond_AgenceMitantsoa.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* effet parallaxe léger */
+    background-repeat: no-repeat;
+  }
+
+  /* Assurer que le contenu reste lisible */
+  main {
+    background: rgba(255, 255, 255, 0.92); /* fond blanc légèrement transparent */
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin: 24px auto;
+    max-width: 900px;
+  }
+
+  /* Optionnel : arrondir et adoucir les sections */
+  section {
+    border-radius: 6px;
+  }
+</style>
+
+</head>
+<body class="page-proposer-article">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mitantsoa.png" alt="" class="logo-icon">Agence <span>Mitantsoa</span></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu"><span></span></label>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="apropos.html">À propos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" style="padding-bottom: 0;">
+    <div class="container" style="display:block;">
+      <p class="hero-eyebrow"><a href="blog.html">← Retour au blog</a></p>
+      <h1>Proposer un article</h1>
+      <p class="hero-lede">Votre expérience peut aider d'autres familles. Rédigez votre article ci-dessous — nous le relisons et le publions si tout est en ordre.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="max-width: 700px;">
+      <form action="https://formspree.io/f/mzezpzpq" method="POST">
+
+        <input type="hidden" name="_subject" value="Proposition d'article de blog — Agence Mitantsoa">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_next" value="https://nathan17reunion.github.io/Mini_project/merci.html">
+
+        <fieldset class="devis-fieldset">
+          <legend>Comment souhaitez-vous apparaître ?</legend>
+          <div class="radio-row">
+            <label><input type="radio" name="affichage" value="Anonyme" checked> Publier de façon anonyme</label>
+            <label><input type="radio" name="affichage" value="Prenom"> Afficher mon prénom</label>
+          </div>
+          <div class="form-field">
+            <label for="prenom">Prénom (si vous avez choisi de l'afficher)</label>
+            <input type="text" id="prenom" name="prenom">
+          </div>
+        </fieldset>
+
+        <fieldset class="devis-fieldset">
+          <legend>Votre article</legend>
+          <div class="form-field">
+            <label for="titre">Titre de l'article</label>
+            <input type="text" id="titre" name="titre" required>
+          </div>
+          <div class="form-field">
+            <label for="contenu">Contenu de l'article</label>
+            <textarea id="contenu" name="contenu" style="min-height: 240px;" required></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset class="devis-fieldset">
+          <legend>Vos coordonnées (non publiées)</legend>
+          <div class="form-field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </fieldset>
+
+        <p class="form-note">Votre article est relu avant publication. Nous pouvons vous recontacter pour d'éventuels ajustements.</p>
+        <button type="submit" class="btn btn-primary">Envoyer ma proposition</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Agence Mitantsoa</h3>
+      <p>Accompagnement médico-social et administratif des familles.</p>
+    </div>
+    <div>
+      <h3>Navigation</h3>
+      <p><a href="index.html">Accueil</a></p>
+      <p><a href="blog.html">Blog</a></p>
+      <p><a href="contact.html">Contact</a></p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<div class="lang-widget-fixed">
+  <button type="button" class="lang-widget-btn" id="langToggleBtn" aria-label="Choisir la langue">🌐</button>
+  <ul class="lang-menu" id="langMenu">
+    <li><button type="button" onclick="changeLanguage('fr')">🇫🇷 Français</button></li>
+    <li><button type="button" onclick="changeLanguage('en')">🇬🇧 English</button></li>
+    <li><button type="button" onclick="changeLanguage('mg')">🇲🇬 Malagasy</button></li>
+    <li><button type="button" onclick="changeLanguage('de')">🇩🇪 Deutsch</button></li>
+    <li><button type="button" onclick="changeLanguage('it')">🇮🇹 Italiano</button></li>
+    <li><button type="button" onclick="changeLanguage('es')">🇪🇸 Español</button></li>
+  </ul>
+</div>
+
+<a href="devis.html" class="devis-widget">📝 Demander un devis</a>
+
+<details class="pay-widget">
+  <summary class="pay-widget-btn">💳 Réserver un service</summary>
+  <div class="pay-menu">
+    <a href="LIEN-STRIPE-AIDE-PERSONNE" target="_blank" rel="noopener">Aide à la personne — 20€/h</a>
+    <a href="LIEN-STRIPE-AIDE-ADMIN" target="_blank" rel="noopener">Aide administrative — 25€/h</a>
+  </div>
+</details>
+
+<!-- Bandeau cookies -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Gestion des cookies">
+  <div class="cookie-content">
+    <p>
+      Ce site utilise des cookies pour améliorer votre expérience et comprendre son utilisation.
+      En poursuivant votre navigation, vous acceptez leur utilisation.
+      <a href="cookies.html" target="_blank">En savoir plus sur notre politique de cookies.</a>
+    </p>
+    <div class="cookie-buttons">
+      <button type="button" id="cookie-accept" class="btn btn-primary">J'accepte</button>
+      <button type="button" id="cookie-refuse" class="btn btn-secondary">Je refuse</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<div id="google_translate_element" style="display:none;"></div>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

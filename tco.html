@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCO, la Côte Ouest de La Réunion — Agence Mitantsoa</title>
+  <meta name="description" content="Saint-Paul, Le Port, La Possession, Saint-Leu et Trois-Bassins : le Territoire de la Côte Ouest, ses plages, ses sites à visiter, ses hébergements et nos conseils pour préparer votre séjour.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body class="province-reunion-tco">
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu"><span></span></label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Ouverture ===== -->
+    <section class="agg-hero">
+      <div class="container agg-hero-grid">
+
+        <div class="agg-hero-text">
+          <p class="agg-back"><a href="reunion.html">Retour à La Réunion</a></p>
+          <h1>TCO, la Côte Ouest</h1>
+          <p class="agg-hero-lede">
+            Le Territoire de la Côte Ouest rassemble cinq communes : Saint-Paul, Le Port, La Possession, Saint-Leu et Trois-Bassins. C'est la façade la plus ensoleillée de l'île, et celle qui concentre l'essentiel du tourisme balnéaire.
+          </p>
+          <ul class="agg-facts">
+            <li><strong>5</strong> communes</li>
+            <li><strong>536 km²</strong> de territoire</li>
+            <li><strong>225 000</strong> habitants environ</li>
+          </ul>
+        </div>
+
+        <div class="agg-hero-collage" aria-hidden="false">
+          <figure class="collage-piece collage-arch">
+            <img src="https://www.cartedelareunion.fr/wp-content/uploads/2016/07/Lagon-de-lErmitage-paddle-coraux-cartedelareunion.fr-%C2%A9-Serge-Gelabert-1422x800.jpg" alt="Plage de l'Hermitage à Saint-Paul" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-leaf">
+            <img src="https://static-cms.routard.com/web-routard/uploads/xlarge_lagon-de-saint-leu.1620353_ec17a95363.jpg" alt="Lagon de Saint-Leu" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-blob">
+            <img src="https://visit.today/images/elements/upload/full/marche-forain-de-saint-paul-vue.jpg" alt="Marché forain de Saint-Paul" loading="eager">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Navigation par commune + carte ===== -->
+    <section class="agg-section">
+      <div class="container agg-orient">
+
+        <div class="agg-orient-text">
+          <h2>Cinq communes, une même côte</h2>
+          <p>
+            Saint-Paul pour les plages et le marché, Le Port pour l'activité portuaire, La Possession en transition vers les hauts, Saint-Leu pour le lagon et la plongée, Trois-Bassins pour l'authenticité rurale.
+          </p>
+          <div class="agg-jump">
+            <a href="#saint-paul" class="agg-jump-link">Saint-Paul</a>
+            <a href="#le-port" class="agg-jump-link">Le Port</a>
+            <a href="#la-possession" class="agg-jump-link">La Possession</a>
+            <a href="#saint-leu" class="agg-jump-link">Saint-Leu</a>
+            <a href="#trois-bassins" class="agg-jump-link">Trois-Bassins</a>
+          </div>
+        </div>
+
+        <figure class="agg-map" id="cinorMap">
+          <div class="map-frame">
+            <iframe src="carte_tco.html" title="Carte interactive de la CINOR" loading="lazy"></iframe>
+
+            <svg class="map-compass" viewBox="0 0 44 56" role="img" aria-label="Le nord est en haut de la carte">
+              <text x="22" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">N</text>
+              <polygon points="22,14 29,30 22,27 15,30" fill="#B9781E"/>
+              <polygon points="22,42 15,26 22,29 29,26" fill="#24463B"/>
+              <text x="22" y="54" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">S</text>
+            </svg>
+          </div>
+
+          <div class="map-tools" role="group" aria-label="Commandes de la carte">
+            <button type="button" data-map="in" data-nav aria-label="Zoom avant">+</button>
+            <button type="button" data-map="out" data-nav aria-label="Zoom arrière">−</button>
+            <button type="button" data-map="left" data-nav aria-label="Déplacer vers la gauche">←</button>
+            <button type="button" data-map="right" data-nav aria-label="Déplacer vers la droite">→</button>
+            <button type="button" data-map="fullscreen" class="map-tool-wide">Plein écran</button>
+            <a class="map-tool-wide" href="https://www.google.com/maps/search/?api=1&query=Communaut%C3%A9+Intercommunale+du+Nord+de+La+R%C3%A9union" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Saint-Paul ===== -->
+    <section class="agg-chapter" id="saint-paul">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://www.alizeplage.fr/wp-content/uploads/2022/07/la-reunion-plage-etang-sale-1.jpeg" alt="Plage de Boucan Canot à Saint-Paul" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Paul, la première ville touristique de l'île</h2>
+          <p>
+            Saint-Paul concentre les plages les plus connues de La Réunion : Boucan Canot, Roches Noires, l'Hermitage. La commune accueille aussi le plus grand marché forain de l'île et un jardin botanique, avec un centre historique qui remonte au premier établissement français sur l'île, en 1663.
+          </p>
+          <ul class="agg-list">
+            <li>Les plages de Boucan Canot, Roches Noires et l'Hermitage</li>
+            <li>Le marché forain, le plus grand de La Réunion</li>
+            <li>Un centre historique parmi les plus anciens de l'île</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Le Port ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="le-port">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="https://reunion.port.fr/wp-content/uploads/2024/07/DJI_20240506084039_0117_D-scaled.jpg" alt="Quais du port de commerce, Le Port" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Le Port, la ville industrielle et portuaire</h2>
+          <p>
+            Siège du TCO, Le Port abrite le principal port de commerce de l'île. Le caractère industriel de la commune n'empêche pas quelques échappées nature, comme l'Étang du Port, une réserve naturelle à deux pas des quais.
+          </p>
+          <ul class="agg-list">
+            <li>Le port de commerce, cœur économique de l'île</li>
+            <li>L'Étang du Port, réserve naturelle</li>
+            <li>Siège administratif du TCO</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : La Possession ===== -->
+    <section class="agg-chapter" id="la-possession">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-blob">
+          <img src="https://www.reunion-parcnational.fr/sites/reunion-parcnational.fr/files/styles/slide_1500_1000/public/thumbnails/image/pnr_0000338bd.jpg?itok=3Ov7J0tx" alt="Village Dos d'Âne La Possession" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>La Possession, entre mer et hauts de l'île</h2>
+          <p>
+            Commune en plein développement, La Possession a aménagé son front de mer et sa marina. C'est aussi le point de départ de la route des Tamarins vers les hauts de l'Ouest, pour ceux qui veulent prendre de l'altitude.
+          </p>
+          <ul class="agg-list">
+            <li>Un front de mer aménagé, plages familiales</li>
+            <li>La marina</li>
+            <li>Accès aux hauts via la route des Tamarins</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Saint-Leu ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="saint-leu">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-slant">
+          <img src="https://www.alizeplage.fr/wp-content/uploads/2022/07/la-reunion-plage-de-Saint-Leu-e1658677742217.jpeg" alt="Lagon et plongée à Saint-Leu" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Leu, le lagon et la plongée</h2>
+          <p>
+            Station balnéaire très prisée, Saint-Leu doit sa réputation à son lagon protégé, particulièrement adapté au snorkeling et à la plongée. La commune abrite aussi un observatoire marin.
+          </p>
+          <ul class="agg-list">
+            <li>Un lagon protégé, idéal pour le snorkeling</li>
+            <li>Spots de plongée réputés</li>
+            <li>L'observatoire marin de Saint-Leu</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Trois-Bassins ===== -->
+    <section class="agg-chapter" id="trois-bassins">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://randopitons.re/img/itr/344/photo_sm.jpg" alt="Plantations de canne à sucre à Trois-Bassins" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Trois-Bassins, la commune la plus rurale</h2>
+          <p>
+            La plus petite commune du TCO vit encore au rythme des plantations de canne à sucre et des cases créoles. C'est la destination à choisir pour un visage plus authentique de la côte ouest, loin des zones les plus touristiques.
+          </p>
+          <ul class="agg-list">
+            <li>Plantations de canne à sucre et paysages ruraux</li>
+            <li>Cases créoles traditionnelles</li>
+            <li>Points de vue sur l'océan</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Rubriques ===== -->
+    <section class="agg-section agg-tiles-section">
+      <div class="container">
+        <h2>Préparer votre séjour sur la Côte Ouest</h2>
+        <div class="agg-tiles">
+          <a href="tco-hotels-restaurants.html" class="agg-tile agg-tile-1">
+            <h3>Hôtels et restaurants</h3>
+            <p>Où dormir et où manger, de Saint-Paul à Trois-Bassins.</p>
+          </a>
+          <a href="tco-sites.html" class="agg-tile agg-tile-2">
+            <h3>Sites touristiques</h3>
+            <p>Plages, lagon, marché, jardin botanique : l'essentiel à voir.</p>
+          </a>
+          <a href="tco-transports.html" class="agg-tile agg-tile-3">
+            <h3>Transports</h3>
+            <p>Arriver, se déplacer, louer une voiture ou prendre le bus.</p>
+          </a>
+          <a href="tco-autres.html" class="agg-tile agg-tile-4">
+            <h3>Infos pratiques</h3>
+            <p>Traditions, fêtes locales, usages à connaître avant de partir.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <section class="agg-section">
+      <div class="container">
+        <h2>La Côte Ouest en images</h2>
+        <div class="agg-mosaic">
+          <figure class="mosaic-item mosaic-a shape-arch">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD-ZHXkOl8G3m_cXTUNojFqegx2HTCXxsfWEGU7-tB63DThl3KWnSANA2h&s=10" alt="Plage de l'Hermitage" loading="lazy">
+            <figcaption>Plage de l'Hermitage</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-b shape-slant">
+            <img src="https://habiter-la-reunion.re/wp-content/uploads/2018/02/HLR-Lagon-Hermitage-1024x682.jpeg" alt="Lagon de Saint-Leu" loading="lazy">
+            <figcaption>Lagon de Saint-Leu</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-c shape-leaf">
+            <img src="https://habiter-la-reunion.re/wp-content/uploads/2018/01/March%C3%A9-Saint-Paul.jpg" alt="Marché de Saint-Paul" loading="lazy">
+            <figcaption>Marché de Saint-Paul</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-d shape-blob">
+            <img src="https://portsetcorridors.com/wp-content/uploads/2025/03/Port-Reunion.jpg" alt="Port de commerce du Port" loading="lazy">
+            <figcaption>Port de commerce</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-e shape-slant">
+            <img src="https://woody.cloudly.space/app/uploads/crt-reunion/2020/04/thumbs/musee44maisonfolio-creditirt-sergegelabertdts122014-640x360.jpg" alt="Jardin botanique de Saint-Paul" loading="lazy">
+            <figcaption>Jardin botanique</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-f shape-arch">
+            <img src="https://imazpress.com/medias/source/0779109001462797919.jpg" alt="Étang du Port" loading="lazy">
+            <figcaption>Étang du Port</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-g shape-blob">
+            <img src="https://la1ere.franceinfo.fr/image/JY6NBAobDUsRgL61uMZFZ8yiApQ/216x0:1082x866/320x320/filters:quality(80)/outremer%2F2026%2F08%2F17%2F6a830bfbad704809762624.jpg" alt="Front de mer de La Possession" loading="lazy">
+            <figcaption>Front de mer, La Possession</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-h shape-leaf">
+            <img src="https://lescarnetsdemarine.com/wp-content/uploads/2017/05/IMG_6694-1024x851.jpg" alt="Coucher de soleil sur la côte ouest" loading="lazy">
+            <figcaption>Coucher de soleil sur l'Ouest</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Appel à l'action ===== -->
+    <section class="agg-cta">
+      <div class="container agg-cta-inner">
+        <div>
+          <h2>Un séjour sur la Côte Ouest à organiser ?</h2>
+          <p>
+            Plages, lagon, snorkeling : dites-nous ce que vous cherchez, nous vous proposons un itinéraire réaliste avec des adresses vérifiées.
+          </p>
+        </div>
+        <div class="agg-cta-actions">
+          <a href="devis.html" class="btn btn-primary">Demander un conseil voyage</a>
+          <a href="reunion.html" class="btn agg-btn-light">Voir les autres intercommunalités</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>Accompagnement médico-social, administratif et conseil voyage.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <p><a href="index.html">Accueil</a></p>
+        <p><a href="madagascar.html">Madagascar</a></p>
+        <p><a href="reunion.html">La Réunion</a></p>
+        <p><a href="contact.html">Contact</a></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
