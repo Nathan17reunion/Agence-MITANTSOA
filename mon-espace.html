@@ -120,53 +120,114 @@
 
   </main>
 
-  <script type="module">
-    import { getAuth, onAuthStateChanged } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Agence Mitantsoa</h3>
+      <p>Accompagnement médico-social et administratif des familles.</p>
+    </div>
+    <div>
+      <h3>Navigation</h3>
+      <p><a href="services.html">Services</a></p>
+      <p><a href="apropos.html">À propos</a></p>
+      <p><a href="contact.html">Contact</a></p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+  </div>
+</footer>
 
-    const auth = getAuth();
+<div class="lang-widget-fixed">
+  <button type="button" class="lang-widget-btn" id="langToggleBtn" aria-label="Choisir la langue">🌐</button>
+  <ul class="lang-menu" id="langMenu">
+    <li><button type="button" onclick="changeLanguage('fr')">🇫🇷 Français</button></li>
+    <li><button type="button" onclick="changeLanguage('en')">🇬🇧 English</button></li>
+    <li><button type="button" onclick="changeLanguage('mg')">🇲🇬 Malagasy</button></li>
+    <li><button type="button" onclick="changeLanguage('de')">🇩🇪 Deutsch</button></li>
+    <li><button type="button" onclick="changeLanguage('it')">🇮🇹 Italiano</button></li>
+    <li><button type="button" onclick="changeLanguage('es')">🇪🇸 Español</button></li>
+    <li><button type="button" onclick="changeLanguage('zh')">🇨🇳 Chinois</button></li>
+    <li><button type="button" onclick="changeLanguage('ko')">🇰🇷 Coréen</button></li>
+    <li><button type="button" onclick="changeLanguage('ja')">🇯🇵 Japonais</button></li>
+  </ul>
+</div>
 
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
+<a href="devis.html" class="devis-widget">📝 Demander un devis</a>
+
+<details class="pay-widget">
+  <summary class="pay-widget-btn">
+    <img src="https://www.reussir-mon-ecommerce.fr/wp-content/uploads/2016/03/Logo_CB-1-1024x503.png" alt="Carte bancaire" class="pay-icon">
+    Réserver un service
+  </summary>
+  <div class="pay-menu">
+    <a href="LIEN-STRIPE-AIDE-PERSONNE" target="_blank" rel="noopener">Aide à la personne — 20€/h</a>
+    <a href="LIEN-STRIPE-AIDE-ADMIN" target="_blank" rel="noopener">Aide administrative — 25€/h</a>
+  </div>
+</details>
+
+<!-- Bandeau cookies -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Gestion des cookies">
+  <div class="cookie-content">
+    <p>
+      Ce site utilise des cookies pour améliorer votre expérience et comprendre son utilisation.
+      En poursuivant votre navigation, vous acceptez leur utilisation.
+      <a href="cookies.html" target="_blank">En savoir plus sur notre politique de cookies.</a>
+    </p>
+    <div class="cookie-buttons">
+      <button type="button" id="cookie-accept" class="btn btn-primary">J'accepte</button>
+      <button type="button" id="cookie-refuse" class="btn btn-secondary">Je refuse</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "connexion.html";
+      return;
+    }
+
+    // Affiche le nom ou l'email du client
+    const nomClient = user.displayName || user.email;
+    document.getElementById("nom-client").textContent = nomClient;
+
+    try {
+      const token = await user.getIdToken();
+
+      const reponse = await fetch(
+        "https://mitantsoaagency.onrender.com/api/mon-espace",
+        {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      if (!reponse.ok) {
         window.location.href = "connexion.html";
         return;
       }
 
-      // Affiche le nom ou l'email du client
-      const nomClient = user.displayName || user.email;
-      document.getElementById("nom-client").textContent = nomClient;
+      const donnees = await reponse.json();
+      console.log(donnees);
 
-      try {
-        const token = await user.getIdToken();
-
-        const reponse = await fetch(
-          "https://mitantsoaagency.onrender.com/api/mon-espace",
-          {
-            method: "GET",
-            headers: {
-              "Authorization": "Bearer " + token
-            }
-          }
-        );
-
-        if (!reponse.ok) {
-          window.location.href = "connexion.html";
-          return;
-        }
-
-        const donnees = await reponse.json();
-        console.log(donnees);
-
-        // Exemple : si ton serveur renvoie { nom: "Jean" }
-        if (donnees.nom) {
-          document.getElementById("nom-client").textContent = donnees.nom;
-        }
-
-      } catch (erreur) {
-        console.error("Erreur lors du chargement de l’espace client :", erreur);
+      // Exemple : si ton serveur renvoie { nom: "Jean" }
+      if (donnees.nom) {
+         document.getElementById("nom-client").textContent = donnees.nom;
       }
-    });
-  </script>
+
+    } catch (erreur) {
+      console.error("Erreur lors du chargement de l’espace client :", erreur);
+    }
+  });
+</script>
 
 </body>
 </html>
