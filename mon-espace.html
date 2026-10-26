@@ -11,19 +11,34 @@
 
 <body>
 
-<div class="barre-espace">
-  <a href="mon-espace.html" class="lien-accueil">
-    Agence Mitantsoa
-  </a>
+<header class="site-header espace-header">
+  <div class="container header-contenu">
 
-  <button
-    type="button"
-    id="bouton-deconnexion"
-    class="bouton-deconnexion"
-  >
-    Se déconnecter
-  </button>
-</div>
+    <a href="mon-espace.html" class="logo">
+      <img src="logo-mitantsoa.png" alt="Logo Agence Mitantsoa" class="logo-icon">
+      Agence <span>Mitantsoa</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigation de l’espace client">
+      <ul>
+        <li><a href="mon-espace.html" aria-current="page">Accueil</a></li>
+        <li><a href="mes-documents.html">Mes documents</a></li>
+        <li><a href="messagerie.html">Messagerie</a></li>
+        <li><a href="info-compte.html">Mon compte</a></li>
+        <li><a href="aide.html">Aide</a></li>
+      </ul>
+    </nav>
+
+    <button
+      type="button"
+      id="bouton-deconnexion"
+      class="bouton-deconnexion"
+    >
+      Se déconnecter
+    </button>
+
+  </div>
+</header>
 
 <p
   id="message-deconnexion"
@@ -120,7 +135,7 @@
 
       <div class="cartes-rapides">
         <a href="mes-demandes.html" class="carte-rapide">
-          <strong>Suivre mes demandes</strong>
+          <strong>Suivre mes demandes</strong> 
           <p>Consultez l’avancement de vos demandes en cours.</p>
         </a>
 
@@ -134,7 +149,7 @@
           <p>Envoyez un message à l’équipe de l’agence.</p>
         </a>
 
-        <a href="mon-profil.html" class="carte-rapide">
+        <a href="info-compte.html" class="carte-rapide">
           <strong>Mes informations</strong>
           <p>Consultez et mettez à jour vos informations personnelles.</p>
         </a>
