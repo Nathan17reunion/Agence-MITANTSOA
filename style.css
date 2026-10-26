@@ -6281,3 +6281,36 @@ body { top: 0px !important; }
     grid-template-columns: 1fr;
   }
 }
+
+/* Mot de passe oublié */
+.lien-reinitialisation {
+  display: inline-block;
+  margin: 10px 0 16px;
+  padding: 4px 0;
+  border: none;
+  background: transparent;
+  color: #805113;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.lien-reinitialisation:hover {
+  color: #243746;
+}
+
+.lien-reinitialisation:focus-visible {
+  outline: 3px solid #b9781e;
+  outline-offset: 4px;
+}
+
+.lien-reinitialisation:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+#message-reinitialisation {
+  line-height: 1.5;
+  color: #243746;
+}
