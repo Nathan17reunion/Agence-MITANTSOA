@@ -169,3 +169,25 @@ app.get("/",(q,r)=>r.send("Serveur Agence Mitantsoa : en ligne"));
 app.listen(PORT,HOST,()=>console.log(`Serveur Mitantsoa sur http://${HOST}:${PORT} (MODE_TEST=${MODE_TEST})`));
 
 app.use(express.static("D:/MitantsoaAgency/fiche-mitantsoa/fiche-mitantsoa"));
+
+/* ---------- auth authentification ---------- */
+const express = require("express");
+const { verifierToken } = require("./auth");
+
+const app = express();
+app.use(express.json());
+
+// Route protégée
+app.get("/api/mon-espace", verifierToken, (req, res) => {
+  const uid = req.utilisateur.uid;
+
+  res.json({
+    message: "Accès autorisé",
+    uid: uid
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Serveur démarré sur le port " + PORT);
+});
