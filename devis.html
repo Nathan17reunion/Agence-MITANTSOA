@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demande de devis — Agence Mitantsoa</title>
+<meta name="description" content="Demandez un devis personnalisé pour vos besoins d'aide à la personne ou d'accompagnement administratif.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mitantsoa.png" alt="" class="logo-icon">Agence <span>Mitantsoa</span></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu"><span></span></label>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="apropos.html">À propos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+    <section class="article-hero-dark">
+    <div class="container article-hero-inner">
+      <p class="agg-back"><a href="index.html">Retour à l'acceuil</a></p>
+      <p class="hero-eyebrow" style="color:var(--color-ochre-soft);">Devis gratuit</p>
+      <h1>Demander un devis personnalisé</h1>
+      <p class="hero-lede" style="margin:0 auto; color:#EDE4D0;">Décrivez-nous précisément votre besoin ci-dessous. Nous étudions votre demande et revenons vers vous avec une estimation adaptée, sans engagement.</p>
+    </div>
+    <div class="article-hero-shape article-hero-shape-1"></div>
+    <div class="article-hero-shape article-hero-shape-2"></div>
+  </section>
+
+  <form action="https://formspree.io/f/mzezpzpq" method="POST">
+
+    <input type="hidden" name="_subject" value="Nouvelle demande de devis — Agence Mitantsoa">
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="_next" value="https://nathan17reunion.github.io/Mini_project/merci.html">
+
+    <section class="devis-row">
+      <div class="container devis-row-grid">
+
+        <div class="devis-decor shape-arch devis-decor-1" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8 C24 8 18 16 18 26 C18 40 32 56 32 56 C32 56 46 40 46 26 C46 16 40 8 32 8Z" stroke="var(--color-ochre)" stroke-width="2"/>
+            <circle cx="32" cy="26" r="7" stroke="var(--color-ochre)" stroke-width="2"/>
+          </svg>
+          <p>Vos coordonnées nous permettent de revenir vers vous rapidement, avec une estimation adaptée à votre situation exacte.</p>
+        </div>
+
+        <fieldset class="devis-fieldset devis-panel">
+          <legend>Vos coordonnées</legend>
+
+          <div class="form-field">
+            <label for="nom">Nom complet</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          <div class="form-field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone">
+          </div>
+          <div class="form-field">
+            <label for="adresse">Adresse de l'intervention</label>
+            <input
+              type="text"
+              id="adresse"
+              name="adresse"
+              placeholder="Commencez à saisir votre adresse…"
+              autocomplete="off"
+              required
+            >
+            <ul id="adresse-suggestions" class="adresse-suggestions"></ul>
+            <input type="hidden" id="adresse-validee" name="adresse_validee">
+            <small class="form-help">
+              « Si votre adresse apparaît dans la liste, sélectionnez-la. »
+            </small>
+          </div>
+                </fieldset>
+
+      </div>
+    </section>
+
+    <section class="devis-row devis-row-alt devis-row-reverse">
+      <div class="container devis-row-grid">
+
+        <fieldset class="devis-fieldset devis-panel">
+          <legend>Aide à la personne — services concernés</legend>
+          <p class="form-note">Cochez tout ce qui correspond à votre besoin.</p>
+
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="services_personne[]" value="Entretien de la maison et travaux ménagers"> Entretien de la maison et travaux ménagers</label>
+            <label><input type="checkbox" name="services_personne[]" value="Petits travaux de jardinage"> Petits travaux de jardinage</label>
+            <label><input type="checkbox" name="services_personne[]" value="Travaux de petit bricolage"> Travaux de petit bricolage</label>
+            <label><input type="checkbox" name="services_personne[]" value="Assistance informatique à domicile"> Assistance informatique à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Soutien scolaire ou cours à domicile"> Soutien scolaire ou cours à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Préparation de repas à domicile"> Préparation de repas à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Livraison de repas à domicile"> Livraison de repas à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Livraison de courses à domicile"> Livraison de courses à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Collecte et livraison de linge repassé"> Collecte et livraison de linge repassé</label>
+            <label><input type="checkbox" name="services_personne[]" value="Soins et promenades d'animaux de compagnie"> Soins et promenades d'animaux de compagnie</label>
+            <label><input type="checkbox" name="services_personne[]" value="Maintenance, entretien et vigilance temporaires à domicile"> Maintenance, entretien et vigilance temporaires à domicile</label>
+            <label><input type="checkbox" name="services_personne[]" value="Téléassistance et visio-assistance"> Téléassistance et visio-assistance</label>
+            <label><input type="checkbox" name="services_personne[]" value="Interprète en langue des signes"> Interprète en langue des signes</label>
+            <label><input type="checkbox" name="services_personne[]" value="Soins de nursing"> Soins de nursing</label>
+            <label><input type="checkbox" name="services_personne[]" value="Soins palliatifs"> Soins palliatifs</label>
+            <label><input type="checkbox" name="services_personne[]" value="Prise en charge de la douleur"> Prise en charge de la douleur</label>
+          </div>
+
+          <div class="form-field" style="margin-top: var(--space-3);">
+            <label for="menage-pieces">Si ménage : nombre de pièces à entretenir</label>
+            <input type="number" id="menage-pieces" name="menage_nombre_pieces" min="0">
+          </div>
+          <div class="form-field">
+            <label for="menage-surface">Si ménage : surface approximative (m²)</label>
+            <input type="number" id="menage-surface" name="menage_surface_m2" min="0">
+          </div>
+          <div class="form-field">
+            <label for="frequence-personne">Fréquence souhaitée</label>
+            <select id="frequence-personne" name="frequence_personne">
+              <option value="">— Sélectionnez —</option>
+              <option value="ponctuel">Intervention ponctuelle</option>
+              <option value="hebdomadaire">Hebdomadaire</option>
+              <option value="quotidien">Quotidien</option>
+              <option value="autre">Autre (précisez dans le message)</option>
+            </select>
+          </div>
+                </fieldset>
+
+        <div class="devis-decor shape-leaf devis-decor-2" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 50 L14 34 C14 22 22 14 32 14 C42 14 50 22 50 34 L50 50" stroke="var(--color-ochre)" stroke-width="2"/>
+            <path d="M32 14 L32 50" stroke="var(--color-ochre)" stroke-width="2"/>
+            <path d="M14 50 L50 50" stroke="var(--color-ochre)" stroke-width="2"/>
+          </svg>
+          <p>Ménage, aide au quotidien, soins de confort : dites-nous ce qui compte le plus pour la personne accompagnée.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="devis-row">
+      <div class="container devis-row-grid">
+
+        <div class="devis-decor shape-blob devis-decor-3" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="10" width="32" height="44" rx="2" stroke="var(--color-ochre)" stroke-width="2"/>
+            <path d="M23 22h18M23 30h18M23 38h11" stroke="var(--color-ochre)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p>Dossiers, courriers, démarches en ligne : dites-nous où vous en êtes, nous reprenons le dossier à partir de là.</p>
+        </div>
+
+        <fieldset class="devis-fieldset devis-panel">
+          <legend>Aide administrative — démarches concernées</legend>
+          <p class="form-note">Cochez tout ce qui correspond à votre besoin.</p>
+
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="services_admin[]" value="Aide à la constitution de dossiers administratifs"> Aide à la constitution de dossiers administratifs</label>
+            <label><input type="checkbox" name="services_admin[]" value="Démarches CAF / CPAM / retraite"> Démarches CAF / CPAM / retraite</label>
+            <label><input type="checkbox" name="services_admin[]" value="Aide à la déclaration d'impôts"> Aide à la déclaration d'impôts</label>
+            <label><input type="checkbox" name="services_admin[]" value="Démarches en ligne (service-public.fr, etc.)"> Démarches en ligne (service-public.fr, etc.)</label>
+            <label><input type="checkbox" name="services_admin[]" value="Dossiers de dépendance (APA, MDPH)"> Dossiers de dépendance (APA, MDPH)</label>
+            <label><input type="checkbox" name="services_admin[]" value="Rédaction de courriers administratifs"> Rédaction de courriers administratifs</label>
+            <label><input type="checkbox" name="services_admin[]" value="Classement et suivi de documents"> Classement et suivi de documents</label>
+            <label><input type="checkbox" name="services_admin[]" value="Assistance administrative à domicile"> Assistance administrative à domicile</label>
+            <label><input type="checkbox" name="services_admin[]" value="Autre démarche administrative"> Autre démarche administrative</label>
+                    </div>
+        </fieldset>
+
+      </div>
+    </section>
+
+    <section class="devis-row devis-row-alt devis-row-reverse">
+      <div class="container devis-row-grid">
+
+        <fieldset class="devis-fieldset devis-panel">
+          <legend>Conseil voyage — France ✈ La Réunion ✈ Madagascar</legend>
+          <p class="form-note">À remplir uniquement si votre demande concerne un projet de voyage.</p>
+
+          <div class="form-field">
+            <label>Destination souhaitée</label>
+            <div class="radio-row">
+              <label><input type="radio" name="voyage_destination" value="La Réunion"> La Réunion</label>
+              <label><input type="radio" name="voyage_destination" value="Madagascar"> Madagascar</label>
+              <label><input type="radio" name="voyage_destination" value="Les deux"> Les deux</label>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="voyage-ville-depart">Ville de départ</label>
+            <input type="text" id="voyage-ville-depart" name="voyage_ville_depart" placeholder="Ex : Paris, Marseille, Saint-Denis...">
+          </div>
+
+          <div class="form-field">
+            <label for="voyage-lieu-visite">Région, commune ou ville que vous souhaitez visiter (si déjà connue)</label>
+            <input type="text" id="voyage-lieu-visite" name="voyage_lieu_visite" placeholder="Ex : Antananarivo, Saint-Gilles, Nosy Be...">
+          </div>
+
+          <p class="form-note" style="margin-top: var(--space-3);">Besoins en transport (cochez tout ce qui s'applique)</p>
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="voyage_transport[]" value="Transport sur place (voiture, 4x4)"> Transport sur place (voiture, 4x4)</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Avion"> Avion</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Bateau"> Bateau</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Bus"> Bus</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Train"> Train</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Téléphérique"> Téléphérique</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Navette"> Navette</label>
+            <label><input type="checkbox" name="voyage_transport[]" value="Taxi"> Taxi</label>
+          </div>
+
+          <p class="form-note" style="margin-top: var(--space-3);">Autres besoins (cochez tout ce qui s'applique)</p>
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="voyage_besoins[]" value="Hôtel & Restaurant"> Hôtel & Restaurant</label>
+            <label><input type="checkbox" name="voyage_besoins[]" value="Guide touristique"> Guide touristique</label>
+            <label><input type="checkbox" name="voyage_besoins[]" value="Sites historiques"> Sites historiques</label>
+            <label><input type="checkbox" name="voyage_besoins[]" value="Traditions, tabous, fêtes locales"> Traditions, tabous, fêtes locales</label>
+            <label><input type="checkbox" name="voyage_besoins[]" value="Sites naturels à visiter"> Sites naturels à visiter</label>
+          </div>
+
+          <div class="form-field" style="margin-top: var(--space-3);">
+            <label for="voyage-guide-langue">Si guide touristique : langue souhaitée</label>
+            <select id="voyage-guide-langue" name="voyage_guide_langue">
+              <option value="">— Sélectionnez —</option>
+              <option value="Français">Français</option>
+              <option value="Anglais">Anglais</option>
+              <option value="Malagasy">Malagasy</option>
+              <option value="Créole réunionnais">Créole réunionnais</option>
+              <option value="Allemand">Allemand</option>
+              <option value="Italien">Italien</option>
+              <option value="Espagnol">Espagnol</option>
+              <option value="Portugais">Portugais</option>
+              <option value="Néerlandais">Néerlandais</option>
+              <option value="Chinois (mandarin)">Chinois (mandarin)</option>
+              <option value="Japonais">Japonais</option>
+              <option value="Coréen">Coréen</option>
+              <option value="Russe">Russe</option>
+              <option value="Arabe">Arabe</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Swahili">Swahili</option>
+              <option value="Autre">Autre (précisez dans le message)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="voyage-sites-historiques">Sites historiques déjà en tête (facultatif)</label>
+            <textarea id="voyage-sites-historiques" name="voyage_sites_historiques" placeholder="Ex : Rova d'Antananarivo, Cirque de Cilaos..."></textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="voyage-message">Précisions complémentaires sur votre projet de voyage</label>
+            <textarea id="voyage-message" name="voyage_message" placeholder="Dates envisagées, nombre de personnes, budget, style de voyage..."></textarea>
+          </div>
+                </fieldset>
+
+        <div class="devis-decor shape-hex devis-decor-4" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 36 L54 20 L48 26 L54 26 L20 44 L26 38 L10 36Z" stroke="var(--color-ochre)" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <p>Un projet de voyage entre la métropole, La Réunion et Madagascar ? Décrivez-le-nous, même à grands traits.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="devis-row devis-row-center">
+      <div class="container">
+        <div class="devis-message-centered">
+          <fieldset class="devis-fieldset devis-panel">
+            <legend>Message complémentaire</legend>
+            <div class="form-field">
+              <label for="message">Précisez ici tout ce qui nous aidera à mieux comprendre votre demande</label>
+              <textarea id="message" name="message" placeholder="Contexte, urgence, disponibilités, situation particulière..."></textarea>
+            </div>
+          </fieldset>
+
+          <p class="form-note" style="text-align:center;">Cette demande de devis est gratuite et sans engagement. Nous vous recontactons avec une estimation adaptée à votre situation.</p>
+          <div class="button-row" style="justify-content:center;">
+            <button type="submit" class="btn btn-primary">Envoyer ma demande de devis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </form>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Agence Mitantsoa</h3>
+      <p>Accompagnement médico-social et administratif des familles.</p>
+    </div>
+    <div>
+      <h3>Navigation</h3>
+      <p><a href="index.html">Accueil</a></p>
+      <p><a href="services.html">Services</a></p>
+      <p><a href="apropos.html">À propos</a></p>
+      <p><a href="contact.html">Contact</a></p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<div class="lang-widget-fixed">
+  <button type="button" class="lang-widget-btn" id="langToggleBtn" aria-label="Choisir la langue">🌐</button>
+  <ul class="lang-menu" id="langMenu">
+    <li><button type="button" onclick="changeLanguage('fr')">🇫🇷 Français</button></li>
+    <li><button type="button" onclick="changeLanguage('en')">🇬🇧 English</button></li>
+    <li><button type="button" onclick="changeLanguage('mg')">🇲🇬 Malagasy</button></li>
+    <li><button type="button" onclick="changeLanguage('de')">🇩🇪 Deutsch</button></li>
+    <li><button type="button" onclick="changeLanguage('it')">🇮🇹 Italiano</button></li>
+    <li><button type="button" onclick="changeLanguage('es')">🇪🇸 Español</button></li>
+  </ul>
+</div>
+
+<a href="devis.html" class="devis-widget">📝 Demander un devis</a>
+
+<details class="pay-widget">
+  <summary class="pay-widget-btn">💳 Réserver un service</summary>
+  <div class="pay-menu">
+    <a href="LIEN-STRIPE-AIDE-PERSONNE" target="_blank" rel="noopener">Aide à la personne — 20€/h</a>
+    <a href="LIEN-STRIPE-AIDE-ADMIN" target="_blank" rel="noopener">Aide administrative — 25€/h</a>
+  </div>
+</details>
+
+<!-- Bandeau cookies -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Gestion des cookies">
+  <div class="cookie-content">
+    <p>
+      Ce site utilise des cookies pour améliorer votre expérience et comprendre son utilisation.
+      En poursuivant votre navigation, vous acceptez leur utilisation.
+      <a href="cookies.html" target="_blank">En savoir plus sur notre politique de cookies.</a>
+    </p>
+    <div class="cookie-buttons">
+      <button type="button" id="cookie-accept" class="btn btn-primary">J'accepte</button>
+      <button type="button" id="cookie-refuse" class="btn btn-secondary">Je refuse</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<div id="google_translate_element" style="display:none;"></div>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

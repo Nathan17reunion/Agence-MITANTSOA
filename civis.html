@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CIVIS, le Sud de La Réunion — Agence Mitantsoa</title>
+
+  <meta
+    name="description"
+    content="Découvrez la CIVIS, le Sud de La Réunion : Saint-Pierre, Saint-Louis, L'Étang-Salé, Petite-Île, Cilaos et Les Avirons. Plages, cirque, vin, broderie et conseils de voyage."
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body class="province-reunion-civis">
+
+  <header class="site-header">
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
+      <label
+        for="nav-toggle"
+        class="nav-toggle-label"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Ouverture : texte à gauche, collage de formes à droite ===== -->
+    <section class="agg-hero">
+      <div class="container agg-hero-grid">
+
+        <div class="agg-hero-text">
+          <p class="agg-back"><a href="reunion.html">Retour à La Réunion</a></p>
+          <h1>CIVIS, le territoire du Sud</h1>
+          <p class="agg-hero-lede">
+            La Communauté Intercommunale des Villes Solidaires rassemble six communes du sud de La Réunion. La CIVIS est un territoire particulièrement riche pour les voyageurs qui recherchent une Réunion diversifiée, entre plages de sable blanc, cirque montagneux, patrimoine culturel et paysages volcaniques.
+          </p>
+
+          <ul class="agg-facts">
+            <li><strong>6</strong> communes</li>
+            <li><strong>378 km²</strong> de territoire</li>
+            <li><strong>184 000</strong> habitants environ</li>
+          </ul>
+        </div>
+
+        <div class="agg-hero-collage" aria-hidden="false">
+          <figure class="collage-piece collage-arch">
+            <img src="https://www.reunion-parcnational.fr/sites/reunion-parcnational.fr/files/styles/slide_1500_1000/public/pnr_0001079bd.jpg?itok=UKMMKuQn" alt="Le cirque de Cilaos, entouré de remparts montagneux" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-leaf">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Saint-Pierre97410h%C3%A9licoptere.jpg?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original" alt="Le front de mer animé de Saint-Pierre" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-blob">
+            <img src="https://ville-cilaos.fr/wp-content/uploads/2022/02/BOY_0260.jpg" alt="Dentelle traditionnelle de Cilaos, savoir-faire local" loading="eager">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Navigation par commune + carte ===== -->
+    <section class="agg-section">
+      <div class="container agg-orient">
+
+        <div class="agg-orient-text">
+          <h2>Six communes, trois façons de voyager</h2>
+          <p>
+            Saint-Pierre pour les plages et le marché, Saint-Louis pour le patrimoine UNESCO, L'Étang-Salé pour la plage de sable noir, Petite-Île pour le calme, Cilaos pour le cirque et le vin, Les Avirons pour l'authenticité rurale.
+          </p>
+          <div class="agg-jump">
+            <a href="#saint-pierre" class="agg-jump-link">Saint-pierre</a>
+            <a href="#saint-louis" class="agg-jump-link">Saint-louis</a>
+            <a href="#etang-sale" class="agg-jump-link">L'Étang-sale</a>
+            <a href="#petite-ile" class="agg-jump-link">Petite-Île</a>
+            <a href="#cilaos" class="agg-jump-link">Cilaos</a>
+            <a href="#avirons" class="agg-jump-link">Avirons</a>
+          </div>
+        </div>
+
+        <figure class="agg-map" id="cinorMap">
+          <div class="map-frame">
+            <iframe src="carte_civis.html" title="Carte interactive de la CINOR" loading="lazy"></iframe>
+
+            <svg class="map-compass" viewBox="0 0 44 56" role="img" aria-label="Le nord est en haut de la carte">
+              <text x="22" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">N</text>
+              <polygon points="22,14 29,30 22,27 15,30" fill="#B9781E"/>
+              <polygon points="22,42 15,26 22,29 29,26" fill="#24463B"/>
+              <text x="22" y="54" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">S</text>
+            </svg>
+          </div>
+
+          <div class="map-tools" role="group" aria-label="Commandes de la carte">
+            <button type="button" data-map="in" data-nav aria-label="Zoom avant">+</button>
+            <button type="button" data-map="out" data-nav aria-label="Zoom arrière">−</button>
+            <button type="button" data-map="left" data-nav aria-label="Déplacer vers la gauche">←</button>
+            <button type="button" data-map="right" data-nav aria-label="Déplacer vers la droite">→</button>
+            <button type="button" data-map="fullscreen" class="map-tool-wide">Plein écran</button>
+            <a class="map-tool-wide" href="https://www.google.com/maps/search/?api=1&query=Communaut%C3%A9+Intercommunale+du+Nord+de+La+R%C3%A9union" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===== Saint-Pierre ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="saint-pierre">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="https://images.trvl-media.com/place/553248635976396417/3f8eff32-8fc1-4bce-847b-0a3612fffde4.jpg?impolicy=fcrop&w=800&h=600&p=1&q=medium" alt="Front de mer de Saint-Pierre" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Pierre, la capitale du Sud</h2>
+          <p>
+            Saint-Pierre est la deuxième ville de La Réunion et le siège de la CIVIS. Elle s'étend entre le littoral et les pentes intérieures. La commune est réputée pour ses plages, son marché forain et son patrimoine historique.
+          </p>
+          <ul class="agg-list">
+            <li>Les plages de Grande Anse et Pierrot</li>
+            <li>Le marché forain, le plus grand du Sud</li>
+            <li>Le front de mer et le centre historique</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Saint-Louis ===== -->
+    <section class="agg-chapter" id="saint-louis">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBPA0fJ5kb5dDrlkfflLiYWkmlNF9jNfO9h2TAVC3ej28aWxx5QalFSFI&s=10" alt="Temple hindou à Saint-Louis" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Louis, le patrimoine UNESCO</h2>
+          <p>
+            Saint-Louis est la troisième ville de La Réunion. La commune se distingue par son patrimoine architectural exceptionnel, notamment ses cases créoles classées au patrimoine mondial de l'UNESCO et l'Habitation Desbassayns.
+          </p>
+          <ul class="agg-list">
+            <li>Les cases créoles classées UNESCO</li>
+            <li>L'Habitation Desbassayns</li>
+            <li>Les plages et le patrimoine historique</li>
+          </ul>
+        </div>
+      </div>
+    </section>   
+
+    <!-- ===== L'Étang-Salé ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="etang-sale">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-slant">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0YQaE56kGqz5-BXtLI8P9CBNuXLXRqHmw-58aXRJe6wOitO5s7fHtJeA&s=10" alt="Lagon et plongée à Saint-Leu" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>L'Étang-Salé, la plage de sable noir</h2>
+          <p>
+            L'Étang-Salé est une commune récente, créée en 1999. Elle est célèbre pour sa plage de sable noir volcanique, unique à La Réunion. La commune offre également des paysages de forêt sèche et des viewpoints sur l'océan.
+          </p>
+          <ul class="agg-list">
+            <li>La plage de sable noir volcanique</li>
+            <li>La forêt sèche et les sentiers côtiers</li>
+            <li>Les viewpoints sur l'océan Indien</li>
+          </ul>
+        </div>
+      </div>
+    </section>   
+
+    <!-- ===== Petite-Île ===== -->
+    <section class="agg-chapter" id="petite-ile">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-blob">
+          <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/d/0/csm_Bassin_Manapany_BD_-_Photo__c__Brieuc_Coessens_a60be30966.jpg" alt="Bassins naturels de Manapany-les-Bains, Petite-Île" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Petite-Île, la commune tranquille</h2>
+          <p>
+            Petite-Île est une commune côtière située entre Saint-Pierre et Saint-Louis. Elle est connue pour ses plages tranquilles, son patrimoine historique (ancienne usine de Pierrefonds) et ses viewpoints sur la côte sud.
+          </p>
+          <ul class="agg-list">
+            <li>Les plages familiales et tranquilles</li>
+            <li>L'usine de Pierrefonds</li>
+            <li>Les viewpoints sur la côte</li>
+          </ul>
+        </div>
+      </div>
+    </section>     
+
+    <!-- ===== Cilaos ===== -->
+    <section class="agg-chapter" id="cilaos">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://static-cms.routard.com/web-routard/uploads/small_la-reunion-mafate.1589095_cb0ae4b5d0.jpg" alt="Le cirque de Cilaos et ses remparts" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Cilaos, le cirque perché</h2>
+          <p>
+            Cilaos est un village perché au cœur du cirque du même nom, accessible par une route sinueuse de 400 virages. La commune est réputée pour sa broderie artisanale, son vin AOC et ses paysages montagneux spectaculaires.
+          </p>
+          <ul class="agg-list">
+            <li>La route des 400 virages</li>
+            <li>La broderie et le vin de Cilaos</li>
+            <li>Les sentiers de randonnée en altitude</li>
+          </ul>
+        </div>
+      </div>
+    </section>    
+
+    <!-- ===== Les Avirons ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="avirons">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-slant">
+          <img src="https://www.ville-active-et-sportive.com/assets/images/avirons%201-aa6be1ea-a100-4529-a7c4-a5aaf1433d8c.jpg" alt="Forêt de l'Étang-Salé, près des Avirons" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Les Avirons, la cité des fleurs</h2>
+          <p>
+            Les Avirons est une commune rurale surnommée la « cité des fleurs ». Elle est connue pour ses cultures de géranium (pour l'huile essentielle), ses cases créoles et son lac artificiel.
+          </p>
+          <ul class="agg-list">
+            <li>Les cultures de géranium</li>
+            <li>Le lac et les cases créoles</li>
+            <li>L'authenticité rurale du Sud</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Rubriques ===== -->
+    <section class="agg-section agg-tiles-section">
+      <div class="container">
+        <h2>Préparer votre séjour dans l'Est</h2>
+        <div class="agg-tiles">
+          <a href="tco-hotels-restaurants.html" class="agg-tile agg-tile-1">
+            <h3>Hôtels et restaurants</h3>
+            <p>Où dormir et où manger, de Bras-Panon à Salazie.</p>
+          </a>
+          <a href="tco-sites.html" class="agg-tile agg-tile-2">
+            <h3>Sites touristiques</h3>
+            <p>Vanille, cascades, forêts, volcan : l'essentiel à voir.</p>
+          </a>
+          <a href="tco-transports.html" class="agg-tile agg-tile-3">
+            <h3>Transports</h3>
+            <p>Arriver, se déplacer, louer une voiture ou prendre le bus.</p>
+          </a>
+          <a href="tco-autres.html" class="agg-tile agg-tile-4">
+            <h3>Infos pratiques</h3>
+            <p>Consulter les infos pratiques</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <section class="agg-section">
+      <div class="container">
+        <h2>Le Sud en images</h2>
+        <div class="agg-mosaic">
+          <figure class="mosaic-item mosaic-a shape-arch">
+            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/portstpierre/plagestpierre.jpg" alt="Front de mer de Saint-Pierre" loading="lazy">
+            <figcaption>Le front de mer animé de Saint-Pierre</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-b shape-slant">
+            <img src="https://www.reunion-parcnational.fr/sites/reunion-parcnational.fr/files/styles/slide_1500_1000/public/pnr_0000320bd.jpg?itok=fuHwH_Bb" alt="Le cirque de Cilaos" loading="lazy">
+            <figcaption>Le cirque de Cilaos, entre remparts et thermes</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-c shape-leaf">
+            <img src="https://ville-cilaos.fr/wp-content/uploads/2022/04/BOY_1539.jpg" alt="Dentelle traditionnelle de Cilaos" loading="lazy">
+            <figcaption>La dentelle de Cilaos, un savoir-faire local</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-d shape-blob">
+            <img src="https://randopitons.re/img/itr/781/photo_sm.jpg" alt="Temple hindou à Saint-Louis" loading="lazy">
+            <figcaption>Un temple hindou à Saint-Louis</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-e shape-slant">
+            <img src="https://snorkeling-report.com/wp-content/uploads/2020/09/bassin-de-manapany-ile-reunion.jpg" alt="Bassins naturels de Manapany, Petite-Île" loading="lazy">
+            <figcaption>Les bassins naturels de Manapany-les-Bains</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-f shape-arch">
+            <img src="https://media.decathlon-outdoor.com/1cxU5XZX5Hun4UWoVXpp4j/etang-sale-et-et-sa-vue.webp?w=600" alt="Forêt de l'Étang-Salé, près des Avirons" loading="lazy">
+            <figcaption>La forêt de l'Étang-Salé</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-g shape-blob">
+            <img src="https://www.cartedelareunion.fr/wp-content/uploads/2016/05/Canyoning-Langevin-Grand-Galet-Reunion.jpg" alt="Randonnée vers Grand Bassin" loading="lazy">
+            <figcaption>La randonnée vers Grand Bassin - Cascade de Grand Galet</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-h shape-leaf">
+            <img src="https://www.papillesetpupilles.fr/wp-content/uploads/2019/12/Lentilles-de-Cilaos-.jpg" alt="Champs de lentilles à Cilaos" loading="lazy">
+            <figcaption>Les lentilles de Cilaos, une spécialité locale</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Appel à l'action ===== -->
+    <section class="agg-cta">
+      <div class="container agg-cta-inner">
+        <div>
+          <h2>Un séjour dans le Sud à organiser ?</h2>
+          <p>
+            Mer, montagne et traditions créoles réunies sur un même territoire : dites-nous ce que vous cherchez, nous vous proposons un itinéraire réaliste avec des adresses vérifiées.
+          </p>
+        </div>
+        <div class="agg-cta-actions">
+          <a href="devis.html" class="btn btn-primary">Demander un conseil voyage</a>
+          <a href="reunion.html" class="btn agg-btn-light">Voir les autres intercommunalités</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>
+          Accompagnement médico-social, administratif et conseil voyage.
+        </p>
+      </div>
+
+      <div>
+        <h3>Navigation</h3>
+        <p><a href="index.html">Accueil</a></p>
+        <p><a href="madagascar.html">Madagascar</a></p>
+        <p><a href="reunion.html">La Réunion</a></p>
+        <p><a href="contact.html">Contact</a></p>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

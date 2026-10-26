@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CIREST, l'Est de La Réunion — Agence Mitantsoa</title>
+
+  <meta
+    name="description"
+    content="Découvrez la CIREST, l'Est de La Réunion : Bras-Panon, La Plaine-des-Palmistes, Saint-André, Saint-Benoît, Sainte-Rose et Salazie. Vanille, forêt tropicale, cascades, volcan et conseils de voyage."
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body class="province-reunion-cirest">
+
+  <header class="site-header">
+    <div class="container">
+
+      <a href="index.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
+      <label
+        for="nav-toggle"
+        class="nav-toggle-label"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Ouverture ===== -->
+    <section class="agg-hero">
+      <div class="container agg-hero-grid">
+
+        <div class="agg-hero-text">
+          <p class="agg-back"><a href="reunion.html">Retour à La Réunion</a></p>
+          <h1>CIREST, le territoire de l'Est</h1>
+          <p class="agg-hero-lede">
+            La Communauté Intercommunale Réunion Est rassemble six communes entre littoral, hauts de l'île, forêts tropicales et paysages volcaniques. La CIREST est un territoire particulièrement riche pour les voyageurs qui recherchent une Réunion authentique, verdoyante et moins concentrée sur le tourisme balnéaire.
+          </p>
+          <ul class="agg-facts">
+            <li><strong>6</strong> communes</li>
+            <li><strong>737 km²</strong> de territoire</li>
+            <li><strong>130 000</strong> habitants environ</li>
+          </ul>
+        </div>
+
+        <div class="agg-hero-collage" aria-hidden="false">
+          <figure class="collage-piece collage-arch">
+            <img src="https://runexcursion.com/cdn/shop/files/Design_sans_titre_18_600x600.png" alt="Hell-Bourg, village du cirque de Salazie, classé parmi les plus beaux villages de France" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-leaf">
+            <img src="https://www.rentiles.fr/client/cache/_webp/contenu/615_410_1591605585_80_615_410____2__vanilleraie-la-reunion_1482.webp" alt="Plantation de vanille sur la Route de la Vanille, Bras-Panon" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-blob">
+            <img src="https://la1ere.franceinfo.fr/image/38zna2HnbPJ-TZnKl65N_bNgYA0/322x0:1286x964/1200x1200/filters:quality(80)/outremer%2F2022%2F01%2F28%2F61f3dc6966c7c_piton-karay-03-1863461.jpg" alt="Église de Sainte-Rose, épargnée par une coulée de lave en 1977" loading="eager">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+    
+    <!-- ===== Navigation par commune + carte ===== -->
+    <section class="agg-section">
+      <div class="container agg-orient">
+
+        <div class="agg-orient-text">
+          <h2>Six communes, un même territoire</h2>
+          <p>
+            Bras-Panon pour la vanille, La Plaine-des-Palmistes pour la montagne, Saint-André pour l'agriculture, Saint-Benoît pour le patrimoine, Sainte-Rose pour le volcan et Salazie pour les cascades.
+          </p>
+          <div class="agg-jump">
+            <a href="#bras-panon" class="agg-jump-link">Bras-Panon</a>
+            <a href="#plaine-des-palmistes" class="agg-jump-link">La Plaine-des-Palmistes</a>
+            <a href="#saint-andre" class="agg-jump-link">Saint-André</a>
+            <a href="#saint-benoit" class="agg-jump-link">Saint-Benoît</a>
+            <a href="#sainte-rose" class="agg-jump-link">Sainte-Rose</a>
+            <a href="#salazie" class="agg-jump-link">Salazie</a>
+          </div>
+        </div>
+
+        <figure class="agg-map" id="cinorMap">
+          <div class="map-frame">
+            <iframe src="carte_cirest.html" title="Carte interactive de la CINOR" loading="lazy"></iframe>
+
+            <svg class="map-compass" viewBox="0 0 44 56" role="img" aria-label="Le nord est en haut de la carte">
+              <text x="22" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">N</text>
+              <polygon points="22,14 29,30 22,27 15,30" fill="#B9781E"/>
+              <polygon points="22,42 15,26 22,29 29,26" fill="#24463B"/>
+              <text x="22" y="54" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">S</text>
+            </svg>
+          </div>
+
+          <div class="map-tools" role="group" aria-label="Commandes de la carte">
+            <button type="button" data-map="in" data-nav aria-label="Zoom avant">+</button>
+            <button type="button" data-map="out" data-nav aria-label="Zoom arrière">−</button>
+            <button type="button" data-map="left" data-nav aria-label="Déplacer vers la gauche">←</button>
+            <button type="button" data-map="right" data-nav aria-label="Déplacer vers la droite">→</button>
+            <button type="button" data-map="fullscreen" class="map-tool-wide">Plein écran</button>
+            <a class="map-tool-wide" href="https://www.google.com/maps/search/?api=1&query=Communaut%C3%A9+Intercommunale+du+Nord+de+La+R%C3%A9union" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===== Bras Panon ===== -->
+    <section class="agg-chapter" id="bras-panon">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="photos/reunion/cirest/bras-panon-route-vanille.jpg" alt="Plantation de vanille sur la Route de la Vanille, Bras-Panon" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Bras-Panon, la terre de la vanille</h2>
+          <p>
+            Bras-Panon est réputée pour la culture de la vanille et les productions agricoles. La commune constitue une étape importante pour découvrir les savoir-faire agricoles et les produits locaux de l'Est.
+          </p>
+          <ul class="agg-list">
+            <li>La Route de la Vanille et les plantations</li>
+            <li>Les paysages agricoles et les marchés locaux</li>
+            <li>L'authenticité rurale de la côte Est</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Plaine-des-Palmistes ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="plaine-des-palmistes">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="photos/reunion/cirest/plaine-des-palmistes-foret.jpg" alt="Forêt de La Plaine-des-Palmistes" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>La Plaine-des-Palmistes, la montagne verte</h2>
+          <p>
+            Installée dans les hauts de l'Est, La Plaine-des-Palmistes offre un climat plus frais et des paysages de montagne. La commune est une porte d'accès vers les forêts humides et les itinéraires liés au Piton de la Fournaise.
+          </p>
+          <ul class="agg-list">
+            <li>La forêt de palmistes rouges</li>
+            <li>Les sentiers de randonnée et points de vue</li>
+            <li>L'accès au volcan par la route nationale</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Saint-André ===== -->
+    <section class="agg-chapter" id="saint-andre">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-blob">
+          <img src="photos/reunion/cirest/saint-andre-temple-tamoul.jpg" alt="Temple tamoul à Saint-André" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-André, la plus peuplée de l'Est</h2>
+          <p>
+            Saint-André est la commune la plus peuplée de la CIREST. Elle s'étend entre le littoral et les pentes de l'intérieur de l'île. Son identité repose sur l'agriculture, la culture créole, les marchés et les paysages de canne à sucre.
+          </p>
+          <ul class="agg-list">
+            <li>Le quartier de Champ Borne</li>
+            <li>Les marchés et le patrimoine religieux</li>
+            <li>L'agriculture et les paysages ruraux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Saint-Benoît ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="saint-benoit">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-slant">
+          <img src="photos/reunion/tco/saint-leu-plongee.jpg" alt="Lagon et plongée à Saint-Leu" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Benoît, sous-préfecture de l'Est</h2>
+          <p>
+            Sous-préfecture de l'Est, Saint-Benoît est une commune étendue entre l'océan Indien, les rivières et les reliefs du cœur de l'île. Elle constitue une base pratique pour explorer les cascades, les forêts et les sites volcaniques.
+          </p>
+          <ul class="agg-list">
+            <li>Le centre historique et les cases créoles</li>
+            <li>Les cascades et rivières</li>
+            <li>Le littoral et les plages sauvages</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- ===== Sainte-Rose ===== -->
+    <section class="agg-chapter" id="sainte-rose">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="photos/reunion/cirest/sainte-rose-eglise-laves.jpg" alt="Église encerclée par une coulée de lave à Sainte-Rose" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Sainte-rose, le pays des laves</h2>
+          <p>
+            Sainte-Rose est surnommée le pays des laves. Située sur le flanc oriental du Piton de la Fournaise, elle se distingue par ses coulées volcaniques, sa côte sauvage et ses paysages noirs formés par les éruptions.
+          </p>
+          <ul class="agg-list">
+            <li>Les coulées de lave et l'église Sainte-Anne</li>
+            <li>La côte sauvage et les plages de sable noir</li>
+            <li>L'accès au Piton de la Fournaise</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Salazie ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="salazie">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="photos/reunion/cirest/salazie-hell-bourg.jpg" alt="Village de Hell-Bourg, cirque de Salazie" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Salazie, le cirque des cascades</h2>
+          <p>
+            Salazie est un cirque montagneux particulièrement verdoyant, dominé par les reliefs du Piton des Neiges. La commune est réputée pour ses cascades, ses paysages brumeux et ses villages de montagne accessibles par une route sinueuse.
+          </p>
+          <ul class="agg-list">
+            <li>Le village de Hell-Bourg</li>
+            <li>Le Voile de la Mariée et les cascades</li>
+            <li>Les sentiers de randonnée en altitude</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Rubriques ===== -->
+    <section class="agg-section agg-tiles-section">
+      <div class="container">
+        <h2>Préparer votre séjour dans l'Est</h2>
+        <div class="agg-tiles">
+          <a href="tco-hotels-restaurants.html" class="agg-tile agg-tile-1">
+            <h3>Hôtels et restaurants</h3>
+            <p>Où dormir et où manger, de Bras-Panon à Salazie.</p>
+          </a>
+          <a href="tco-sites.html" class="agg-tile agg-tile-2">
+            <h3>Sites touristiques</h3>
+            <p>Vanille, cascades, forêts, volcan : l'essentiel à voir.</p>
+          </a>
+          <a href="tco-transports.html" class="agg-tile agg-tile-3">
+            <h3>Transports</h3>
+            <p>Arriver, se déplacer, louer une voiture ou prendre le bus.</p>
+          </a>
+          <a href="tco-autres.html" class="agg-tile agg-tile-4">
+            <h3>Infos pratiques</h3>
+            <p>Consulter les infos pratiques</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <section class="agg-section">
+      <div class="container">
+        <h2>L'Est en images</h2>
+        <div class="agg-mosaic">
+          <figure class="mosaic-item mosaic-a shape-arch">
+            <img src="https://www.cartedelareunion.fr/wp-content/uploads/2016/05/Village-de-Hell-Bourg-centre-ville-remparts-cartedelareunion.fr-%C2%A9-Serge-Gelabert-1422x800.jpg" alt="Village de Hell-Bourg, cirque de Salazie" loading="lazy">
+            <figcaption>Hell-Bourg, l'un des plus beaux villages de France</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-b shape-slant">
+            <img src="https://api.cloudly.space/resize/clip/1200/760/75/aHR0cHM6Ly9yZXVuaW9uLm1lZGlhLnRvdXJpbnNvZnQuZXUvdXBsb2FkL3RodW1iLTE0MC1saWV1LXJlbWFycXVhYmxlLWxhcmdlLmpwZWc=/image.jpg" alt="Cascade Voile de la Mariée à Salazie" loading="lazy">
+            <figcaption>La cascade Voile de la Mariée</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-c shape-leaf">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Vanilla_fragrans_3.jpg?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original" alt="Plantation de vanille à Bras-Panon" loading="lazy">
+            <figcaption>Les plantations de vanille de Bras-Panon</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-d shape-blob">
+            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/8c/3b/13/photo0jpg.jpg?w=1200&h=-1&s=1" alt="Église encerclée par une coulée de lave à Sainte-Rose" loading="lazy">
+            <figcaption>L'église que la lave a épargnée, à Sainte-Rose</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-e shape-slant">
+            <img src="https://media.decathlon-outdoor.com/1cxKQCxN2GUAtBzEnQJrsN/le-trou-de-fer-par-le-sentier-de-l-ecole-normale-depuis-bebour-et-la-plaine-des-palmistes.webp?w=600" alt="Forêt verdoyante à La Plaine-des-Palmistes" loading="lazy">
+            <figcaption>Les forêts de La Plaine-des-Palmistes</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-f shape-arch">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Temple_tamoul_%C3%A0_Saint_Andr%C3%A9_%281%29.jpg?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original" alt="Temple tamoul à Saint-André" loading="lazy">
+            <figcaption>Un temple tamoul à Saint-André</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-g shape-blob">
+            <img src="https://res.cloudinary.com/manawa/image/private/f_auto,c_limit,w_3840,q_auto/e64e0cbcfbe05485c2ddff2a3350cd1d" alt="Rivière des Marsouins à Saint-Benoît" loading="lazy">
+            <figcaption>Canyoning sur la rivière des Marsouins</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-h shape-leaf">
+            <img src="https://image.over-blog.com/4FJsm882V-O9wMO8DP0i1wQus-I=/filters:no_upscale()/image%2F2505694%2F20241029%2Fob_7fa7a1_04473133-22aa-4841-a773-6f09bc04ef0b.jpeg" alt="Route d'accès au Piton de la Fournaise" loading="lazy">
+            <figcaption>La route vers le Piton de la Fournaise</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Appel à l'action ===== -->
+    <section class="agg-cta">
+      <div class="container agg-cta-inner">
+        <div>
+          <h2>Un séjour dans l'Est à organiser ?</h2>
+          <p>
+            Vanille, forêts, cascades, volcan et villages de montagne : dites-nous ce que vous cherchez, nous vous proposons un itinéraire réaliste avec des adresses vérifiées.
+          </p>
+        </div>
+        <div class="agg-cta-actions">
+          <a href="devis.html" class="btn btn-primary">Demander un conseil voyage</a>
+          <a href="reunion.html" class="btn agg-btn-light">Voir les autres intercommunalités</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>
+          Accompagnement médico-social, administratif et conseil voyage.
+        </p>
+      </div>
+
+      <div>
+        <h3>Navigation</h3>
+        <p><a href="index.html">Accueil</a></p>
+        <p><a href="madagascar.html">Madagascar</a></p>
+        <p><a href="reunion.html">La Réunion</a></p>
+        <p><a href="contact.html">Contact</a></p>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

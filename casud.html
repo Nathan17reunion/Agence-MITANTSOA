@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASUD, le Sud profond — Agence Mitantsoa</title>
+  <meta name="description" content="Découvrez le CASUD, le Sud profond de La Réunion : Entre-Deux, Le Tampon, Saint-Joseph et Saint-Philippe. Cases créoles, volcan, authenticité et conseils de voyage.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body class="province-reunion-tco">
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu"><span></span></label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Ouverture : texte à gauche, collage de formes à droite ===== -->
+    <section class="agg-hero">
+      <div class="container agg-hero-grid">
+
+        <div class="agg-hero-text">
+          <p class="agg-back"><a href="reunion.html">Retour à La Réunion</a></p>
+          <h1>CASUD, le territoire du Sud profond</h1>
+          <p class="province-intro">
+            La Communauté d'Agglomération du Sud rassemble quatre communes du sud profond de La Réunion. Le CASUD est un territoire authentique et préservé, idéal pour les voyageurs qui recherchent une Réunion traditionnelle, entre cases créoles, paysages volcaniques et authenticité rurale.
+          </p>
+
+          <ul class="agg-facts">
+            <li><strong>4</strong> communes</li>
+            <li><strong>256 km²</strong> de territoire</li>
+            <li><strong>85 000</strong> habitants environ</li>
+          </ul>
+        </div>
+
+        <div class="agg-hero-collage" aria-hidden="false">
+          <figure class="collage-piece collage-arch">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmWkzXx1dpaIOOrmTGGjTENw3RWwzv915GXujqwwdJNH76pqaHR6y7AN4&s=10" alt="Cascade de Grand Galet sur la rivière Langevin, Saint-Joseph" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-leaf">
+            <img src="https://i.pinimg.com/736x/e8/f2/bc/e8f2bcba34494d38d9c051c984dd5633.jpg" alt="Le Jardin des Parfums et des Épices, Saint-Philippe" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-blob">
+            <img src="https://www.cartedelareunion.fr/wp-content/uploads/2016/04/Plaine-des-Cafres-Reunion.jpg" alt="Les pâturages de la Plaine des Cafres, Le Tampon" loading="eager">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Navigation par commune + carte ===== -->
+    <section class="agg-section">
+      <div class="container agg-orient">
+
+        <div class="agg-orient-text">
+          <h2>Quatre communes, un même territoire</h2>
+          <p>
+            Entre-Deux pour les cases créoles, Le Tampon pour le volcan et l'agriculture, Saint-Joseph pour les plages et la pêche, Saint-Philippe pour les coulées de lave et la côte sauvage.
+          </p>
+          <div class="agg-jump">
+            <a href="#entre-deux" class="agg-jump-link">Entre-Deux</a>
+            <a href="#le-tampon" class="agg-jump-link">Le-tampon</a>
+            <a href="#saint-joseph" class="agg-jump-link">Saint-joseph</a>
+            <a href="#saint-philippe" class="agg-jump-link">Saint-philippe</a>
+          </div>
+        </div>
+
+        <figure class="agg-map" id="cinorMap">
+          <div class="map-frame">
+            <iframe src="carte_cinor.html" title="Carte interactive de la CINOR" loading="lazy"></iframe>
+
+            <svg class="map-compass" viewBox="0 0 44 56" role="img" aria-label="Le nord est en haut de la carte">
+              <text x="22" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">N</text>
+              <polygon points="22,14 29,30 22,27 15,30" fill="#B9781E"/>
+              <polygon points="22,42 15,26 22,29 29,26" fill="#24463B"/>
+              <text x="22" y="54" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">S</text>
+            </svg>
+          </div>
+
+          <div class="map-tools" role="group" aria-label="Commandes de la carte">
+            <button type="button" data-map="in" data-nav aria-label="Zoom avant">+</button>
+            <button type="button" data-map="out" data-nav aria-label="Zoom arrière">−</button>
+            <button type="button" data-map="left" data-nav aria-label="Déplacer vers la gauche">←</button>
+            <button type="button" data-map="right" data-nav aria-label="Déplacer vers la droite">→</button>
+            <button type="button" data-map="fullscreen" class="map-tool-wide">Plein écran</button>
+            <a class="map-tool-wide" href="https://www.google.com/maps/search/?api=1&query=Communaut%C3%A9+Intercommunale+du+Nord+de+La+R%C3%A9union" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===== Entre-Deux ===== -->
+    <section class="agg-chapter" id="entre-deux">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/05/f8/5d/photo0jpg.jpg?w=1400&h=-1&s=1" alt="Case créole traditionnelle à l'Entre-Deux" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Entre-Deux, la capitale de la case créole</h2>
+          <p>
+            Entre-Deux est une commune rurale située entre les rivières des Remparts et du Bras de la Plaine. Elle est réputée pour ses cases traditionnelles restaurées, son musée de la Case Créole et ses paysages de cultures traditionnelles.
+          </p>
+          <ul class="agg-list">
+            <li>Les cases créoles classées</li>
+            <li>Le musée de la Case Créole</li>
+            <li>Les cultures de géranium et vetiver</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Le Tampon ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="le-tampon">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Stade_de_Pont_d%27Yves.jpg?utm_source=fr.wikivoyage.org&utm_campaign=index&utm_content=original" alt="Pâturages de la Plaine des Cafres, Le Tampon" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Le Tampon, porte du volcan</h2>
+          <p>
+            Le Tampon est la commune la plus étendue du CASUD et siège de l'intercommunalité. Située dans les hauts, elle offre un accès privilégié au Piton de la Fournaise, à la Plaine-des-Cafres et aux sites de randonnée comme le Pas de Bellecombe.
+          </p>
+          <ul class="agg-list">
+            <li>L'accès au Piton de la Fournaise</li>
+            <li>La Plaine-des-Cafres et l'agriculture</li>
+            <li>Les sentiers de randonnée en altitude</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Saint-Joseph ===== -->
+    <section class="agg-chapter" id="saint-joseph">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-blob">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZpq-6Gnjn5GsVthIlnQDSJI4ZUZDMmI5A6n71qBX1QpSuCoVjLltb9MD&s=10" alt="Cascade de Grand Galet sur la rivière Langevin, Saint-Joseph" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Joseph, entre mer et terre</h2>
+          <p>
+            Saint-Joseph est une commune côtière du sud profond. Elle est connue pour ses plages, son activité de pêche, son patrimoine religieux et ses paysages agricoles. C'est une destination authentique loin du tourisme de masse.
+          </p>
+          <ul class="agg-list">
+            <li>Les plages et l'activité de pêche</li>
+            <li>Le patrimoine religieux et culturel</li>
+            <li>L'agriculture et les paysages ruraux</li>
+          </ul>
+          <p class="agg-note">Avant de partir en cascade, vérifiez la météo et l'accès du site : après de fortes pluies, certains sentiers sont fermés.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Saint-Philippe ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="saint-philippe">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/6af4fd28-ea18-448f-99c5-f620df3444bd/content/f5749035-7876-45f0-9402-a60eceb88fb4/97d4dffd-45ef-45ea-990f-87102bc7b75d.jpg" alt="Jardin des Parfums et des Épices à Saint-Philippe" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Philippe, le pays des laves</h2>
+          <p>
+            Saint-Philippe est la commune la plus au sud de l'île, dominée par le Piton de la Fournaise. Elle est connue pour ses paysages lunaires de coulées de lave, ses églises construites après les éruptions et sa côte sauvage préservée.
+          </p>
+          <ul class="agg-list">
+            <li>Les coulées de lave et l'église</li>
+            <li>La côte sauvage et les plages de sable noir</li>
+            <li>L'accès au Piton de la Fournaise</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== RPréparer le séjour ===== -->
+    <section class="agg-section agg-tiles-section">
+      <div class="container">
+        <h2>Préparer votre séjour dans le Sud profond</h2>
+        <div class="agg-tiles">
+          <a href="cinor-hotels-restaurants.html" class="agg-tile agg-tile-1">
+            <h3>Hôtels et restaurants</h3>
+            <p>Où dormir et où manger, d'Entre-Deux à Saint-Philippe.</p>
+          </a>
+          <a href="cinor-sites.html" class="agg-tile agg-tile-2">
+            <h3>Sites touristiques</h3>
+            <p>Cases créoles, volcan, plages, patrimoine : l'essentiel à voir.</p>
+          </a>
+          <a href="cinor-transports.html" class="agg-tile agg-tile-3">
+            <h3>Transports</h3>
+            <p>Organiser vos déplacements.</p>
+          </a>
+          <a href="cinor-autres.html" class="agg-tile agg-tile-4">
+            <h3>Infos pratiques</h3>
+            <p>Traditions, météo, sécurité, usages à connaître avant de partir.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <section class="agg-section">
+      <div class="container">
+        <h2>Le Sud sauvage en images</h2>
+        <div class="agg-mosaic">
+          <figure class="mosaic-item mosaic-a shape-arch">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4K5W2Zzbpf-Bna68-Q13BYVk0oIY06uxcfbwuVgGGLXr3BOzPbn8fzCCp&s=10" alt="Cascade de Grand Galet sur la rivière Langevin" loading="lazy">
+            <figcaption>La cascade de Grand Galet, à Saint-Joseph</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-b shape-slant">
+            <img src="https://amphitea.com/wp-content/uploads/2020/11/jardin-parfums-epices-site.jpg" alt="Jardin des Parfums et des Épices, Saint-Philippe" loading="lazy">
+            <figcaption>Le Jardin des Parfums et des Épices</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-c shape-leaf">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF_fvyv57L8uVUK3-CtGxhPx0DDiuN_RWdZ-4EVnu-syqdKqf5WbJvjTg0&s=10" alt="Coulée de lave figée à Saint-Philippe" loading="lazy">
+            <figcaption>Les coulées de lave de Saint-Philippe</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-d shape-blob">
+            <img src="https://www.reunion.fr/app/uploads/crt-reunion/2020/04/thumbs/plainedescafres02paturagesbourgmurat-creditirt-emmanuelvirin-1920x960.jpg" alt="Pâturages de la Plaine des Cafres, Le Tampon" loading="lazy">
+            <figcaption>Les pâturages de la Plaine des Cafres</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-e shape-slant">
+            <img src="https://www.deco.fr/sites/default/files/styles/1920px/public/2020-02/shutterstock_542202466.jpg" alt="Fleurs des Floralies du Tampon" loading="lazy">
+            <figcaption>Les Floralies, fête des fleurs du Tampon</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-f shape-arch">
+            <img src="https://atasteofmylife.fr/wp-content/uploads/2013/04/reunion_cases_06.jpg" alt="Case créole traditionnelle à l'Entre-Deux" loading="lazy">
+            <figcaption>Les cases créoles de l'Entre-Deux</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-g shape-blob">
+            <img src="https://randopitons.re/img/itr/254/photo_sm.jpg" alt="Sanctuaire Notre-Dame-de-la-Paix, Plaine des Cafres" loading="lazy">
+            <figcaption>Le sanctuaire Notre-Dame-de-la-Paix</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-h shape-leaf">
+            <img src="https://reunionboutik.com/img/p/1/3/0/1/1301-medium_default.jpg" alt="Plantation de vanille à Basse Vallée, Saint-Joseph" loading="lazy">
+            <figcaption>La vanille de Basse Vallée</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Appel à l'action ===== -->
+    <section class="agg-cta">
+      <div class="container agg-cta-inner">
+        <div>
+          <h2>Un séjour dans le Sud sauvage à organiser ?</h2>
+          <p>
+            Volcan, lave figée et villages de montagne préservés : dites-nous ce que vous cherchez, nous vous proposons un itinéraire réaliste avec des adresses vérifiées.
+          </p>
+        </div>
+        <div class="agg-cta-actions">
+          <a href="devis.html" class="btn btn-primary">Demander un conseil voyage</a>
+          <a href="reunion.html" class="btn agg-btn-light">Voir les autres intercommunalités</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>
+          Accompagnement médico-social, administratif et conseil voyage.
+        </p>
+      </div>
+
+      <div>
+        <h3>Navigation</h3>
+        <p><a href="index.html">Accueil</a></p>
+        <p><a href="madagascar.html">Madagascar</a></p>
+        <p><a href="reunion.html">La Réunion</a></p>
+        <p><a href="contact.html">Contact</a></p>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

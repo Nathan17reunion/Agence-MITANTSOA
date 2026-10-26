@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Agence Mitantsoa</title>
+<meta name="description" content="Contactez l'Agence Mitantsoa pour un accompagnement médico-social ou administratif.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mitantsoa.png" alt="" class="logo-icon">Agence <span>Mitantsoa</span></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu"><span></span></label>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="apropos.html">À propos</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" style="padding-bottom: 0;">
+    <div class="container" style="display:block;">
+      <p class="hero-eyebrow">Contact</p>
+      <h1>Parlons de votre situation.</h1>
+      <p class="hero-lede">Le premier échange est sans engagement. Il sert simplement à comprendre votre besoin et à voir comment nous pouvons vous aider.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container contact-grid">
+
+      <div>
+        <h2>Nos coordonnées</h2>
+        <dl class="contact-info">
+          <dt><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 3.1 2 2 0 0 1 4.11 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>Téléphone</dt>
+          <dd><a href="tel:+33745261986">+33 7 45 26 19 86</a></dd>
+
+          <dt><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3z"/><path d="M3 6l9 7 9-7"/></svg></span>E-mail</dt>
+          <dd><a href="mailto:jrayan.mitantsoanyhaja@gmail.com">jrayan.mitantsoanyhaja@gmail.com</a></dd>
+
+          <dt><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9.5" r="2.3"/></svg></span>Adresse</dt>
+          <dd><a href="https://maps.app.goo.gl/CXbzAb24piKeZ8EBA" target="_blank" rel="noopener">Rue Fernand Léger, 14123 IFS</a></dd>
+          <div class="map-wrapper">
+          <iframe
+            src="https://www.google.com/maps?q=Rue+Fernand+L%C3%A9ger,+14123+Ifs&z=16&output=embed"
+            width="100%"
+            height="320"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localisation Agence Mitantsoa">
+          </iframe>
+          <button type="button" class="btn btn-secondary map-open-btn"
+            onclick="if(confirm('Ouvrir cette adresse dans Google Maps ?')){window.open('https://maps.app.goo.gl/CXbzAb24piKeZ8EBA','_blank');}">
+            📍 Voir sur Google Maps
+          </button>
+        </div>
+
+          <dt><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span>Horaires</dt>
+          <dd>Du lundi au vendredi, 8h – 17h ou <a href="https://calendar.app.google/JaMcWo7q4auBtVXr5" target="_blank" rel="noopener">prendre un RDV en cliquant ici</a></dd>
+        </dl> 
+      </div>
+
+      <div>
+        <h2>Envoyez-nous un message</h2>
+        <form action="https://formspree.io/f/mzezpzpq" method="POST">
+          <div class="form-field">
+            <label for="nom">Nom complet</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          <div class="form-field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="sujet">Type de besoin</label>
+            <select id="sujet" name="sujet">
+              <option value="medico-social">Accompagnement médico-social</option>
+              <option value="administratif">Accompagnement administratif</option>
+              <option value="autre">Autre / je ne sais pas encore</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <input type="hidden" name="_subject" value="Nouveau message depuis le site Agence Mitantsoa">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="_next" value="https://nathan17reunion.github.io/Mini_project/merci.html">
+          <p class="form-note">Les messages envoyés ici arrivent directement dans votre boîte e-mail.</p>
+          <button type="submit" class="btn btn-primary">Envoyer le message</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Agence Mitantsoa</h3>
+      <p>Accompagnement médico-social et administratif des familles.</p>
+    </div>
+    <div>
+      <h3>Navigation</h3>
+      <p><a href="index.html">Accueil</a></p>
+      <p><a href="services.html">Services</a></p>
+      <p><a href="apropos.html">À propos</a></p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<div class="lang-widget-fixed">
+  <button type="button" class="lang-widget-btn" id="langToggleBtn" aria-label="Choisir la langue">🌐</button>
+  <ul class="lang-menu" id="langMenu">
+    <li><button type="button" onclick="changeLanguage('fr')">🇫🇷 Français</button></li>
+    <li><button type="button" onclick="changeLanguage('en')">🇬🇧 English</button></li>
+    <li><button type="button" onclick="changeLanguage('mg')">🇲🇬 Malagasy</button></li>
+    <li><button type="button" onclick="changeLanguage('de')">🇩🇪 Deutsch</button></li>
+    <li><button type="button" onclick="changeLanguage('it')">🇮🇹 Italiano</button></li>
+    <li><button type="button" onclick="changeLanguage('es')">🇪🇸 Español</button></li>
+  </ul>
+</div>
+
+<a href="devis.html" class="devis-widget">📝 Demander un devis</a>
+
+<details class="pay-widget">
+  <summary class="pay-widget-btn">💳 Réserver un service</summary>
+  <div class="pay-menu">
+    <a href="LIEN-STRIPE-AIDE-PERSONNE" target="_blank" rel="noopener">Aide à la personne — 20€/h</a>
+    <a href="LIEN-STRIPE-AIDE-ADMIN" target="_blank" rel="noopener">Aide administrative — 25€/h</a>
+  </div>
+</details>
+
+<!-- Bandeau cookies -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Gestion des cookies">
+  <div class="cookie-content">
+    <p>
+      Ce site utilise des cookies pour améliorer votre expérience et comprendre son utilisation.
+      En poursuivant votre navigation, vous acceptez leur utilisation.
+      <a href="cookies.html" target="_blank">En savoir plus sur notre politique de cookies.</a>
+    </p>
+    <div class="cookie-buttons">
+      <button type="button" id="cookie-accept" class="btn btn-primary">J'accepte</button>
+      <button type="button" id="cookie-refuse" class="btn btn-secondary">Je refuse</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<div id="google_translate_element" style="display:none;"></div>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

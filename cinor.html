@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINOR, le Nord de La Réunion — Agence Mitantsoa</title>
+  <meta name="description" content="Saint-Denis, Sainte-Marie et Sainte-Suzanne : le territoire de la CINOR, ses sites à visiter, ses hébergements, ses transports et nos conseils pour préparer votre séjour dans le Nord de La Réunion.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body class="province-reunion-cinor">
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu">
+        <span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Ouverture : texte à gauche, collage de formes à droite ===== -->
+    <section class="agg-hero">
+      <div class="container agg-hero-grid">
+
+        <div class="agg-hero-text">
+          <p class="agg-back"><a href="reunion.html">Retour à La Réunion</a></p>
+          <h1>CINOR, le Nord de La Réunion</h1>
+          <p class="agg-hero-lede">
+            La Communauté Intercommunale du Nord de La Réunion rassemble trois communes : Saint-Denis, la préfecture, Sainte-Marie, où atterrissent la plupart des vols, et Sainte-Suzanne, tournée vers les cascades et les champs de canne.
+          </p>
+
+          <ul class="agg-facts">
+            <li><strong>3</strong> communes</li>
+            <li><strong>288 km²</strong> de territoire</li>
+            <li><strong>207 000</strong> habitants environ</li>
+          </ul>
+        </div>
+
+        <div class="agg-hero-collage" aria-hidden="false">
+          <figure class="collage-piece collage-arch">
+            <img src="https://villagesetvillessages.fr/wp-content/uploads/2023/01/Logo-ville-de-Saint-Denis_-002.jpg" alt="Le Barachois à Saint-Denis" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-leaf">
+            <img src="https://www.zinfos974.com/wp-content/uploads/2023/06/73208868-50941979.jpg" alt="Le Jardin de l'État à Saint-Denis" loading="eager">
+          </figure>
+          <figure class="collage-piece collage-blob">
+            <img src="https://ville-saintesuzanne.re/wp-content/uploads/2022/01/Communique-400x250.png" alt="Cascade près de Sainte-Suzanne" loading="eager">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Navigation par commune + carte ===== -->
+    <section class="agg-section">
+      <div class="container agg-orient">
+
+        <div class="agg-orient-text">
+          <h2>Trois communes, trois façons de voyager</h2>
+          <p>
+            Saint-Denis se visite à pied, Sainte-Marie sert de porte d'entrée, Sainte-Suzanne se découvre en voiture, en suivant les ravines. Choisissez par où commencer.
+          </p>
+          <div class="agg-jump">
+            <a href="#saint-denis" class="agg-jump-link">Saint-Denis</a>
+            <a href="#sainte-marie" class="agg-jump-link">Sainte-Marie</a>
+            <a href="#sainte-suzanne" class="agg-jump-link">Sainte-Suzanne</a>
+          </div>
+        </div>
+
+        <figure class="agg-map" id="cinorMap">
+          <div class="map-frame">
+            <iframe src="carte_cinor.html" title="Carte interactive de la CINOR" loading="lazy"></iframe>
+
+            <svg class="map-compass" viewBox="0 0 44 56" role="img" aria-label="Le nord est en haut de la carte">
+              <text x="22" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">N</text>
+              <polygon points="22,14 29,30 22,27 15,30" fill="#B9781E"/>
+              <polygon points="22,42 15,26 22,29 29,26" fill="#24463B"/>
+              <text x="22" y="54" text-anchor="middle" font-size="11" font-weight="700" fill="#152E26">S</text>
+            </svg>
+          </div>
+
+          <div class="map-tools" role="group" aria-label="Commandes de la carte">
+            <button type="button" data-map="in" data-nav aria-label="Zoom avant">+</button>
+            <button type="button" data-map="out" data-nav aria-label="Zoom arrière">−</button>
+            <button type="button" data-map="left" data-nav aria-label="Déplacer vers la gauche">←</button>
+            <button type="button" data-map="right" data-nav aria-label="Déplacer vers la droite">→</button>
+            <button type="button" data-map="fullscreen" class="map-tool-wide">Plein écran</button>
+            <a class="map-tool-wide" href="https://www.google.com/maps/search/?api=1&query=Communaut%C3%A9+Intercommunale+du+Nord+de+La+R%C3%A9union" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Saint-Denis ===== -->
+    <section class="agg-chapter" id="saint-denis">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-arch">
+          <img src="https://api.cloudly.space/resize/crop/1024/512/60/aHR0cHM6Ly9yZXVuaW9uLm1lZGlhLnRvdXJpbnNvZnQuZXUvdXBsb2FkL3RodW1iLTEzNi1saWV1LXJlbWFycXVhYmxlLWxhcmdlLmpwZWc=/image.jpg" alt="Barachois" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Saint-Denis, la ville qui se parcourt à pied</h2>
+          <p>
+            Préfecture de l'île, Saint-Denis est la seule vraie ville du Nord. Le centre est assez compact pour se faire en une journée : promenade du Barachois face à l'océan, cases créoles de la rue de Paris, cathédrale, puis un détour par le Jardin de l'État.
+          </p>
+          <ul class="agg-list">
+            <li>Le Barachois et sa promenade en bord de mer</li>
+            <li>Le Jardin de l'État, jardin botanique en plein centre</li>
+            <li>Le musée Léon Dierx pour les beaux-arts</li>
+            <li>La rue de Paris et ses cases créoles</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Sainte-Marie (décalé, fond teinté) ===== -->
+    <section class="agg-chapter agg-chapter-tint" id="sainte-marie">
+      <div class="container agg-chapter-grid agg-chapter-reverse">
+        <figure class="agg-chapter-photo shape-leaf">
+          <img src="https://guide-reunion.fr/fileadmin/gr/transport/aeroport-reunion.jpg" alt="Aéroport Roland Garros" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Sainte-Marie, la porte d'entrée de l'île</h2>
+          <p>
+            L'aéroport Roland-Garros se trouve sur cette commune : c'est probablement la première que vous verrez. Le littoral du Nord est fait de roches et de galets, sans lagon. Pour la baignade, on va plutôt vers l'Ouest ; ici, on vient pour la proximité de Saint-Denis et pour la facilité d'accès.
+          </p>
+          <ul class="agg-list">
+            <li>Aéroport Roland-Garros, à quelques minutes du centre de Saint-Denis</li>
+            <li>Littoral aménagé pour la promenade</li>
+            <li>Hébergements pratiques pour une arrivée ou un départ tôt</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chapitre : Sainte-Suzanne ===== -->
+    <section class="agg-chapter" id="sainte-suzanne">
+      <div class="container agg-chapter-grid">
+        <figure class="agg-chapter-photo shape-blob">
+          <img src="https://media.oovatu.com/43-540/la-cote-nord-de-saint-denis-a-sainte-suzanne_135909.jpg" alt="Phare de Sainte-Suzanne" loading="lazy">
+        </figure>
+        <div class="agg-chapter-body">
+          <h2>Sainte-Suzanne, les ravines et la canne à sucre</h2>
+          <p>
+            Plus rurale, la commune s'étend des champs de canne du littoral vers les hauteurs. C'est le côté du Nord où l'on vient chercher les cascades et les sentiers, avec en général plus de pluie que sur la côte ouest.
+          </p>
+          <ul class="agg-list">
+            <li>La cascade Niagara, à rejoindre en voiture puis à pied</li>
+            <li>Des paysages de ravines et de plantations</li>
+            <li>Un rythme plus calme que Saint-Denis</li>
+          </ul>
+          <p class="agg-note">Avant de partir en cascade, vérifiez la météo et l'accès du site : après de fortes pluies, certains sentiers sont fermés.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Rubriques (tuiles à coin coupé, légèrement décalées) ===== -->
+    <section class="agg-section agg-tiles-section">
+      <div class="container">
+        <h2>Préparer votre séjour dans le Nord</h2>
+        <div class="agg-tiles">
+          <a href="cinor-hotels-restaurants.html" class="agg-tile agg-tile-1">
+            <h3>Hôtels et restaurants</h3>
+            <p>Où dormir et où manger, de Saint-Denis à Sainte-Suzanne.</p>
+          </a>
+          <a href="cinor-sites.html" class="agg-tile agg-tile-2">
+            <h3>Sites touristiques</h3>
+            <p>Musées, jardins, cascades : ce qui vaut le déplacement.</p>
+          </a>
+          <a href="cinor-transports.html" class="agg-tile agg-tile-3">
+            <h3>Transports</h3>
+            <p>Arriver, se déplacer, louer une voiture ou prendre le bus.</p>
+          </a>
+          <a href="cinor-autres.html" class="agg-tile agg-tile-4">
+            <h3>Infos pratiques</h3>
+            <p>Traditions, fêtes locales, usages à connaître avant de partir.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Mosaïque : 8 images, découpes variées ===== -->
+    <section class="agg-section">
+      <div class="container">
+        <h2>Le Nord en images</h2>
+        <div class="agg-mosaic">
+          <figure class="mosaic-item mosaic-a shape-arch">
+            <img src="https://974.agendaculturel.fr/media/ecKokPUZdmDjOE2ov69VJw/storage/2026/6a8753907d600.webp/f=auto" alt="Préfecture de Saint-Denis" loading="lazy">
+            <figcaption>Préfecture de Saint-Denis</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-b shape-slant">
+            <img src="https://visit.today/images/elements/upload/full/Marche-du-Chaudronde-Saint-Denis-1.jpg" alt="Marché de Saint-Denis" loading="lazy">
+            <figcaption>Marché du Chaudron</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-c shape-leaf">
+            <img src="https://www.vtt.mg/wp-content/uploads/2018/09/sentier-littoral-nord_01.jpg" alt="Littoral de Sainte-Marie" loading="lazy">
+            <figcaption>Littoral de Sainte-Marie - plage à galets</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-d shape-blob">
+            <img src="https://images.mnstatic.com/da/5e/da5efe79230d17e8ce142b6fa004f522.jpg?quality=75&format=png&fit=crop&width=980&height=880&aspect_ratio=980%3A880" alt="Ravine de Sainte-Suzanne" loading="lazy">
+            <figcaption>Ravine creuse de Sainte-Suzanne</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-e shape-slant">
+            <img src="https://woody.cloudly.space/app/uploads/crt-reunion/2020/04/thumbs/religion_catholique01_cathedrale_-_credit_irt_-_emmanuel_virin-360x360.jpg" alt="Cathédrale de Saint-Denis" loading="lazy">
+            <figcaption>Cathédrale de Saint-Denis</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-f shape-arch">
+            <img src="https://www.lebeaupays.com/Assets/img-files/pages/sainte-marie/Loisirs_Ste-Marie-velo.jpg" alt="Front de mer de Sainte-Marie" loading="lazy">
+            <figcaption>Front de mer de Sainte-Marie</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-g shape-blob">
+            <img src="https://www.poma.net/wp-content/uploads/2020/08/15766_GD10_FRANCE_LA-REUNION_ST-DENIS_2021_007-1400x787.jpg" alt="Papang - téléphérique" loading="lazy">
+            <figcaption>Papang - téléphérique</figcaption>
+          </figure>
+          <figure class="mosaic-item mosaic-h shape-leaf">
+            <img src="https://randopitons.re/img/rando/1042/carte_relief.jpg" alt="Route de la montagne - Sentier en pavier et rampes (rouge)" loading="lazy">
+            <figcaption>Route de la montagne - Sentier en pavier et rampes (rouge)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Appel à l'action ===== -->
+    <section class="agg-cta">
+      <div class="container agg-cta-inner">
+        <div>
+          <h2>Un séjour dans le Nord à organiser ?</h2>
+          <p>
+            Dites-nous quand vous partez, avec qui, et ce que vous aimez : nous vous proposons un itinéraire réaliste, avec des adresses que nous avons vérifiées.
+          </p>
+        </div>
+        <div class="agg-cta-actions">
+          <a href="devis.html" class="btn btn-primary">Demander un conseil voyage</a>
+          <a href="reunion.html" class="btn agg-btn-light">Voir les autres intercommunalités</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>Accompagnement médico-social, administratif et conseil voyage.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <p><a href="index.html">Accueil</a></p>
+        <p><a href="madagascar.html">Madagascar</a></p>
+        <p><a href="reunion.html">La Réunion</a></p>
+        <p><a href="contact.html">Contact</a></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
