@@ -158,14 +158,6 @@ onAuthStateChanged(auth, (user) => {
   } else {
     console.log("Utilisateur non connecté.");
   }
-
-  if (!user) {
-    if (!deconnexionEnCours) {
-      window.location.replace("connexion.html");
-    }
-  
-    return;
-  }
 });
 
 loginForm.addEventListener("submit", async (event) => {
