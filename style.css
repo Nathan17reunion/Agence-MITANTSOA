@@ -6373,3 +6373,32 @@ body { top: 0px !important; }
   padding: 0 20px;
   color: #923b32;
 }
+
+/* barre d'entête de mon-espace */
+.espace-header {
+  background: #243746;
+  padding: 14px 0;
+}
+
+.header-contenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .header-contenu {
+    flex-wrap: wrap;
+  }
+
+  .main-nav {
+    order: 3;
+    width: 100%;
+  }
+
+  .main-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
