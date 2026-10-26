@@ -40,6 +40,66 @@ function showMessage(text, type = "error") {
   loginMessage.className = `login-message ${type}`;
 }
 
+const boutonReinitialisation =
+  document.getElementById("mot-de-passe-oublie");
+
+const messageReinitialisation =
+  document.getElementById("message-reinitialisation");
+
+const champEmail = document.getElementById("email");
+
+if (
+  boutonReinitialisation &&
+  messageReinitialisation &&
+  champEmail
+) {
+  boutonReinitialisation.addEventListener("click", async () => {
+    const email = champEmail.value.trim();
+
+    if (!email || !champEmail.checkValidity()) {
+      messageReinitialisation.textContent =
+        "Saisissez une adresse e-mail valide dans le champ ci-dessus.";
+
+      champEmail.focus();
+      champEmail.reportValidity();
+      return;
+    }
+
+    boutonReinitialisation.disabled = true;
+    messageReinitialisation.textContent = "Traitement en cours…";
+
+    const messageNeutre =
+      "Si un compte correspond à cette adresse, vous recevrez un e-mail " +
+      "pour réinitialiser votre mot de passe. " +
+      "Pensez à vérifier vos courriers indésirables.";
+
+    try {
+      auth.languageCode = "fr";
+
+      await sendPasswordResetEmail(auth, email);
+
+      messageReinitialisation.textContent = messageNeutre;
+
+    } catch (erreur) {
+      if (erreur.code === "auth/user-not-found") {
+        messageReinitialisation.textContent = messageNeutre;
+
+      } else if (erreur.code === "auth/too-many-requests") {
+        messageReinitialisation.textContent =
+          "Trop de tentatives. Veuillez patienter avant de réessayer.";
+
+      } else {
+        messageReinitialisation.textContent =
+          "Impossible de traiter la demande pour le moment. " +
+          "Veuillez réessayer plus tard.";
+      }
+
+    } finally {
+      boutonReinitialisation.disabled = false;
+    }
+  });
+}
+
 function getFriendlyError(errorCode) {
   const messages = {
     "auth/invalid-email": "L’adresse e-mail saisie n’est pas valide.",
