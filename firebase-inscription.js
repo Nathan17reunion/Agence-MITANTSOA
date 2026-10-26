@@ -63,7 +63,7 @@ function showMessage(text, type = "error") {
 function getFriendlyError(errorCode) {
   const messages = {
     "auth/email-already-in-use":
-      "Cette adresse e-mail est déjà associée à un compte.",
+      "Cette adresse e-mail est déjà associée à un compte. Connectez-vous ou utilisez « Mot de passe oublié ?",
     "auth/invalid-email":
       "L’adresse e-mail saisie n’est pas valide.",
     "auth/weak-password":
