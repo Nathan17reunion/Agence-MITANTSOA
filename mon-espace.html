@@ -201,18 +201,39 @@
 </div>
 
 <script type="module">
-  import { getAuth, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-  const auth = getAuth();
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
+    authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
+    projectId: "connexion-mitantsoa-angence",
+    storageBucket: "connexion-mitantsoa-angence.firebasestorage.app",
+    messagingSenderId: "857962704410",
+    appId: "1:857962704410:web:984c9936b3f22742fc6ba3",
+    measurementId: "G-G6L1RCZPRG"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  let deconnexionEnCours = false;
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      window.location.href = "connexion.html";
+      if (!deconnexionEnCours) {
+        window.location.replace("connexion.html");
+      }
+
       return;
     }
 
-    // Affiche le nom ou l'email du client
     const nomClient = user.displayName || user.email;
     document.getElementById("nom-client").textContent = nomClient;
 
@@ -230,22 +251,60 @@
       );
 
       if (!reponse.ok) {
-        window.location.href = "connexion.html";
+        if (!deconnexionEnCours) {
+          window.location.replace("connexion.html");
+        }
+
         return;
       }
 
       const donnees = await reponse.json();
       console.log(donnees);
 
-      // Exemple : si ton serveur renvoie { nom: "Jean" }
       if (donnees.nom) {
-         document.getElementById("nom-client").textContent = donnees.nom;
+        document.getElementById("nom-client").textContent = donnees.nom;
       }
 
     } catch (erreur) {
       console.error("Erreur lors du chargement de l’espace client :", erreur);
     }
   });
+
+  const boutonDeconnexion =
+    document.getElementById("bouton-deconnexion");
+
+  const messageDeconnexion =
+    document.getElementById("message-deconnexion");
+
+  if (boutonDeconnexion) {
+    boutonDeconnexion.addEventListener("click", async () => {
+      deconnexionEnCours = true;
+
+      boutonDeconnexion.disabled = true;
+      boutonDeconnexion.textContent = "Déconnexion…";
+
+      if (messageDeconnexion) {
+        messageDeconnexion.textContent = "";
+      }
+
+      try {
+        await signOut(auth);
+        window.location.replace("index.html");
+
+      } catch (erreur) {
+        console.error("Erreur de déconnexion :", erreur);
+
+        deconnexionEnCours = false;
+        boutonDeconnexion.disabled = false;
+        boutonDeconnexion.textContent = "Se déconnecter";
+
+        if (messageDeconnexion) {
+          messageDeconnexion.textContent =
+            "La déconnexion a échoué. Veuillez réessayer.";
+        }
+      }
+    });
+  }
 </script>
 <div id="google_translate_element" style="display:none;"></div>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
