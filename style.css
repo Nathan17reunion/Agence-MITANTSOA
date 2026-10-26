@@ -1874,6 +1874,11 @@ body { top: 0px !important; }
   min-width: 160px;
   box-shadow: 0 8px 20px rgba(21, 46, 38, 0.15);
 }
+
+.lang-menu.ouvert {
+  display: block;
+}
+
 .lang-menu.is-open { display: block; }
 .lang-menu button {
   width: 100%;
