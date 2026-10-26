@@ -8,6 +8,32 @@ import {
 } from
   "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// "auth" doit déjà correspondre à ton application Firebase initialisée.
+// "email" et "motDePasse" viennent de ton formulaire.
+
+async function inscrireClient(email, motDePasse) {
+  const resultat = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    motDePasse
+  );
+
+  auth.languageCode = "fr";
+
+  await sendEmailVerification(resultat.user, {
+    url: "https://mitantsoaagency.onrender.com/completer-profil.html",
+    handleCodeInApp: false
+  });
+
+  // Ne pas rediriger immédiatement vers mon-espace.html.
+  window.location.replace("verification-email.html");
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
   authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
@@ -47,6 +73,12 @@ function getFriendlyError(errorCode) {
     "auth/too-many-requests":
       "Trop de tentatives. Veuillez patienter avant de réessayer."
   };
+
+  if (erreur.code === "auth/email-already-in-use") {
+    message.textContent =
+      "Impossible de créer ce compte. Si vous êtes déjà inscrit, " +
+      "connectez-vous ou utilisez « Mot de passe oublié ? ».";
+  }
 
   return messages[errorCode] ||
     "Le compte n’a pas pu être créé. Veuillez réessayer.";
@@ -96,3 +128,21 @@ form.addEventListener("submit", async (event) => {
     showMessage(getFriendlyError(error.code));
   }
 });
+
+// Ajouter sendEmailVerification aux imports Firebase Auth existants.
+
+// Après createUserWithEmailAndPassword(...) :
+auth.languageCode = "fr";
+
+try {
+  await sendEmailVerification(auth.currentUser, {
+    url: new URL("completer-profil.html", window.location.href).href,
+    handleCodeInApp: false
+  });
+} catch (erreur) {
+  // Le compte existe déjà, même si l'envoi a échoué.
+  // La page suivante permettra de demander un nouvel envoi.
+  console.error("Échec de l’envoi de vérification :", erreur.code);
+}
+
+window.location.replace("verification-email.html");
