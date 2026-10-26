@@ -6314,3 +6314,57 @@ body { top: 0px !important; }
   line-height: 1.5;
   color: #243746;
 }
+
+/* bouton déconnexion */
+.barre-espace {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.lien-accueil {
+  color: #243746;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bouton-deconnexion {
+  padding: 11px 20px;
+  border: 1px solid #243746;
+  border-radius: 8px;
+  background: #fff;
+  color: #243746;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.bouton-deconnexion:hover {
+  background: #243746;
+  color: #fff;
+}
+
+.bouton-deconnexion:focus-visible {
+  outline: 3px solid #b9781e;
+  outline-offset: 4px;
+}
+
+.bouton-deconnexion:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.message-deconnexion {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+  color: #923b32;
+}
