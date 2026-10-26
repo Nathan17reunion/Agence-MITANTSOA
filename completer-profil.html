@@ -2,8 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Validation du compte — Agence Mitantsoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compléter mon profil — Agence Mitantsoa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png?v=2">
 
   <style>
     * { box-sizing: border-box; }
@@ -11,101 +13,197 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f7f5ef;
+      background: #f6f4ee;
       color: #243746;
       font-family: Arial, sans-serif;
       line-height: 1.6;
     }
 
     header {
-      padding: 22px;
       background: #243746;
-      text-align: center;
+      padding: 18px 24px;
     }
 
-    header a {
+    .logo {
       color: #fff;
+      font-weight: 700;
       text-decoration: none;
-      font-size: 1.2rem;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 1.15rem;
     }
+
+    .logo span { color: #e7c393; }
 
     main {
-      width: min(100% - 32px, 580px);
-      margin: 60px auto;
-      padding: 36px;
+      width: min(100% - 32px, 760px);
+      margin: 48px auto 72px;
       background: #fff;
-      border: 1px solid #e6e0d5;
-      border-top: 4px solid #b9781e;
-      border-radius: 16px;
-      box-shadow: 0 16px 40px #2437460d;
+      border: 1px solid #e4dccb;
+      border-top: 5px solid #b9781e;
+      border-radius: 18px;
+      padding: 36px;
+      box-shadow: 0 18px 45px rgba(36, 55, 70, .08);
     }
 
-    .etape {
+    .sur-titre {
       color: #986016;
-      font-size: .8rem;
+      font-size: .78rem;
       text-transform: uppercase;
       letter-spacing: 2px;
+      margin: 0 0 10px;
     }
 
-    h1 {
-      font-size: clamp(1.6rem, 5vw, 2rem);
-      line-height: 1.25;
+    h1 { margin: 0 0 12px; }
+
+    .champ { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid #d9d0bf;
+      border-radius: 10px;
+      font: inherit;
+      background: #fff;
+    }
+
+    input:disabled {
+      background: #f2efe8;
+      color: #5d6870;
+    }
+
+    .double {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
     button {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 14px 18px;
-      border: 0;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       background: #243746;
       color: #fff;
       font: inherit;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    button:disabled { opacity: .55; }
-
-    a { color: #805113; }
-
-    :focus-visible {
-      outline: 3px solid #b9781e;
-      outline-offset: 4px;
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #65717a;
-      font-size: .85rem;
+    .message {
+      min-height: 26px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .succes { color: #256b45; }
+    .erreur { color: #923b32; }
+
+    @media (max-width: 620px) {
+      .double { grid-template-columns: 1fr; }
+      main { padding: 26px 18px; }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="index.html">AGENCE MITANTSOA</a>
+    <a class="logo" href="mon-espace.html">
+      Agence <span>Mitantsoa</span>
+    </a>
   </header>
 
   <main>
-    <p class="etape">Création de compte · Confirmation</p>
+    <p class="sur-titre">Création du profil</p>
+    <h1>Complétez vos informations</h1>
 
-    <h1 id="titre">Vérification de votre compte</h1>
-
-    <p id="message" role="status" aria-live="polite">
-      Veuillez patienter…
+    <p>
+      Ces informations permettent à l’Agence Mitantsoa de personnaliser
+      son accompagnement et de vous contacter si nécessaire.
     </p>
 
-    <button id="connexion" type="button">
-      Retour à la connexion
-    </button>
+    <form id="formulaire-profil" novalidate>
+      <div class="double">
+        <div class="champ">
+          <label for="prenom">Prénom *</label>
+          <input type="text" id="prenom" required autocomplete="given-name">
+        </div>
 
-    <p><a href="index.html">Retour à l’accueil</a></p>
+        <div class="champ">
+          <label for="nom">Nom *</label>
+          <input type="text" id="nom" required autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" disabled>
+      </div>
+
+      <div class="double">
+        <div class="champ">
+          <label for="date-naissance">Date de naissance *</label>
+          <input type="date" id="date-naissance" required>
+        </div>
+
+        <div class="champ">
+          <label for="sexe">Sexe</label>
+          <select id="sexe">
+            <option value="">Non précisé</option>
+            <option value="feminin">Féminin</option>
+            <option value="masculin">Masculin</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" autocomplete="tel"
+               placeholder="Ex. : +33 6 12 34 56 78">
+      </div>
+
+      <div class="champ">
+        <label for="adresse">Adresse</label>
+        <input type="text" id="adresse" autocomplete="street-address"
+               placeholder="Numéro, rue, complément">
+      </div>
+
+      <div class="double">
+        <div class="champ">
+          <label for="ville">Ville</label>
+          <input type="text" id="ville" autocomplete="address-level2">
+        </div>
+
+        <div class="champ">
+          <label for="code-postal">Code postal</label>
+          <input type="text" id="code-postal" autocomplete="postal-code">
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="pays">Pays</label>
+        <input type="text" id="pays" autocomplete="country-name" value="France">
+      </div>
+
+      <button type="submit" id="bouton-enregistrer">
+        Enregistrer mon profil
+      </button>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </form>
   </main>
-
-  <footer>Agence Mitantsoa — Création de votre compte</footer>
 
   <script type="module">
     import { initializeApp }
@@ -113,65 +211,139 @@
 
     import {
       getAuth,
-      onAuthStateChanged,
-      reload,
-      signOut
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const app = initializeApp({
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
       apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
       authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
-      projectId: "connexion-mitantsoa-angence"
-    });
+      projectId: "connexion-mitantsoa-angence",
+      storageBucket: "connexion-mitantsoa-angence.firebasestorage.app",
+      messagingSenderId: "857962704410",
+      appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
+    };
 
+    const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    const titre = document.getElementById("titre");
+    const formulaire = document.getElementById("formulaire-profil");
     const message = document.getElementById("message");
-    const bouton = document.getElementById("connexion");
+    const bouton = document.getElementById("bouton-enregistrer");
+
+    let utilisateurConnecte = null;
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        titre.textContent = "Connectez-vous pour poursuivre";
+        window.location.replace("connexion.html");
+        return;
+      }
 
-        message.textContent =
-          "Si vous avez confirmé votre adresse depuis l’e-mail Firebase, " +
-          "vous pouvez maintenant revenir à la page de connexion.";
+      utilisateurConnecte = user;
+      document.getElementById("email").value = user.email;
+
+      if (!user.emailVerified) {
+        window.location.replace("verification-email.html");
         return;
       }
 
       try {
-        await reload(user);
+        const reference = doc(db, "users", user.uid);
+        const documentProfil = await getDoc(reference);
 
-        if (!user.emailVerified) {
-          window.location.replace("verification-email.html");
-          return;
+        if (documentProfil.exists()) {
+          const donnees = documentProfil.data();
+
+          document.getElementById("prenom").value = donnees.prenom || "";
+          document.getElementById("nom").value = donnees.nom || "";
+          document.getElementById("date-naissance").value = donnees.dateNaissance || "";
+          document.getElementById("sexe").value = donnees.sexe || "";
+          document.getElementById("telephone").value = donnees.telephone || "";
+          document.getElementById("adresse").value = donnees.adresse || "";
+          document.getElementById("ville").value = donnees.ville || "";
+          document.getElementById("code-postal").value = donnees.codePostal || "";
+          document.getElementById("pays").value = donnees.pays || "France";
+
+          message.className = "message succes";
+          message.textContent =
+            "Votre profil existe déjà. Vous pouvez le mettre à jour.";
         }
 
-        titre.textContent = "Votre adresse e-mail est confirmée";
-
+      } catch (erreur) {
+        console.error(erreur);
+        message.className = "message erreur";
         message.textContent =
-          "Votre compte Agence Mitantsoa a bien été créé et votre adresse " +
-          "a été vérifiée. Vous pouvez maintenant revenir à la connexion.";
-
-      } catch {
-        titre.textContent = "Vérification temporairement indisponible";
-
-        message.textContent =
-          "Nous ne pouvons pas confirmer l’état de votre compte pour le moment. " +
-          "Veuillez réessayer ou revenir à la connexion.";
+          "Impossible de charger votre profil pour le moment.";
       }
     });
 
-    bouton.addEventListener("click", async () => {
+    formulaire.addEventListener("submit", async (evenement) => {
+      evenement.preventDefault();
+
+      if (!utilisateurConnecte) {
+        window.location.replace("connexion.html");
+        return;
+      }
+
+      const prenom = document.getElementById("prenom").value.trim();
+      const nom = document.getElementById("nom").value.trim();
+      const dateNaissance = document.getElementById("date-naissance").value;
+
+      message.className = "message erreur";
+
+      if (!prenom || !nom || !dateNaissance) {
+        message.textContent =
+          "Veuillez renseigner votre prénom, votre nom et votre date de naissance.";
+        return;
+      }
+
       bouton.disabled = true;
+      message.textContent = "Enregistrement en cours…";
 
       try {
-        await signOut(auth);
-        window.location.replace("connexion.html");
-      } catch {
+        await setDoc(
+          doc(db, "users", utilisateurConnecte.uid),
+          {
+            uid: utilisateurConnecte.uid,
+            email: utilisateurConnecte.email,
+            emailVerifie: utilisateurConnecte.emailVerified,
+            prenom: prenom,
+            nom: nom,
+            dateNaissance: dateNaissance,
+            sexe: document.getElementById("sexe").value,
+            telephone: document.getElementById("telephone").value.trim(),
+            adresse: document.getElementById("adresse").value.trim(),
+            ville: document.getElementById("ville").value.trim(),
+            codePostal: document.getElementById("code-postal").value.trim(),
+            pays: document.getElementById("pays").value.trim(),
+            profilComplete: true,
+            dateCreation: serverTimestamp(),
+            dateModification: serverTimestamp()
+          },
+          { merge: true }
+        );
+
+        message.className = "message succes";
+        message.textContent = "Votre profil a bien été enregistré.";
+
+        setTimeout(() => {
+          window.location.replace("mon-espace.html");
+        }, 1500);
+
+      } catch (erreur) {
+        console.error(erreur);
+        message.className = "message erreur";
         message.textContent =
-          "La déconnexion a échoué. Veuillez réessayer.";
+          "L’enregistrement a échoué. Vérifiez votre connexion ou réessayez.";
+      } finally {
         bouton.disabled = false;
       }
     });
