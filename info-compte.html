@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes informations — Agence Mitantsoa</title>
+  <meta name="description" content="Consultez et gérez les informations de votre compte Agence Mitantsoa.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png?v=2">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #f6f4ee;
+      color: #243746;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Fond décoratif moderne */
+    .fond-decoratif {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(183, 120, 30, .16), transparent 34%),
+        radial-gradient(circle at 88% 12%, rgba(36, 55, 70, .16), transparent 38%),
+        radial-gradient(circle at 72% 88%, rgba(231, 195, 147, .22), transparent 42%),
+        linear-gradient(160deg, #f8f6f0 0%, #f1ece1 100%);
+    }
+
+    .fond-decoratif::before,
+    .fond-decoratif::after {
+      content: "";
+      position: absolute;
+      filter: blur(70px);
+      opacity: .45;
+    }
+
+    .fond-decoratif::before {
+      width: 46vw;
+      height: 46vw;
+      left: -14vw;
+      top: -12vw;
+      background: conic-gradient(from 120deg, #b9781e, #e7c393, #243746, #b9781e);
+      border-radius: 42% 58% 61% 39% / 45% 41% 59% 55%;
+    }
+
+    .fond-decoratif::after {
+      width: 38vw;
+      height: 38vw;
+      right: -12vw;
+      bottom: -14vw;
+      background: conic-gradient(from 300deg, #243746, #e7c393, #b9781e, #243746);
+      border-radius: 61% 39% 44% 56% / 52% 63% 37% 48%;
+    }
+
+    /* En-tête */
+    .site-header {
+      background: #243746;
+      padding: 16px 0;
+    }
+
+    .header-contenu {
+      width: min(100% - 48px, 1400px);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo span { color: #e7c393; }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .main-nav a {
+      display: block;
+      padding: 9px 14px;
+      border-radius: 8px;
+      color: #e8eef2;
+      text-decoration: none;
+      font-size: .95rem;
+      white-space: nowrap;
+    }
+
+    .main-nav a:hover,
+    .main-nav a[aria-current="page"] {
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+    }
+
+    .main-nav a[aria-current="page"] {
+      background: #e7c393;
+      color: #243746;
+      font-weight: 700;
+    }
+
+    .bouton-deconnexion {
+      padding: 10px 18px;
+      border: 1px solid #e7c393;
+      border-radius: 8px;
+      background: transparent;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .bouton-deconnexion:hover {
+      background: #e7c393;
+      color: #243746;
+    }
+
+    /* Contenu pleine largeur */
+    .contenu-compte {
+      width: 100%;
+      flex: 1;
+      padding: 48px 48px 72px;
+    }
+
+    .bloc-titre {
+      width: min(100%, 1400px);
+      margin: 0 auto 34px;
+    }
+
+    .sur-titre {
+      color: #986016;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+    }
+
+    .bloc-titre p {
+      max-width: 760px;
+      margin: 0;
+      color: #5d6870;
+    }
+
+    .grille-compte {
+      width: min(100%, 1400px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.35fr .85fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .carte {
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid #e4dccb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(36, 55, 70, .08);
+      backdrop-filter: blur(8px);
+    }
+
+    .carte h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+    }
+
+    .carte > p {
+      margin: 0 0 22px;
+      color: #65717a;
+      font-size: .95rem;
+    }
+
+    .champ {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #3c4a55;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid #d9d0bf;
+      border-radius: 10px;
+      background: #fff;
+      font: inherit;
+      color: #243746;
+    }
+
+    input:disabled {
+      background: #f2efe8;
+      color: #5d6870;
+      cursor: not-allowed;
+    }
+
+    input:focus {
+      outline: 3px solid rgba(183, 120, 30, .25);
+      border-color: #b9781e;
+    }
+
+    .double {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .bouton-modifier {
+      margin-top: 6px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #243746;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .bouton-modifier:hover { background: #31485a; }
+
+    .bouton-modifier:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .bouton-secondaire {
+      margin-top: 12px;
+      padding: 11px 18px;
+      border: 1px solid #b9781e;
+      border-radius: 10px;
+      background: transparent;
+      color: #805113;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .bouton-secondaire:hover {
+      background: #b9781e;
+      color: #fff;
+    }
+
+    .zone-message {
+      min-height: 24px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .message-succes { color: #256b45; }
+    .message-erreur { color: #923b32; }
+
+    .carte-securite {
+      border-top: 5px solid #b9781e;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      background: #f7f3e9;
+      border-left: 4px solid #b9781e;
+      border-radius: 8px;
+      font-size: .92rem;
+      color: #5d5342;
+    }
+
+    /* Pied de page */
+    .site-footer {
+      background: #243746;
+      color: #d9e2e8;
+      padding: 44px 48px 24px;
+    }
+
+    .footer-grille {
+      width: min(100%, 1400px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 34px;
+    }
+
+    .site-footer h3 {
+      margin: 0 0 12px;
+      color: #fff;
+    }
+
+    .site-footer p,
+    .site-footer a {
+      color: #c7d2da;
+      text-decoration: none;
+    }
+
+    .site-footer a:hover { color: #e7c393; }
+
+    .footer-bas {
+      width: min(100%, 1400px);
+      margin: 34px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, .15);
+      font-size: .88rem;
+    }
+
+    @media (max-width: 1050px) {
+      .grille-compte { grid-template-columns: 1fr; }
+      .contenu-compte { padding: 34px 24px 56px; }
+      .footer-grille { grid-template-columns: 1fr; }
+      .header-contenu { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 620px) {
+      .double { grid-template-columns: 1fr; }
+      .contenu-compte { padding: 28px 16px 48px; }
+      .site-footer { padding: 34px 16px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="fond-decoratif" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="header-contenu">
+      <a href="mon-espace.html" class="logo">
+        <img src="logo-mitantsoa.png" alt="Logo Agence Mitantsoa" class="logo-icon">
+        Agence <span>Mitantsoa</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Navigation de l’espace client">
+        <ul>
+          <li><a href="mon-espace.html">Accueil</a></li>
+          <li><a href="mes-documents.html">Mes documents</a></li>
+          <li><a href="messagerie.html">Messagerie</a></li>
+          <li><a href="info-compte.html" aria-current="page">Mon compte</a></li>
+          <li><a href="aide.html">Aide</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" id="bouton-deconnexion" class="bouton-deconnexion">
+        Se déconnecter
+      </button>
+    </div>
+  </header>
+
+  <main class="contenu-compte">
+    <div class="bloc-titre">
+      <p class="sur-titre">Espace client</p>
+      <h1>Mes informations</h1>
+      <p>
+        Consultez vos informations personnelles, mettez à jour vos coordonnées
+        et gérez la sécurité de votre compte.
+      </p>
+    </div>
+
+    <div class="grille-compte">
+
+      <section class="carte" aria-labelledby="titre-informations">
+        <h2 id="titre-informations">Informations personnelles</h2>
+        <p>
+          Les informations marquées comme non modifiables doivent correspondre
+          à votre identité déclarée lors de la création du compte.
+        </p>
+
+        <div class="double">
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" disabled>
+          </div>
+
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" disabled>
+          </div>
+        </div>
+
+        <div class="double">
+          <div class="champ">
+            <label for="date-naissance">Date de naissance</label>
+            <input type="date" id="date-naissance" disabled>
+          </div>
+
+          <div class="champ">
+            <label for="sexe">Sexe</label>
+            <input type="text" id="sexe" disabled>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" disabled>
+        </div>
+
+        <div class="double">
+          <div class="champ">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" placeholder="Ex. : +33 6 12 34 56 78">
+          </div>
+
+          <div class="champ">
+            <label for="ville">Ville</label>
+            <input type="text" id="ville" placeholder="Ex. : Caen">
+          </div>
+        </div>
+
+        <div class="double">
+          <div class="champ">
+            <label for="code-postal">Code postal</label>
+            <input type="text" id="code-postal" placeholder="Ex. : 14000">
+          </div>
+
+          <div class="champ">
+            <label for="pays">Pays</label>
+            <input type="text" id="pays" placeholder="Ex. : France">
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="adresse">Adresse</label>
+          <input type="text" id="adresse" placeholder="Numéro, rue, complément d’adresse">
+        </div>
+
+        <button type="button" id="bouton-enregistrer" class="bouton-modifier">
+          Enregistrer les modifications
+        </button>
+
+        <p id="message-profil" class="zone-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <aside class="carte carte-securite" aria-labelledby="titre-securite">
+        <h2 id="titre-securite">Sécurité du compte</h2>
+        <p>
+          Pour changer votre mot de passe, confirmez d’abord votre mot de passe actuel.
+        </p>
+
+        <div class="champ">
+          <label for="ancien-mot-de-passe">Mot de passe actuel</label>
+          <input type="password" id="ancien-mot-de-passe" autocomplete="current-password">
+        </div>
+
+        <div class="champ">
+          <label for="nouveau-mot-de-passe">Nouveau mot de passe</label>
+          <input type="password" id="nouveau-mot-de-passe" autocomplete="new-password"
+                 minlength="8" placeholder="Au moins 8 caractères">
+        </div>
+
+        <div class="champ">
+          <label for="confirmation-mot-de-passe">Confirmer le nouveau mot de passe</label>
+          <input type="password" id="confirmation-mot-de-passe" autocomplete="new-password"
+                 minlength="8">
+        </div>
+
+        <button type="button" id="bouton-mot-de-passe" class="bouton-modifier">
+          Modifier le mot de passe
+        </button>
+
+        <p id="message-securite" class="zone-message" role="status" aria-live="polite"></p>
+
+        <div class="notice">
+          <strong>Adresse e-mail :</strong> pour des raisons de sécurité,
+          l’adresse utilisée pour se connecter ne peut pas être modifiée
+          directement depuis cette page.
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grille">
+      <div>
+        <h3>Agence Mitantsoa</h3>
+        <p>Accompagnement médico-social, administratif, voyages et projets environnementaux.</p>
+      </div>
+
+      <div>
+        <h3>Espace client</h3>
+        <p><a href="mon-espace.html">Accueil</a></p>
+        <p><a href="mes-documents.html">Mes documents</a></p>
+        <p><a href="messagerie.html">Messagerie</a></p>
+      </div>
+
+      <div>
+        <h3>Informations</h3>
+        <p><a href="contact.html">Contact</a></p>
+        <p><a href="apropos.html">À propos</a></p>
+        <p><a href="cookies.html">Cookies</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bas">
+      <p>© 2026 Agence Mitantsoa. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+      reauthenticateWithCredential,
+      updatePassword,
+      EmailAuthProvider
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
+      authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
+      projectId: "connexion-mitantsoa-angence",
+      storageBucket: "connexion-mitantsoa-angence.firebasestorage.app",
+      messagingSenderId: "857962704410",
+      appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    let deconnexionEnCours = false;
+
+    const messageProfil = document.getElementById("message-profil");
+    const messageSecurite = document.getElementById("message-securite");
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        if (!deconnexionEnCours) {
+          window.location.replace("connexion.html");
+        }
+        return;
+      }
+
+      document.getElementById("email").value = user.email;
+
+      // À connecter plus tard à Firestore ou à ton serveur Render.
+      chargerInformationsClient(user.uid);
+    });
+
+    async function chargerInformationsClient(uid) {
+      // Pour l’instant, les champs restent vides si aucune donnée
+      // n’a encore été enregistrée lors de la création du compte.
+      console.log("Chargement des informations du client :", uid);
+    }
+
+    document.getElementById("bouton-enregistrer").addEventListener("click", () => {
+      messageProfil.className = "zone-message message-erreur";
+      messageProfil.textContent =
+        "L’enregistrement des informations nécessite encore une base de données sécurisée.";
+    });
+
+    document.getElementById("bouton-mot-de-passe").addEventListener("click", async () => {
+      const user = auth.currentUser;
+
+      const ancien = document.getElementById("ancien-mot-de-passe").value;
+      const nouveau = document.getElementById("nouveau-mot-de-passe").value;
+      const confirmation = document.getElementById("confirmation-mot-de-passe").value;
+
+      messageSecurite.className = "zone-message message-erreur";
+
+      if (!user) {
+        messageSecurite.textContent = "Vous devez être connecté.";
+        return;
+      }
+
+      if (!ancien || !nouveau || !confirmation) {
+        messageSecurite.textContent = "Veuillez remplir les trois champs.";
+        return;
+      }
+
+      if (nouveau.length < 8) {
+        messageSecurite.textContent =
+          "Le nouveau mot de passe doit contenir au moins 8 caractères.";
+        return;
+      }
+
+      if (nouveau !== confirmation) {
+        messageSecurite.textContent =
+          "Le nouveau mot de passe et sa confirmation ne correspondent pas.";
+        return;
+      }
+
+      const bouton = document.getElementById("bouton-mot-de-passe");
+      bouton.disabled = true;
+      messageSecurite.textContent = "Vérification en cours…";
+
+      try {
+        const identifiants = EmailAuthProvider.credential(user.email, ancien);
+        await reauthenticateWithCredential(user, identifiants);
+
+        await updatePassword(user, nouveau);
+
+        messageSecurite.className = "zone-message message-succes";
+        messageSecurite.textContent = "Votre mot de passe a bien été modifié.";
+
+        document.getElementById("ancien-mot-de-passe").value = "";
+        document.getElementById("nouveau-mot-de-passe").value = "";
+        document.getElementById("confirmation-mot-de-passe").value = "";
+
+      } catch (erreur) {
+        console.error(erreur);
+
+        if (erreur.code === "auth/invalid-credential" ||
+            erreur.code === "auth/wrong-password") {
+          messageSecurite.textContent = "Le mot de passe actuel est incorrect.";
+        } else if (erreur.code === "auth/weak-password") {
+          messageSecurite.textContent = "Le nouveau mot de passe est trop faible.";
+        } else {
+          messageSecurite.textContent =
+            "Impossible de modifier le mot de passe pour le moment.";
+        }
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+
+    const boutonDeconnexion = document.getElementById("bouton-deconnexion");
+
+    boutonDeconnexion.addEventListener("click", async () => {
+      deconnexionEnCours = true;
+      boutonDeconnexion.disabled = true;
+      boutonDeconnexion.textContent = "Déconnexion…";
+
+      try {
+        await signOut(auth);
+        window.location.replace("index.html");
+      } catch (erreur) {
+        console.error(erreur);
+        deconnexionEnCours = false;
+        boutonDeconnexion.disabled = false;
+        boutonDeconnexion.textContent = "Se déconnecter";
+      }
+    });
+  </script>
+</body>
+</html>
