@@ -168,8 +168,6 @@ app.get("/admin/verifier/:ref",lim(60),auth,(req,res)=>{
 app.get("/",(q,r)=>r.send("Serveur Agence Mitantsoa : en ligne"));
 app.listen(PORT,HOST,()=>console.log(`Serveur Mitantsoa sur http://${HOST}:${PORT} (MODE_TEST=${MODE_TEST})`));
 
-app.use(express.static("D:/MitantsoaAgency/fiche-mitantsoa/fiche-mitantsoa"));
-
 /* ---------- auth authentification ---------- */
 const express = require("express");
 const { verifierToken } = require("./auth");
@@ -209,9 +207,8 @@ const path = require("path");
 const racineProjet = path.join(__dirname, "..", "..");
 
 // Sert index.html, connexion.html, mon-espace.html, CSS, JS, images...
+app.use(["/Serveur", "/node_modules", "/package.json", "/package-lock.json", "/.git"], (req, res) => res.status(404).send("Not found"));
 app.use(express.static(racineProjet));
 
-// Page d'accueil
-app.get("/", (req, res) => {
-  res.sendFile(path.join(racineProjet, "index.html"));
-});
+app.use(helmet());
+
