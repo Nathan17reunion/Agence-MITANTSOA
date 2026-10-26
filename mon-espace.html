@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon espace — Agence Mitantsoa</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agence Mitantsoa — Accompagnement médico-social et administratif</title>
+<meta name="description" content="Agence Mitantsoa accompagne les familles et les particuliers au quotidien : aide à domicile, aide-soignant, et accompagnement dans les démarches administratives.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
 </head>
 
 <body>
 
 <div class="barre-espace">
-  <a href="index.html" class="lien-accueil">
+  <a href="mon-espace.html" class="lien-accueil">
     Agence Mitantsoa
   </a>
 
@@ -168,7 +170,7 @@
     <li><button type="button" onclick="changeLanguage('de')">🇩🇪 Deutsch</button></li>
     <li><button type="button" onclick="changeLanguage('it')">🇮🇹 Italiano</button></li>
     <li><button type="button" onclick="changeLanguage('es')">🇪🇸 Español</button></li>
-    <li><button type="button" onclick="changeLanguage('zh')">🇨🇳 Chinois</button></li>
+    <li><button type="button" onclick="changeLanguage('zh-CN')">🇨🇳 Chinois</button></li>
     <li><button type="button" onclick="changeLanguage('ko')">🇰🇷 Coréen</button></li>
     <li><button type="button" onclick="changeLanguage('ja')">🇯🇵 Japonais</button></li>
   </ul>
@@ -307,7 +309,47 @@
   }
 </script>
 <div id="google_translate_element" style="display:none;"></div>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: "fr",
+      includedLanguages: "fr,en,mg,de,it,es,zh-CN,ko,ja",
+      autoDisplay: false
+    }, "google_translate_element");
+  }
+
+  function changeLanguage(langue) {
+    const selecteur = document.querySelector(".goog-te-combo");
+
+    if (!selecteur) {
+      console.error("Google Translate n’est pas encore chargé.");
+      return;
+    }
+
+    selecteur.value = langue;
+    selecteur.dispatchEvent(new Event("change"));
+  }
+</script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+  const boutonLangue = document.getElementById("langToggleBtn");
+  const menuLangue = document.getElementById("langMenu");
+
+  if (boutonLangue && menuLangue) {
+    boutonLangue.addEventListener("click", () => {
+      menuLangue.classList.toggle("ouvert");
+    });
+
+    document.addEventListener("click", (evenement) => {
+      if (
+        !boutonLangue.contains(evenement.target) &&
+        !menuLangue.contains(evenement.target)
+      ) {
+        menuLangue.classList.remove("ouvert");
+      }
+    });
+  }
+</script>
 </body>
 </html>
 
