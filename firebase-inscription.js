@@ -8,11 +8,6 @@ import {
 } from
   "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 // "auth" doit déjà correspondre à ton application Firebase initialisée.
 // "email" et "motDePasse" viennent de ton formulaire.
 
@@ -34,6 +29,7 @@ async function inscrireClient(email, motDePasse) {
   window.location.replace("verification-email.html");
 }
 
+// Configuration Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
   authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
@@ -44,9 +40,11 @@ const firebaseConfig = {
   measurementId: "G-G6L1RCZPRG"
 };
 
+// Initialisation Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Éléments du formulaire
 const form = document.getElementById("register-form");
 const emailInput = document.getElementById("register-email");
 const passwordInput = document.getElementById("register-password");
@@ -55,11 +53,13 @@ const confirmPasswordInput = document.getElementById(
 );
 const message = document.getElementById("register-message");
 
+// Affichage des messages
 function showMessage(text, type = "error") {
   message.textContent = text;
   message.className = `login-message ${type}`;
 }
 
+// Messages d'erreur
 function getFriendlyError(errorCode) {
   const messages = {
     "auth/email-already-in-use":
@@ -84,6 +84,7 @@ function getFriendlyError(errorCode) {
     "Le compte n’a pas pu être créé. Veuillez réessayer.";
 }
 
+// Inscription
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -106,43 +107,52 @@ form.addEventListener("submit", async (event) => {
   try {
     showMessage("Création du compte en cours…", "info");
 
+    // Créer le compte
+
     const credential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
 
-    await sendEmailVerification(credential.user);
+    // Envoyer l'e-mail de vérification
+    try {
+      await sendEmailVerification(credential.user, {
+        url: new URL(
+          "completer-profil.html",
+          window.location.href
+        ).href,
+        handleCodeInApp: false
+      });
 
-    showMessage(
-      "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre adresse.",
-      "success"
-    );
+      showMessage(
+        "Compte créé. Consultez votre boîte e-mail pour vérifier votre adresse.",
+        "success"
+      );
+    } catch (erreur) {
+      console.error(
+        "Échec de l’envoi de vérification :",
+        erreur.code
+      );
 
+      showMessage(
+        "Votre compte est créé, mais l’e-mail de vérification n’a pas pu être envoyé. Vous pourrez demander un nouvel envoi.",
+        "info"
+      );
+    }
+
+    // Dans tous les cas, accéder à la page de vérification
     setTimeout(() => {
-      window.location.href = "mon-espace.html";
-    }, 1800);
+      window.location.replace("verification-email.html");
+    }, 1500);
 
   } catch (error) {
-    console.error("Erreur d'inscription Firebase :", error.code, error.message);
+    console.error(
+      "Erreur d'inscription Firebase :",
+      error.code,
+      error.message
+    );
+
     showMessage(getFriendlyError(error.code));
   }
 });
-
-// Ajouter sendEmailVerification aux imports Firebase Auth existants.
-
-// Après createUserWithEmailAndPassword(...) :
-auth.languageCode = "fr";
-
-try {
-  await sendEmailVerification(auth.currentUser, {
-    url: new URL("completer-profil.html", window.location.href).href,
-    handleCodeInApp: false
-  });
-} catch (erreur) {
-  // Le compte existe déjà, même si l'envoi a échoué.
-  // La page suivante permettra de demander un nouvel envoi.
-  console.error("Échec de l’envoi de vérification :", erreur.code);
-}
-
-window.location.replace("verification-email.html");
