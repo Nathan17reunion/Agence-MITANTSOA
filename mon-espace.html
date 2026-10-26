@@ -4,47 +4,170 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon espace — Agence Mitantsoa</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<script type="module">
-  import { getAuth, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<body>
 
-  const auth = getAuth();
+  <main class="espace-client">
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "connexion.html";
-      return;
-    }
+    <!-- Publicités -->
+    <section class="publicites" aria-label="Actualités et services">
+      <article class="pub">
+        <img src="images/aide-personnes.jpg" alt="Accompagnement et aide aux personnes">
+        <div class="pub-texte">
+          <h3>Aide aux personnes</h3>
+          <p>Accompagnement au quotidien, maintien à domicile et services personnalisés.</p>
+        </div>
+      </article>
 
-    chargerEspaceUtilisateur(user);
-  });
+      <article class="pub">
+        <img src="images/agence-voyage.jpg" alt="Agence de voyage et séjours">
+        <div class="pub-texte">
+          <h3>Agence de voyage</h3>
+          <p>Voyages organisés, séjours, réservations et accompagnement personnalisé.</p>
+        </div>
+      </article>
 
-  async function chargerEspaceUtilisateur(user) {
-    const token = await user.getIdToken();
+      <article class="pub">
+        <img src="images/geoscience-environnement.jpg" alt="Géoscience et environnement">
+        <div class="pub-texte">
+          <h3>Géoscience & environnement</h3>
+          <p>Études territoriales, cartographie, environnement et projets durables.</p>
+        </div>
+      </article>
+    </section>
 
-    const reponse = await fetch("https://mitantsoaagency.onrender.com/api/mon-espace", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + token
+    <!-- Bienvenue -->
+    <section class="bienvenue">
+      <div class="hero-art hero-art-framed" aria-hidden="true">
+        <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="150" cy="90" r="46" fill="none" stroke="#E7C393" stroke-width="2"/>
+          <path d="M60 220 C60 150 240 150 240 220" fill="none" stroke="#FCFAF4" stroke-width="2"/>
+          <path d="M40 235 C40 180 260 180 260 235" fill="none" stroke="#B9781E" stroke-width="2"/>
+          <circle cx="150" cy="90" r="4" fill="#E7C393"/>
+          <path d="M110 100 q40 30 80 0" fill="none" stroke="#FCFAF4" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <div class="bienvenue-texte">
+        <p class="sur-titre">Mon espace client</p>
+        <h1>Bienvenue, <span id="nom-client">client(e)</span></h1>
+        <p>
+          Retrouvez vos services, suivez vos demandes, échangez avec notre équipe
+          et déposez vos documents en toute simplicité.
+        </p>
+      </div>
+    </section>
+
+    <!-- Trois services -->
+    <section class="choix-services" aria-label="Choisissez un service">
+      <h2>Que souhaitez-vous faire ?</h2>
+
+      <div class="boutons-services">
+        <a class="bouton-service" href="aide-aux-personnes.html">
+          <span class="bouton-numero">01</span>
+          <span class="bouton-contenu">
+            <strong>Aide aux personnes</strong>
+            <small>Accompagnement, demandes et suivi</small>
+          </span>
+        </a>
+
+        <a class="bouton-service" href="agence-de-voyage.html">
+          <span class="bouton-numero">02</span>
+          <span class="bouton-contenu">
+            <strong>Agence de voyage</strong>
+            <small>Séjours, réservations et conseils</small>
+          </span>
+        </a>
+
+        <a class="bouton-service" href="geoscience-environnement.html">
+          <span class="bouton-numero">03</span>
+          <span class="bouton-contenu">
+            <strong>Géoscience & environnement</strong>
+            <small>Études, cartographie et projets</small>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Accès rapides -->
+    <section class="acces-rapides">
+      <h2>Accès rapide</h2>
+
+      <div class="cartes-rapides">
+        <a href="mes-demandes.html" class="carte-rapide">
+          <strong>Suivre mes demandes</strong>
+          <p>Consultez l’avancement de vos demandes en cours.</p>
+        </a>
+
+        <a href="mes-documents.html" class="carte-rapide">
+          <strong>Mes documents</strong>
+          <p>Déposez et consultez vos documents importants.</p>
+        </a>
+
+        <a href="messagerie.html" class="carte-rapide">
+          <strong>Messagerie</strong>
+          <p>Envoyez un message à l’équipe de l’agence.</p>
+        </a>
+
+        <a href="mon-profil.html" class="carte-rapide">
+          <strong>Mes informations</strong>
+          <p>Consultez et mettez à jour vos informations personnelles.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { getAuth, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "connexion.html";
+        return;
+      }
+
+      // Affiche le nom ou l'email du client
+      const nomClient = user.displayName || user.email;
+      document.getElementById("nom-client").textContent = nomClient;
+
+      try {
+        const token = await user.getIdToken();
+
+        const reponse = await fetch(
+          "https://mitantsoaagency.onrender.com/api/mon-espace",
+          {
+            method: "GET",
+            headers: {
+              "Authorization": "Bearer " + token
+            }
+          }
+        );
+
+        if (!reponse.ok) {
+          window.location.href = "connexion.html";
+          return;
+        }
+
+        const donnees = await reponse.json();
+        console.log(donnees);
+
+        // Exemple : si ton serveur renvoie { nom: "Jean" }
+        if (donnees.nom) {
+          document.getElementById("nom-client").textContent = donnees.nom;
+        }
+
+      } catch (erreur) {
+        console.error("Erreur lors du chargement de l’espace client :", erreur);
       }
     });
+  </script>
 
-    if (!reponse.ok) {
-      window.location.href = "connexion.html";
-      return;
-    }
-
-    const donnees = await reponse.json();
-    console.log(donnees);
-  }
-</script>
-  
-<body>
-  <h1>Mon espace client</h1>
-  <p>Vous êtes connecté(e).</p>
-  <p><a href="index.html">Retour à l’accueil</a></p>
 </body>
 </html>
 
