@@ -6,9 +6,45 @@
   <title>Mon espace — Agence Mitantsoa</title>
 </head>
 
+<script type="module">
+  import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "connexion.html";
+      return;
+    }
+
+    chargerEspaceUtilisateur(user);
+  });
+
+  async function chargerEspaceUtilisateur(user) {
+    const token = await user.getIdToken();
+
+    const reponse = await fetch("https://mitantsoaagency.onrender.com/api/mon-espace", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    if (!reponse.ok) {
+      window.location.href = "connexion.html";
+      return;
+    }
+
+    const donnees = await reponse.json();
+    console.log(donnees);
+  }
+</script>
+  
 <body>
   <h1>Mon espace client</h1>
   <p>Vous êtes connecté(e).</p>
   <p><a href="index.html">Retour à l’accueil</a></p>
 </body>
 </html>
+
