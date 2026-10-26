@@ -57,7 +57,6 @@ const passwordInput = document.getElementById("login-password");
 const rememberSession = document.getElementById("remember-session");
 const loginMessage = document.getElementById("login-message");
 const googleLoginButton = document.getElementById("google-login");
-const forgotPasswordButton = document.getElementById("forgot-password-button");
 
 function showMessage(text, type = "error") {
   loginMessage.textContent = text;
@@ -135,6 +134,12 @@ function getFriendlyError(errorCode) {
       "Impossible de vous connecter. Vérifiez votre connexion Internet.",
     "auth/popup-closed-by-user":
       "La fenêtre Google a été fermée avant la fin de la connexion.",
+    "auth/invalid-credential": 
+      "Adresse e-mail ou mot de passe incorrect.",
+    "auth/unauthorized-domain": 
+      "Ce site n’est pas encore autorisé dans Firebase (domaine non autorisé).",
+    "auth/operation-not-allowed": 
+      "Ce mode de connexion n’est pas activé dans Firebase.",
     "auth/popup-blocked":
       "Votre navigateur a bloqué la fenêtre de connexion Google."
   };
@@ -194,36 +199,5 @@ googleLoginButton.addEventListener("click", async () => {
   } catch (error) {
     console.error("Erreur de connexion Google :", error.code, error.message);
     showMessage(getFriendlyError(error.code));
-  }
-});
-
-forgotPasswordButton.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-
-  if (!email) {
-    showMessage(
-      "Saisissez votre adresse e-mail, puis cliquez à nouveau sur « Mot de passe oublié ? »."
-    );
-    emailInput.focus();
-    return;
-  }
-
-  try {
-    await sendPasswordResetEmail(auth, email);
-
-    showMessage(
-      "Si cette adresse correspond à un compte, un e-mail de réinitialisation a été envoyé.",
-      "success"
-    );
-  } catch (error) {
-    console.error(
-      "Erreur de réinitialisation Firebase :",
-      error.code,
-      error.message
-    );
-
-    showMessage(
-      "La demande n’a pas pu être envoyée. Vérifiez l’adresse saisie et réessayez."
-    );
   }
 });
