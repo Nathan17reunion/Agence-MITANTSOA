@@ -192,11 +192,26 @@ app.listen(PORT, () => {
   console.log("Serveur démarré sur le port " + PORT);
 });
 
+const fs = require("fs");
+
+app.get("/debug-fichiers", (req, res) => {
+  res.json({
+    dossierActuel: __dirname,
+    racine: racineProjet,
+    fichiers: fs.readdirSync(racineProjet)
+  });
+});
+
 /* ---------- utiliser directement reader au lieu de github ---------- */
 const path = require("path");
 
-app.use(express.static(path.join(__dirname, "...")));
+// Renvoie à la racine du projet : Agence-MITANTSOA/
+const racineProjet = path.join(__dirname, "..", "..");
 
+// Sert index.html, connexion.html, mon-espace.html, CSS, JS, images...
+app.use(express.static(racineProjet));
+
+// Page d'accueil
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "...", "index.html"));
+  res.sendFile(path.join(racineProjet, "index.html"));
 });
