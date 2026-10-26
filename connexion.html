@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Se connecter — Agence Mitantsoa</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+  <main class="login-screen">
+
+    <!-- Colonne de gauche -->
+    <section class="login-welcome" aria-label="Bienvenue à l'Agence Mitantsoa">
+
+      <a href="index.html" class="login-logo-link" aria-label="Retour à l'accueil">
+        <img
+          src="logo-mitantsoa.png"
+          alt="Logo de l'Agence Mitantsoa"
+          class="login-logo"
+        >
+      </a>
+
+      <h1>Bienvenue<br>à nouveau</h1>
+
+      <p>
+        Retrouvez votre espace personnel pour suivre vos demandes,
+        échanger avec l’Agence Mitantsoa et accéder à vos services.
+      </p>
+
+      <!-- Remplace # avec les liens réels de tes réseaux sociaux -->
+      <nav class="login-social-links" aria-label="Nos réseaux sociaux">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+      </nav>
+
+    </section>
+
+    <!-- Colonne de droite -->
+    <section class="login-panel" aria-labelledby="login-title">
+
+      <div class="login-panel-inner">
+
+        <a href="index.html" class="login-return">
+          ← Retour à l’accueil
+        </a>
+
+        <h2 id="login-title">Se connecter</h2>
+
+        <form id="login-form" class="login-form">
+
+          <label for="login-email">Adresse e-mail</label>
+          <input
+            type="email"
+            id="login-email"
+            name="email"
+            placeholder="votre@email.com"
+            autocomplete="email"
+            required
+          >
+
+          <label for="login-password">Mot de passe</label>
+          <input
+            type="password"
+            id="login-password"
+            name="password"
+            placeholder="Votre mot de passe"
+            autocomplete="current-password"
+            required
+          >
+
+          <label class="remember-me">
+            <input
+              type="checkbox"
+              id="remember-session"
+              name="remember"
+            >
+            <span>Se souvenir de moi</span>
+          </label>
+
+          <button type="submit" class="login-submit">
+            Se connecter
+          </button>
+
+          <p
+            id="login-message"
+            class="login-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+        <button
+          type="button"
+          id="forgot-password-button"
+          class="login-forgot"
+        >
+          Mot de passe oublié ?
+        </button>
+
+        <div class="login-divider">
+          <span>ou</span>
+        </div>
+
+        <button
+          type="button"
+          id="google-login"
+          class="login-google"
+        >
+          <span class="google-mark" aria-hidden="true">G</span>
+          Continuer avec Google
+        </button>
+
+        <p class="login-create">
+          Vous n’avez pas encore de compte ?
+          <a href="inscription.html">Créer un compte</a>
+        </p>
+
+        <p class="login-legal">
+          En continuant, vous acceptez nos
+          <a href="conditions.html">Conditions d’utilisation</a>
+          et notre
+          <a href="confidentialite.html">Politique de confidentialité</a>.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Fichier JavaScript avec Firebase et la logique de connexion -->
+  <script type="module" src="firebase-auth.js"></script>
+
+</body>
+</html>

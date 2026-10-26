@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Créer un compte — Agence Mitantsoa</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+  <main class="login-screen">
+
+    <section class="login-welcome" aria-label="Bienvenue à l'Agence Mitantsoa">
+
+      <a href="index.html" class="login-logo-link" aria-label="Retour à l'accueil">
+        <img
+          src="logo-mitantsoa.png"
+          alt="Logo de l'Agence Mitantsoa"
+          class="login-logo"
+        >
+      </a>
+
+      <h1>Créer votre<br>espace client</h1>
+
+      <p>
+        Créez votre compte pour suivre vos demandes, accéder à vos services
+        et échanger plus simplement avec l’Agence Mitantsoa.
+      </p>
+
+      <nav class="login-social-links" aria-label="Nos réseaux sociaux">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+      </nav>
+
+    </section>
+
+    <section class="login-panel" aria-labelledby="register-title">
+
+      <div class="login-panel-inner">
+
+        <a href="connexion.html" class="login-return">
+          ← Déjà un compte ? Se connecter
+        </a>
+
+        <h2 id="register-title">Créer un compte</h2>
+
+        <form id="register-form" class="login-form">
+
+          <label for="register-email">Adresse e-mail</label>
+          <input
+            type="email"
+            id="register-email"
+            name="email"
+            placeholder="votre@email.com"
+            autocomplete="email"
+            required
+          >
+
+          <label for="register-password">Mot de passe</label>
+          <input
+            type="password"
+            id="register-password"
+            name="password"
+            placeholder="Au moins 6 caractères"
+            autocomplete="new-password"
+            minlength="6"
+            required
+          >
+
+          <label for="register-password-confirm">
+            Confirmer le mot de passe
+          </label>
+          <input
+            type="password"
+            id="register-password-confirm"
+            name="password-confirm"
+            placeholder="Saisissez à nouveau votre mot de passe"
+            autocomplete="new-password"
+            minlength="6"
+            required
+          >
+
+          <label class="remember-me">
+            <input
+              type="checkbox"
+              id="privacy-consent"
+              required
+            >
+            <span>
+              J’accepte la
+              <a href="confidentialite.html">politique de confidentialité</a>.
+            </span>
+          </label>
+
+          <button type="submit" class="login-submit">
+            Créer mon compte
+          </button>
+
+          <p
+            id="register-message"
+            class="login-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="firebase-inscription.js"></script>
+</body>
+</html>
