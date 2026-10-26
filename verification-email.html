@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vérifier mon adresse — Agence Mitantsoa</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f7f5ef;
+      color: #243746;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 22px;
+      background: #243746;
+      text-align: center;
+    }
+
+    header a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    main {
+      width: min(100% - 32px, 580px);
+      margin: 60px auto;
+      padding: 36px;
+      background: #fff;
+      border: 1px solid #e6e0d5;
+      border-top: 4px solid #b9781e;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px #2437460d;
+    }
+
+    .etape {
+      color: #986016;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      line-height: 1.25;
+    }
+
+    #adresse { overflow-wrap: anywhere; }
+
+    .conseil {
+      padding: 16px;
+      background: #f7f5ef;
+      border-radius: 8px;
+      font-size: .95rem;
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    button {
+      padding: 14px 18px;
+      border: 1px solid #243746;
+      border-radius: 8px;
+      background: #243746;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.secondaire {
+      color: #243746;
+      background: #fff;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    a { color: #805113; }
+
+    :focus-visible {
+      outline: 3px solid #b9781e;
+      outline-offset: 4px;
+    }
+
+    #message {
+      min-height: 26px;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #65717a;
+      font-size: .85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html">AGENCE MITANTSOA</a>
+  </header>
+
+  <main>
+    <p class="etape">Création de compte · Vérification</p>
+    <h1>Confirmez votre adresse e-mail</h1>
+
+    <p>
+      Après votre inscription, ouvrez le message de vérification
+      envoyé par l’Agence Mitantsoa.
+    </p>
+
+    <p id="adresse"></p>
+
+    <p class="conseil">
+      Cliquez sur le lien contenu dans cet e-mail.
+      Consultez également votre dossier de courriers indésirables.
+      Revenez ensuite ici pour poursuivre.
+    </p>
+
+    <div class="actions">
+      <button id="verifier" type="button" disabled>
+        J’ai validé mon adresse
+      </button>
+
+      <button id="renvoyer" class="secondaire" type="button" disabled>
+        Renvoyer l’e-mail de vérification
+      </button>
+    </div>
+
+    <p id="message" role="status" aria-live="polite">
+      Vérification de votre session…
+    </p>
+
+    <p><a href="connexion.html">Retour à la connexion</a></p>
+  </main>
+
+  <footer>Agence Mitantsoa — Création de votre compte</footer>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      sendEmailVerification,
+      reload
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
+      authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
+      projectId: "connexion-mitantsoa-angence"
+    });
+
+    const auth = getAuth(app);
+    auth.languageCode = "fr";
+
+    const message = document.getElementById("message");
+    const verifier = document.getElementById("verifier");
+    const renvoyer = document.getElementById("renvoyer");
+
+    let utilisateur = null;
+    let prochainEnvoi = 0;
+
+    onAuthStateChanged(auth, (user) => {
+      utilisateur = user;
+
+      if (!user) {
+        verifier.disabled = true;
+        renvoyer.disabled = true;
+
+        message.textContent =
+          "Connectez-vous pour vérifier votre adresse ou renvoyer l’e-mail.";
+        return;
+      }
+
+      document.getElementById("adresse").textContent =
+        "Adresse concernée : " + user.email;
+
+      if (user.emailVerified) {
+        window.location.replace("completer-profil.html");
+        return;
+      }
+
+      verifier.disabled = false;
+      renvoyer.disabled = false;
+      message.textContent = "";
+    });
+
+    verifier.addEventListener("click", async () => {
+      if (!utilisateur) return;
+
+      verifier.disabled = true;
+      message.textContent = "Vérification en cours…";
+
+      try {
+        await reload(utilisateur);
+
+        if (utilisateur.emailVerified) {
+          await utilisateur.getIdToken(true);
+          window.location.replace("completer-profil.html");
+          return;
+        }
+
+        message.textContent =
+          "Votre adresse n’est pas encore confirmée. Ouvrez le lien reçu par e-mail.";
+      } catch {
+        message.textContent =
+          "Impossible de vérifier pour le moment. Réessayez ou reconnectez-vous.";
+      } finally {
+        verifier.disabled = false;
+      }
+    });
+
+    renvoyer.addEventListener("click", async () => {
+      if (!utilisateur) return;
+
+      if (Date.now() < prochainEnvoi) {
+        message.textContent =
+          "Veuillez patienter avant de demander un nouvel e-mail.";
+        return;
+      }
+
+      renvoyer.disabled = true;
+      message.textContent = "Envoi en cours…";
+
+      try {
+        await sendEmailVerification(utilisateur, {
+          url: new URL(
+            "completer-profil.html",
+            window.location.href
+          ).href,
+          handleCodeInApp: false
+        });
+
+        prochainEnvoi = Date.now() + 60000;
+
+        message.textContent =
+          "Un nouvel e-mail a été envoyé. Vérifiez votre messagerie.";
+      } catch (erreur) {
+        message.textContent =
+          erreur.code === "auth/too-many-requests"
+            ? "Trop de tentatives. Veuillez patienter avant de réessayer."
+            : "L’envoi a échoué. Réessayez plus tard ou reconnectez-vous.";
+      } finally {
+        renvoyer.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

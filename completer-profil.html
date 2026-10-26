@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validation du compte — Agence Mitantsoa</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f7f5ef;
+      color: #243746;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 22px;
+      background: #243746;
+      text-align: center;
+    }
+
+    header a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    main {
+      width: min(100% - 32px, 580px);
+      margin: 60px auto;
+      padding: 36px;
+      background: #fff;
+      border: 1px solid #e6e0d5;
+      border-top: 4px solid #b9781e;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px #2437460d;
+    }
+
+    .etape {
+      color: #986016;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      line-height: 1.25;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #243746;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .55; }
+
+    a { color: #805113; }
+
+    :focus-visible {
+      outline: 3px solid #b9781e;
+      outline-offset: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #65717a;
+      font-size: .85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html">AGENCE MITANTSOA</a>
+  </header>
+
+  <main>
+    <p class="etape">Création de compte · Confirmation</p>
+
+    <h1 id="titre">Vérification de votre compte</h1>
+
+    <p id="message" role="status" aria-live="polite">
+      Veuillez patienter…
+    </p>
+
+    <button id="connexion" type="button">
+      Retour à la connexion
+    </button>
+
+    <p><a href="index.html">Retour à l’accueil</a></p>
+  </main>
+
+  <footer>Agence Mitantsoa — Création de votre compte</footer>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      reload,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
+      authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
+      projectId: "connexion-mitantsoa-angence"
+    });
+
+    const auth = getAuth(app);
+
+    const titre = document.getElementById("titre");
+    const message = document.getElementById("message");
+    const bouton = document.getElementById("connexion");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        titre.textContent = "Connectez-vous pour poursuivre";
+
+        message.textContent =
+          "Si vous avez confirmé votre adresse depuis l’e-mail Firebase, " +
+          "vous pouvez maintenant revenir à la page de connexion.";
+        return;
+      }
+
+      try {
+        await reload(user);
+
+        if (!user.emailVerified) {
+          window.location.replace("verification-email.html");
+          return;
+        }
+
+        titre.textContent = "Votre adresse e-mail est confirmée";
+
+        message.textContent =
+          "Votre compte Agence Mitantsoa a bien été créé et votre adresse " +
+          "a été vérifiée. Vous pouvez maintenant revenir à la connexion.";
+
+      } catch {
+        titre.textContent = "Vérification temporairement indisponible";
+
+        message.textContent =
+          "Nous ne pouvons pas confirmer l’état de votre compte pour le moment. " +
+          "Veuillez réessayer ou revenir à la connexion.";
+      }
+    });
+
+    bouton.addEventListener("click", async () => {
+      bouton.disabled = true;
+
+      try {
+        await signOut(auth);
+        window.location.replace("connexion.html");
+      } catch {
+        message.textContent =
+          "La déconnexion a échoué. Veuillez réessayer.";
+        bouton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
