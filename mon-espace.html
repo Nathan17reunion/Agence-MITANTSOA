@@ -227,6 +227,14 @@
     signOut
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+  import {
+    getFirestore,
+    doc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const db = getFirestore(app);
+
   const firebaseConfig = {
     apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
     authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
@@ -243,7 +251,48 @@
   let deconnexionEnCours = false;
 
   onAuthStateChanged(auth, async (user) => {
-    if (!user) {
+  if (!user) {
+    if (!deconnexionEnCours) {
+      window.location.replace("connexion.html");
+    }
+
+    return;
+  }
+
+  // Affiche d'abord l'e-mail en attendant la lecture du profil
+  document.getElementById("nom-client").textContent = user.email;
+
+  try {
+    // Lit le profil du client dans Firestore
+    const reference = doc(db, "clients", user.uid);
+    const documentProfil = await getDoc(reference);
+
+    if (documentProfil.exists()) {
+      const profil = documentProfil.data();
+
+      const prenom = profil.prenom || "";
+      const nom = profil.nom || "";
+
+      if (prenom || nom) {
+        document.getElementById("nom-client").textContent =
+          (prenom + " " + nom).trim();
+      }
+    }
+
+    // Ensuite, appel à ton serveur Render
+    const token = await user.getIdToken();
+
+    const reponse = await fetch(
+      "https://mitantsoaagency.onrender.com/api/mon-espace",
+      {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+    if (!reponse.ok) {
       if (!deconnexionEnCours) {
         window.location.replace("connexion.html");
       }
@@ -251,41 +300,17 @@
       return;
     }
 
-    const nomClient = user.displayName || user.email;
-    document.getElementById("nom-client").textContent = nomClient;
+    const donnees = await reponse.json();
+    console.log(donnees);
 
-    try {
-      const token = await user.getIdToken();
-
-      const reponse = await fetch(
-        "https://mitantsoaagency.onrender.com/api/mon-espace",
-        {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + token
-          }
-        }
-      );
-
-      if (!reponse.ok) {
-        if (!deconnexionEnCours) {
-          window.location.replace("connexion.html");
-        }
-
-        return;
-      }
-
-      const donnees = await reponse.json();
-      console.log(donnees);
-
-      if (donnees.nom) {
-        document.getElementById("nom-client").textContent = donnees.nom;
-      }
-
-    } catch (erreur) {
-      console.error("Erreur lors du chargement de l’espace client :", erreur);
+    if (donnees.nom) {
+      document.getElementById("nom-client").textContent = donnees.nom;
     }
-  });
+
+  } catch (erreur) {
+    console.error("Erreur lors du chargement de l’espace client :", erreur);
+  }
+});
 
   const boutonDeconnexion =
     document.getElementById("bouton-deconnexion");
