@@ -396,24 +396,24 @@
         <div class="double">
           <div class="champ">
             <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" disabled>
+            <input type="text" id="prenom">
           </div>
 
           <div class="champ">
             <label for="nom">Nom</label>
-            <input type="text" id="nom" disabled>
+            <input type="text" id="nom">
           </div>
         </div>
 
         <div class="double">
           <div class="champ">
             <label for="date-naissance">Date de naissance</label>
-            <input type="date" id="date-naissance" disabled>
+            <input type="date" id="date-naissance">
           </div>
 
           <div class="champ">
             <label for="sexe">Sexe</label>
-            <input type="text" id="sexe" disabled>
+            <input type="text" id="sexe">
           </div>
         </div>
 
@@ -536,6 +536,14 @@
       updatePassword,
       EmailAuthProvider
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    
+    import {
+      initializeFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
@@ -549,35 +557,124 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    const db = initializeFirestore(app, {
+      experimentalAutoDetectLongPolling: true
+    });
+
     let deconnexionEnCours = false;
 
     const messageProfil = document.getElementById("message-profil");
     const messageSecurite = document.getElementById("message-securite");
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (!user) {
         if (!deconnexionEnCours) {
           window.location.replace("connexion.html");
         }
         return;
       }
-
+    
       document.getElementById("email").value = user.email;
-
-      // À connecter plus tard à Firestore ou à ton serveur Render.
-      chargerInformationsClient(user.uid);
+    
+      await chargerInformationsClient(user);
     });
 
-    async function chargerInformationsClient(uid) {
-      // Pour l’instant, les champs restent vides si aucune donnée
-      // n’a encore été enregistrée lors de la création du compte.
-      console.log("Chargement des informations du client :", uid);
+    async function chargerInformationsClient(user) {
+      messageProfil.className = "zone-message";
+      messageProfil.textContent = "Chargement de vos informations…";
+    
+      try {
+        const reference = doc(db, "clients", user.uid);
+        const documentProfil = await getDoc(reference);
+    
+        if (documentProfil.exists()) {
+          const profil = documentProfil.data();
+    
+          document.getElementById("prenom").value = profil.prenom || "";
+          document.getElementById("nom").value = profil.nom || "";
+          document.getElementById("date-naissance").value = profil.dateNaissance || "";
+          document.getElementById("sexe").value = profil.sexe || "";
+          document.getElementById("telephone").value = profil.telephone || "";
+          document.getElementById("adresse").value = profil.adresse || "";
+          document.getElementById("ville").value = profil.ville || "";
+          document.getElementById("code-postal").value = profil.codePostal || "";
+          document.getElementById("pays").value = profil.pays || "France";
+    
+          messageProfil.className = "zone-message message-succes";
+          messageProfil.textContent = "Vos informations ont été chargées.";
+        } else {
+          messageProfil.textContent =
+            "Votre profil n’est pas encore complété. Vous pouvez le remplir maintenant.";
+        }
+    
+      } catch (erreur) {
+        console.error("Erreur Firestore :", erreur.code, erreur.message);
+    
+        messageProfil.className = "zone-message message-erreur";
+    
+        if (erreur.code === "permission-denied") {
+          messageProfil.textContent =
+            "Firestore refuse l’accès à vos informations. Vérifiez les règles de sécurité.";
+        } else {
+          messageProfil.textContent =
+            "Impossible de charger vos informations pour le moment.";
+        }
+      }
     }
 
-    document.getElementById("bouton-enregistrer").addEventListener("click", () => {
-      messageProfil.className = "zone-message message-erreur";
-      messageProfil.textContent =
-        "L’enregistrement des informations nécessite encore une base de données sécurisée.";
+    document.getElementById("bouton-enregistrer").addEventListener("click", async () => {
+      const user = auth.currentUser;
+    
+      if (!user) {
+        window.location.replace("connexion.html");
+        return;
+      }
+    
+      const bouton = document.getElementById("bouton-enregistrer");
+      bouton.disabled = true;
+    
+      messageProfil.className = "zone-message";
+      messageProfil.textContent = "Enregistrement en cours…";
+    
+      try {
+        await setDoc(
+          doc(db, "clients", user.uid),
+          {
+            uid: user.uid,
+            email: user.email,
+            prenom: document.getElementById("prenom").value.trim(),
+            nom: document.getElementById("nom").value.trim(),
+            dateNaissance: document.getElementById("date-naissance").value,
+            sexe: document.getElementById("sexe").value,
+            telephone: document.getElementById("telephone").value.trim(),
+            adresse: document.getElementById("adresse").value.trim(),
+            ville: document.getElementById("ville").value.trim(),
+            codePostal: document.getElementById("code-postal").value.trim(),
+            pays: document.getElementById("pays").value.trim(),
+            profilComplete: true,
+            dateModification: serverTimestamp()
+          },
+          { merge: true }
+        );
+    
+        messageProfil.className = "zone-message message-succes";
+        messageProfil.textContent = "Vos informations ont bien été enregistrées.";
+    
+      } catch (erreur) {
+        console.error("Erreur Firestore :", erreur.code, erreur.message);
+    
+        messageProfil.className = "zone-message message-erreur";
+    
+        if (erreur.code === "permission-denied") {
+          messageProfil.textContent =
+            "Firestore refuse l’enregistrement. Vérifiez les règles de sécurité.";
+        } else {
+          messageProfil.textContent =
+            "L’enregistrement a échoué : " + (erreur.code || erreur.message);
+        }
+      } finally {
+        bouton.disabled = false;
+      }
     });
 
     document.getElementById("bouton-mot-de-passe").addEventListener("click", async () => {
