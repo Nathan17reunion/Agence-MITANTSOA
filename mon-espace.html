@@ -228,12 +228,10 @@
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   import {
-    getFirestore,
+    initializeFirestore,
     doc,
     getDoc
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const db = getFirestore(app);
 
   const firebaseConfig = {
     apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
@@ -247,70 +245,70 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  // Firestore est créé APRÈS « app » et une seule fois
+  const db = initializeFirestore(app, { experimentalAutoDetectLongPolling: true });
 
   let deconnexionEnCours = false;
 
   onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    if (!deconnexionEnCours) {
-      window.location.replace("connexion.html");
-    }
-
-    return;
-  }
-
-  // Affiche d'abord l'e-mail en attendant la lecture du profil
-  document.getElementById("nom-client").textContent = user.email;
-
-  try {
-    // Lit le profil du client dans Firestore
-    const reference = doc(db, "clients", user.uid);
-    const documentProfil = await getDoc(reference);
-
-    if (documentProfil.exists()) {
-      const profil = documentProfil.data();
-
-      const prenom = profil.prenom || "";
-      const nom = profil.nom || "";
-
-      if (prenom || nom) {
-        document.getElementById("nom-client").textContent =
-          (prenom + " " + nom).trim();
-      }
-    }
-
-    // Ensuite, appel à ton serveur Render
-    const token = await user.getIdToken();
-
-    const reponse = await fetch(
-      "https://mitantsoaagency.onrender.com/api/mon-espace",
-      {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      }
-    );
-
-    if (!reponse.ok) {
+    if (!user) {
       if (!deconnexionEnCours) {
         window.location.replace("connexion.html");
       }
-
       return;
     }
 
-    const donnees = await reponse.json();
-    console.log(donnees);
+    const nomClient = document.getElementById("nom-client");
 
-    if (donnees.nom) {
-      document.getElementById("nom-client").textContent = donnees.nom;
+    // Affiche d'abord l'e-mail en attendant la lecture du profil
+    nomClient.textContent = user.email;
+
+    // 1. Profil du client dans Firestore (collection « clients »)
+    try {
+      const documentProfil = await getDoc(doc(db, "clients", user.uid));
+      const profil = documentProfil.exists() ? documentProfil.data() : null;
+
+      // Compte déjà créé mais informations personnelles non remplies :
+      // on envoie le client compléter son profil
+      if (!profil || !profil.prenom || !profil.nom) {
+        window.location.replace("completer-profil.html");
+        return;
+      }
+
+      nomClient.textContent = (profil.prenom + " " + profil.nom).trim();
+
+    } catch (erreur) {
+      // Firestore injoignable : on reste sur la page, sans rediriger
+      console.error("Lecture du profil impossible :", erreur);
     }
 
-  } catch (erreur) {
-    console.error("Erreur lors du chargement de l’espace client :", erreur);
-  }
-});
+    // 2. Serveur Render (facultatif) : un échec ne déconnecte jamais le client
+    try {
+      const token = await user.getIdToken();
+
+      const reponse = await fetch(
+        "https://mitantsoaagency.onrender.com/api/mon-espace",
+        {
+          method: "GET",
+          headers: { "Authorization": "Bearer " + token }
+        }
+      );
+
+      if (reponse.ok) {
+        const donnees = await reponse.json();
+        console.log(donnees);
+
+        if (donnees.nom) {
+          nomClient.textContent = donnees.nom;
+        }
+      } else {
+        console.warn("Serveur Render : réponse", reponse.status);
+      }
+
+    } catch (erreur) {
+      console.warn("Serveur Render injoignable :", erreur);
+    }
+  });
 
   const boutonDeconnexion =
     document.getElementById("bouton-deconnexion");
@@ -344,48 +342,6 @@
           messageDeconnexion.textContent =
             "La déconnexion a échoué. Veuillez réessayer.";
         }
-      }
-    });
-  }
-</script>
-<div id="google_translate_element" style="display:none;"></div>
-<script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: "fr",
-      includedLanguages: "fr,en,mg,de,it,es,zh-CN,ko,ja",
-      autoDisplay: false
-    }, "google_translate_element");
-  }
-
-  function changeLanguage(langue) {
-    const selecteur = document.querySelector(".goog-te-combo");
-
-    if (!selecteur) {
-      console.error("Google Translate n’est pas encore chargé.");
-      return;
-    }
-
-    selecteur.value = langue;
-    selecteur.dispatchEvent(new Event("change"));
-  }
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-  const boutonLangue = document.getElementById("langToggleBtn");
-  const menuLangue = document.getElementById("langMenu");
-
-  if (boutonLangue && menuLangue) {
-    boutonLangue.addEventListener("click", () => {
-      menuLangue.classList.toggle("ouvert");
-    });
-
-    document.addEventListener("click", (evenement) => {
-      if (
-        !boutonLangue.contains(evenement.target) &&
-        !menuLangue.contains(evenement.target)
-      ) {
-        menuLangue.classList.remove("ouvert");
       }
     });
   }
