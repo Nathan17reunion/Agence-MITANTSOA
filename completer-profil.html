@@ -206,7 +206,7 @@
   </main>
 
   <script type="module">
-    import { initializeApp }
+        import { initializeApp }
       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
     import {
@@ -215,7 +215,7 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     import {
-      getFirestore,
+      initializeFirestore,
       doc,
       setDoc,
       getDoc,
@@ -233,13 +233,46 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
+    // Détection automatique du mode de connexion (évite « client is offline »
+    // quand un pare-feu, une extension ou un réseau bloque les WebSockets).
+    const db = initializeFirestore(app, { experimentalAutoDetectLongPolling: true });
 
     const formulaire = document.getElementById("formulaire-profil");
     const message = document.getElementById("message");
     const bouton = document.getElementById("bouton-enregistrer");
+    const champ = (id) => document.getElementById(id);
 
     let utilisateurConnecte = null;
+    let profilExiste = false;
+
+    // Abandonne si Firestore ne répond pas (au lieu d'attendre indéfiniment)
+    const avecDelai = (promesse, ms = 15000) =>
+      Promise.race([
+        promesse,
+        new Promise((_, rejet) => setTimeout(() => rejet(new Error("delai-depasse")), ms))
+      ]);
+
+    // « Marie Dupont » -> prénom « Marie », nom « Dupont »
+    function separerNom(nomComplet) {
+      const mots = (nomComplet || "").trim().split(/\s+/).filter(Boolean);
+      if (mots.length < 2) return { prenom: mots[0] || "", nom: "" };
+      return { prenom: mots.slice(0, -1).join(" "), nom: mots[mots.length - 1] };
+    }
+
+    const formaterNom = (s) => s.trim().toLocaleUpperCase("fr-FR");
+    const formaterPrenom = (s) =>
+      s.trim().toLocaleLowerCase("fr-FR")
+        .replace(/(^|[\s'’-])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase("fr-FR"));
+
+    function messageErreur(erreur, action) {
+      if (erreur && erreur.code === "permission-denied")
+        return "Accès refusé par les règles de la base de données (Firestore).";
+      if (erreur && (erreur.code === "unavailable" || erreur.message === "delai-depasse"))
+        return "Connexion à la base de données impossible pour le moment. Réessayez dans un instant.";
+      return action === "charger"
+        ? "Impossible de charger votre profil pour le moment."
+        : "L’enregistrement a échoué. Vérifiez votre connexion ou réessayez.";
+    }
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -247,41 +280,49 @@
         return;
       }
 
+      // Recharge l'état du compte (l'e-mail vient peut-être d'être vérifié)
+      try { await user.reload(); } catch (e) {}
+
       utilisateurConnecte = user;
-      document.getElementById("email").value = user.email;
+      champ("email").value = user.email || "";
 
       if (!user.emailVerified) {
         window.location.replace("verification-email.html");
         return;
       }
 
+      // 1. Préremplissage automatique avec ce que le compte connaît déjà
+      const suggestion = separerNom(user.displayName);
+      champ("prenom").value = suggestion.prenom;
+      champ("nom").value = suggestion.nom;
+      if (user.phoneNumber) champ("telephone").value = user.phoneNumber;
+
+      // 2. Puis avec le profil déjà enregistré dans Firestore (collection « clients »)
       try {
-        const reference = doc(db, "users", user.uid);
-        const documentProfil = await getDoc(reference);
+        const documentProfil = await avecDelai(getDoc(doc(db, "clients", user.uid)));
+        profilExiste = documentProfil.exists();
 
-        if (documentProfil.exists()) {
-          const donnees = documentProfil.data();
+        if (profilExiste) {
+          const d = documentProfil.data();
+          const remplir = (id, valeur) => { if (valeur) champ(id).value = valeur; };
 
-          document.getElementById("prenom").value = donnees.prenom || "";
-          document.getElementById("nom").value = donnees.nom || "";
-          document.getElementById("date-naissance").value = donnees.dateNaissance || "";
-          document.getElementById("sexe").value = donnees.sexe || "";
-          document.getElementById("telephone").value = donnees.telephone || "";
-          document.getElementById("adresse").value = donnees.adresse || "";
-          document.getElementById("ville").value = donnees.ville || "";
-          document.getElementById("code-postal").value = donnees.codePostal || "";
-          document.getElementById("pays").value = donnees.pays || "France";
+          remplir("prenom", d.prenom);
+          remplir("nom", d.nom);
+          remplir("date-naissance", d.dateNaissance);
+          remplir("sexe", d.sexe);
+          remplir("telephone", d.telephone);
+          remplir("adresse", d.adresse);
+          remplir("ville", d.ville);
+          remplir("code-postal", d.codePostal);
+          remplir("pays", d.pays);
 
           message.className = "message succes";
-          message.textContent =
-            "Votre profil existe déjà. Vous pouvez le mettre à jour.";
+          message.textContent = "Votre profil existe déjà. Vous pouvez le mettre à jour.";
         }
-
       } catch (erreur) {
         console.error(erreur);
         message.className = "message erreur";
-        message.textContent =
-          "Impossible de charger votre profil pour le moment.";
+        message.textContent = messageErreur(erreur, "charger");
       }
     });
 
@@ -293,9 +334,9 @@
         return;
       }
 
-      const prenom = document.getElementById("prenom").value.trim();
-      const nom = document.getElementById("nom").value.trim();
-      const dateNaissance = document.getElementById("date-naissance").value;
+      const prenom = champ("prenom").value.trim();
+      const nom = champ("nom").value.trim();
+      const dateNaissance = champ("date-naissance").value;
 
       message.className = "message erreur";
 
@@ -305,31 +346,39 @@
         return;
       }
 
+      if (new Date(dateNaissance) > new Date()) {
+        message.textContent = "La date de naissance ne peut pas être dans le futur.";
+        return;
+      }
+
       bouton.disabled = true;
       message.textContent = "Enregistrement en cours…";
 
+      const donnees = {
+        uid: utilisateurConnecte.uid,
+        email: utilisateurConnecte.email,
+        emailVerifie: utilisateurConnecte.emailVerified,
+        prenom: formaterPrenom(prenom),
+        nom: formaterNom(nom),
+        dateNaissance: dateNaissance,
+        sexe: champ("sexe").value,
+        telephone: champ("telephone").value.trim(),
+        adresse: champ("adresse").value.trim(),
+        ville: champ("ville").value.trim(),
+        codePostal: champ("code-postal").value.trim(),
+        pays: champ("pays").value.trim(),
+        profilComplete: true,
+        dateModification: serverTimestamp()
+      };
+
+      // La date de création n'est écrite qu'une seule fois
+      if (!profilExiste) donnees.dateCreation = serverTimestamp();
+
       try {
-        await setDoc(
-          doc(db, "users", utilisateurConnecte.uid),
-          {
-            uid: utilisateurConnecte.uid,
-            email: utilisateurConnecte.email,
-            emailVerifie: utilisateurConnecte.emailVerified,
-            prenom: prenom,
-            nom: nom,
-            dateNaissance: dateNaissance,
-            sexe: document.getElementById("sexe").value,
-            telephone: document.getElementById("telephone").value.trim(),
-            adresse: document.getElementById("adresse").value.trim(),
-            ville: document.getElementById("ville").value.trim(),
-            codePostal: document.getElementById("code-postal").value.trim(),
-            pays: document.getElementById("pays").value.trim(),
-            profilComplete: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          },
-          { merge: true }
+        await avecDelai(
+          setDoc(doc(db, "clients", utilisateurConnecte.uid), donnees, { merge: true })
         );
+        profilExiste = true;
 
         message.className = "message succes";
         message.textContent = "Votre profil a bien été enregistré.";
@@ -341,8 +390,7 @@
       } catch (erreur) {
         console.error(erreur);
         message.className = "message erreur";
-        message.textContent =
-          "L’enregistrement a échoué. Vérifiez votre connexion ou réessayez.";
+        message.textContent = messageErreur(erreur, "enregistrer");
       } finally {
         bouton.disabled = false;
       }
