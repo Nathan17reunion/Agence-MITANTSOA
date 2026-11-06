@@ -212,3 +212,29 @@ app.use(express.static(racineProjet));
 
 app.use(helmet());
 
+// Adresses sans .html
+app.get("/mon-espace", (req, res) => {
+  res.sendFile(path.join(racineProjet, "mon-espace.html"));
+});
+
+app.get("/connexion", (req, res) => {
+  res.sendFile(path.join(racineProjet, "connexion.html"));
+});
+
+app.get("/info-compte", (req, res) => {
+  res.sendFile(path.join(racineProjet, "info-compte.html"));
+});
+
+// Tes routes API protégées
+app.get("/api/mon-espace", verifierToken, (req, res) => {
+  res.json({
+    message: "Accès autorisé",
+    uid: req.utilisateur.uid
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Serveur démarré sur le port " + PORT);
+});
+
