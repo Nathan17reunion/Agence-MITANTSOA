@@ -487,6 +487,20 @@
         grid-template-columns: 1fr;
       }
     }
+
+    #piece-jointe {
+      padding: 10px;
+      border: 1px dashed #b9781e;
+      border-radius: 10px;
+      background: #fcfaf4;
+      cursor: pointer;
+    }
+    
+    #nom-piece-jointe {
+      margin: 0;
+      color: #65717a;
+      font-size: .9rem;
+    }
   </style>
 </head>
 
@@ -574,16 +588,6 @@
           <h2>Nouveau message</h2>
 
           <div class="champ">
-            <label for="destinataire">Destinataire</label>
-            <input
-              type="email"
-              id="destinataire"
-              value="contact@agencemitantsoa.fr"
-              readonly
-            >
-          </div>
-
-          <div class="champ">
             <label for="objet-message">Objet</label>
             <input
               type="text"
@@ -604,6 +608,17 @@
             <button type="button" id="bouton-envoyer" class="bouton-principal">
               Envoyer
             </button>
+
+            <div class="champ">
+              <label for="piece-jointe">Pièce jointe</label>
+              <input
+                type="file"
+                id="piece-jointe"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
+              >
+            </div>
+            
+            <p id="nom-piece-jointe" class="message"></p>
 
             <button type="button" id="bouton-brouillon" class="bouton-action">
               Enregistrer le brouillon
@@ -674,10 +689,29 @@
       onSnapshot,
       addDoc,
       updateDoc,
+      getStorage,
       deleteDoc,
+      ref,
       doc,
+      uploadBytes,
+      getDownloadURL,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const storage = getStorage(app);
+
+    const champPieceJointe = document.getElementById("piece-jointe");
+    const nomPieceJointe = document.getElementById("nom-piece-jointe");
+    
+    champPieceJointe.addEventListener("change", () => {
+      const fichier = champPieceJointe.files[0];
+    
+      if (fichier) {
+        nomPieceJointe.textContent = "Fichier sélectionné : " + fichier.name;
+      } else {
+        nomPieceJointe.textContent = "";
+      }
+    });
 
     const firebaseConfig = {
       apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
@@ -929,6 +963,23 @@
         <div class="contenu-message">
           ${message.contenu || ""}
         </div>
+
+        ${
+          message.pieceJointeURL
+            ? `
+              <p>
+                <strong>Pièce jointe :</strong>
+                <a
+                  href="${message.pieceJointeURL}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  ${message.pieceJointeNom || "Ouvrir le fichier"}
+                </a>
+              </p>
+            `
+            : ""
+        }
       `;
 
       const boutonCorbeille = lectureMessage.querySelector(
@@ -1107,43 +1158,126 @@
       });
 
     document.getElementById("bouton-envoyer")
-      .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
+    .addEventListener("click", async () => {
+      const objet = document.getElementById("objet-message").value.trim();
+      const contenu = document.getElementById("contenu-message").value.trim();
+      const fichier = document.getElementById("piece-jointe").files[0];
+  
+      if (!objet || !contenu) {
+        notifier(
+          "Veuillez renseigner l’objet et le message.",
+          "erreur"
+        );
+        return;
+      }
+  
+      const bouton = document.getElementById("bouton-envoyer");
+      bouton.disabled = true;
+  
+      notifier("Envoi du message en cours…", "info");
+  
+      try {
+        const token = await utilisateurActuel.getIdToken();
+  
+        const reference = await addDoc(collection(db, "messages"), {
+          expediteurUid: utilisateurActuel.uid,
+          expediteurEmail: utilisateurActuel.email,
+          expediteurNom: utilisateurActuel.displayName || "",
+          destinataireEmail: "jrayan.mitantsoanyhaja@gmail.com",
+          destinataireUid: "agence-mitantsoa",
+          objet: objet,
+          contenu: contenu,
+          pieceJointeURL: "",
+          pieceJointeNom: "",
+          statut: "envoye",
+          luParAgence: false,
+          luParClient: true,
+          dateCreation: serverTimestamp(),
+          dateModification: serverTimestamp()
+        });
+  
+        const urlPieceJointe = await envoyerPieceJointe(
+          fichier,
+          reference.id
+        );
+  
+        if (urlPieceJointe) {
+          await updateDoc(doc(db, "messages", reference.id), {
+            pieceJointeURL: urlPieceJointe,
+            pieceJointeNom: fichier.name,
+            dateModification: serverTimestamp()
+          });
+        }
+  
+        const reponse = await fetch(
+          URL_SERVEUR + "/api/messagerie/envoyer",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+              messageId: reference.id,
+              objet: objet,
+              contenu: contenu,
+              pieceJointeURL: urlPieceJointe,
+              pieceJointeNom: fichier ? fichier.name : ""
+            })
+          }
+        );
+  
+        if (!reponse.ok) {
+          throw new Error("Envoi des e-mails impossible.");
+        }
+  
+        document.getElementById("objet-message").value = "";
+        document.getElementById("contenu-message").value = "";
+        document.getElementById("piece-jointe").value = "";
+        nomPieceJointe.textContent = "";
+  
+        redactionMessage.classList.remove("ouverte");
+        changerDossier("envoyes");
+  
+        notifier(
+          "Message envoyé. Un accusé de réception vous a été envoyé.",
+          "succes"
+        );
+      } catch (erreur) {
+        console.error(erreur);
+        notifier(
+          "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
+          "erreur"
+        );
+      } finally {
+        bouton.disabled = false;
+      }
+    });
 
-        if (!objet || !contenu) {
+    document.getElementById("bouton-correction-ia")
+      .addEventListener("click", async () => {
+        const champ = document.getElementById("contenu-message");
+        const texte = champ.value.trim();
+    
+        if (!texte) {
           notifier(
-            "Veuillez renseigner l’objet et le message.",
+            "Écrivez d’abord votre message avant de demander une correction.",
             "erreur"
           );
           return;
         }
-
-        const bouton = document.getElementById("bouton-envoyer");
+    
+        const bouton = document.getElementById("bouton-correction-ia");
+        const texteOriginal = bouton.textContent;
+    
         bouton.disabled = true;
-
-        notifier("Envoi du message en cours…", "info");
-
+        bouton.textContent = "ChatGPT corrige…";
+    
         try {
           const token = await utilisateurActuel.getIdToken();
-
-          const reference = await addDoc(collection(db, "messages"), {
-            expediteurUid: utilisateurActuel.uid,
-            expediteurEmail: utilisateurActuel.email,
-            expediteurNom: utilisateurActuel.displayName || "",
-            destinataireEmail: EMAIL_AGENCE,
-            destinataireUid: "agence-mitantsoa",
-            objet: objet,
-            contenu: contenu,
-            statut: "envoye",
-            luParAgence: false,
-            luParClient: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          });
-
+    
           const reponse = await fetch(
-            URL_SERVEUR + "/api/messagerie/envoyer",
+            URL_SERVEUR + "/api/ia/corriger",
             {
               method: "POST",
               headers: {
@@ -1151,65 +1285,32 @@
                 "Authorization": "Bearer " + token
               },
               body: JSON.stringify({
-                messageId: reference.id,
-                objet: objet,
-                contenu: contenu
+                texte: texte
               })
             }
           );
-
+    
+          const donnees = await reponse.json();
+    
           if (!reponse.ok) {
-            throw new Error("Envoi des e-mails impossible.");
+            throw new Error(donnees.erreur || "Correction impossible.");
           }
-
-          document.getElementById("objet-message").value = "";
-          document.getElementById("contenu-message").value = "";
-
-          redactionMessage.classList.remove("ouverte");
-          changerDossier("envoyes");
-
-          notifier(
-            "Message envoyé. Un accusé de réception vous a été envoyé.",
-            "succes"
-          );
+    
+          champ.value = donnees.texteCorrige;
+    
+          notifier("ChatGPT a corrigé votre message.", "succes");
         } catch (erreur) {
           console.error(erreur);
           notifier(
-            "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
+            "ChatGPT n’a pas pu corriger le message. Réessayez plus tard.",
             "erreur"
           );
         } finally {
           bouton.disabled = false;
+          bouton.textContent = texteOriginal;
         }
       });
-
-    document.getElementById("bouton-correction-ia")
-      .addEventListener("click", () => {
-        const champ = document.getElementById("contenu-message");
-        const texte = champ.value.trim();
-
-        if (!texte) {
-          notifier(
-            "Écrivez d’abord votre message avant la correction.",
-            "erreur"
-          );
-          return;
-        }
-
-        const texteCorrige = texte
-          .replace(/\s+/g, " ")
-          .replace(/\s+([,.;:!?])/g, "$1")
-          .replace(/([,.;:!?])(?=[^\s])/g, "$1 ")
-          .replace(
-            /^([a-zàâäéèêëîïôöùûüç])/,
-            (lettre) => lettre.toUpperCase()
-          );
-
-        champ.value = texteCorrige;
-
-        notifier("Correction automatique appliquée.", "succes");
-      });
-
+    
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         if (!deconnexionEnCours) {
