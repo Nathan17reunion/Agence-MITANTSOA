@@ -191,33 +191,3 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape' && frame.classList.contains('is-fullscreen')) exit();
   });
 })();
-
-// ---------- publicité défilante ----------
-
-<script>
-  const pistePublicites = document.getElementById("publicites-piste");
-  const publicites = document.querySelectorAll(".carrousel-item");
-
-  publicites.forEach((publicite) => {
-    publicite.addEventListener("click", () => {
-      publicite.classList.toggle("zoom");
-
-      if (publicite.classList.contains("zoom")) {
-        pistePublicites.style.animationPlayState = "paused";
-      } else {
-        pistePublicites.style.animationPlayState = "running";
-      }
-    });
-  });
-
-  document.addEventListener("keydown", (evenement) => {
-    if (evenement.key === "Escape") {
-      const publiciteZoom = document.querySelector(".carrousel-item.zoom");
-
-      if (publiciteZoom) {
-        publiciteZoom.classList.remove("zoom");
-        pistePublicites.style.animationPlayState = "running";
-      }
-    }
-  });
-</script>
