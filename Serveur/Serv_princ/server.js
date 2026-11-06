@@ -238,3 +238,55 @@ app.listen(PORT, () => {
   console.log("Serveur démarré sur le port " + PORT);
 });
 
+app.post("/api/ia/corriger", verifierToken, async (req, res) => {
+  try {
+    const texte = (req.body.texte || "").trim();
+
+    if (!texte) {
+      return res.status(400).json({ erreur: "Texte manquant." });
+    }
+
+    const reponse = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + process.env.OPENAI_API_KEY
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content:
+                "Tu es un assistant de correction en français. Corrige uniquement l’orthographe, la grammaire, la ponctuation et la clarté. Ne change pas le sens du message. Réponds uniquement avec le texte corrigé."
+            },
+            {
+              role: "user",
+              content: texte
+            }
+          ],
+          temperature: 0.2
+        })
+      }
+    );
+
+    const donnees = await reponse.json();
+
+    if (!reponse.ok) {
+      throw new Error(donnees.error?.message || "Erreur OpenAI");
+    }
+
+    const texteCorrige =
+      donnees.choices[0]?.message?.content?.trim() || texte;
+
+    res.json({ texteCorrige: texteCorrige });
+
+  } catch (erreur) {
+    console.error(erreur);
+    res.status(500).json({
+      erreur: "Impossible de corriger le message."
+    });
+  }
+});
