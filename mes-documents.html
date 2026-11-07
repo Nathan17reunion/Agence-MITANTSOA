@@ -513,6 +513,10 @@
               Déverrouiller le coffre
             </button>
 
+            <button type="button" id="bouton-creer-code" class="bouton-secondaire">
+              Créer mon code
+            </button>
+
             <button type="button" id="bouton-modifier-code" class="bouton-secondaire">
               Modifier mon code
             </button>
@@ -1067,6 +1071,51 @@
           bouton.disabled = false;
           bouton.textContent = "Se déconnecter";
         }
+      });
+
+      const boutonCreerCode = document.getElementById("bouton-creer-code");
+      
+      boutonCreerCode.addEventListener("click", async () => {
+        const code = obtenirCodeSaisi();
+      
+        if (code.length !== 4) {
+          notifier("Saisissez un code à 4 chiffres.", "erreur");
+          return;
+        }
+      
+        const referenceUtilisateur = doc(
+          db,
+          "users",
+          utilisateurActuel.uid
+        );
+      
+        const documentUtilisateur = await getDoc(referenceUtilisateur);
+      
+        if (
+          documentUtilisateur.exists() &&
+          documentUtilisateur.data().codeCoffreHash
+        ) {
+          notifier(
+            "Un code existe déjà. Utilisez « Modifier mon code ».",
+            "erreur"
+          );
+      
+          return;
+        }
+      
+        const codeHash = await hasherCode(code);
+      
+        await setDoc(
+          referenceUtilisateur,
+          {
+            codeCoffreHash: codeHash,
+            dateCreationCodeCoffre: serverTimestamp()
+          },
+          { merge: true }
+        );
+      
+        notifier("Code personnel créé avec succès.", "succes");
+        viderCode();
       });
   </script>
 </body>
