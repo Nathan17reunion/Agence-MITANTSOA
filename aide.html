@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Messagerie — Agence Mitantsoa</title>
+  <title>Aide et assistance — Agence Mitantsoa</title>
 
   <link rel="icon" type="image/png" href="favicon.png?v=2">
 
@@ -20,7 +20,7 @@
       background: #f6f4ee;
       color: #243746;
       font-family: Arial, sans-serif;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .fond {
@@ -40,7 +40,7 @@
     }
 
     .header-contenu {
-      max-width: 1500px;
+      max-width: 1400px;
       margin: auto;
       display: flex;
       align-items: center;
@@ -89,335 +89,218 @@
       font-weight: 700;
     }
 
-    .bouton-deconnexion {
-      padding: 10px 18px;
-      border: 1px solid #e7c393;
-      border-radius: 8px;
-      background: transparent;
+    main {
+      flex: 1;
+      padding: 34px 22px 60px;
+    }
+
+    .conteneur {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .introduction {
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .introduction h1 {
+      margin: 0 0 12px;
+      font-size: 2.1rem;
+    }
+
+    .introduction p {
+      max-width: 720px;
+      margin: auto;
+      color: #65717a;
+    }
+
+    .recherche-aide {
+      max-width: 640px;
+      margin: 26px auto 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    .recherche-aide input {
+      flex: 1;
+      padding: 15px 18px;
+      border: 1px solid #d9d0bf;
+      border-radius: 12px;
+      font: inherit;
+      background: #fff;
+    }
+
+    .recherche-aide button {
+      padding: 15px 22px;
+      border: none;
+      border-radius: 12px;
+      background: #243746;
       color: #fff;
       font: inherit;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .bouton-deconnexion:hover {
-      background: #e7c393;
-      color: #243746;
-    }
-
-    main {
-      flex: 1;
-      width: 100%;
-      padding: 26px 22px 48px;
-    }
-
-    .messagerie {
-      max-width: 1500px;
-      margin: auto;
+    .grille-aide {
       display: grid;
-      grid-template-columns: 260px minmax(320px, 1fr) minmax(380px, 1.25fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      min-height: 72vh;
+      margin-bottom: 34px;
     }
 
-    .colonne {
+    .carte-aide {
       background: rgba(255,255,255,.94);
       border: 1px solid #e4dccb;
       border-radius: 16px;
-      box-shadow: 0 16px 40px rgba(36,55,70,.07);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      padding: 24px;
+      box-shadow: 0 14px 35px rgba(36,55,70,.07);
     }
 
-    .colonne-titre {
-      padding: 18px 20px;
-      border-bottom: 1px solid #e8e0d2;
-      background: #fcfaf4;
+    .carte-aide h2 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
     }
 
-    .colonne-titre h2 {
-      margin: 0;
-      font-size: 1.08rem;
-    }
-
-    .dossiers {
-      padding: 12px;
-      display: grid;
-      gap: 7px;
-    }
-
-    .dossier {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      background: transparent;
-      color: #243746;
-      font: inherit;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .dossier:hover {
-      background: #f3efe6;
-    }
-
-    .dossier.actif {
-      background: #243746;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .badge {
-      min-width: 26px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #b9781e;
-      color: #fff;
-      font-size: .78rem;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .dossier.actif .badge {
-      background: #e7c393;
-      color: #243746;
-    }
-
-    .liste-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
-
-    .message-liste {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 8px;
-      border: 1px solid #e8e0d2;
-      border-radius: 12px;
-      background: #fff;
-      color: #243746;
-      font: inherit;
-      text-align: left;
-      cursor: pointer;
-      transition: border-color .2s ease, transform .2s ease;
-    }
-
-    .message-liste:hover {
-      border-color: #b9781e;
-      transform: translateX(3px);
-    }
-
-    .message-liste.actif {
-      border-color: #b9781e;
-      background: #fdf8ee;
-    }
-
-    .message-liste.non-lu {
-      border-left: 5px solid #b9781e;
-      font-weight: 700;
-    }
-
-    .message-haut {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 5px;
-    }
-
-    .message-expediteur {
+    .carte-aide p {
+      margin: 0 0 14px;
+      color: #65717a;
       font-size: .95rem;
     }
 
-    .message-date {
-      color: #77828a;
-      font-size: .8rem;
-      white-space: nowrap;
+    .carte-aide a {
+      color: #805113;
+      font-weight: 700;
+      text-decoration: none;
     }
 
-    .message-apercu {
-      color: #65717a;
-      font-size: .9rem;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    .carte-aide a:hover {
+      text-decoration: underline;
     }
 
-    .lecture {
-      padding: 22px;
-      overflow-y: auto;
-    }
-
-    .lecture-vide {
-      height: 100%;
+    .icone {
+      width: 48px;
+      height: 48px;
       display: grid;
       place-items: center;
-      color: #77828a;
-      text-align: center;
+      border-radius: 12px;
+      background: #fdf3e2;
+      color: #805113;
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+    }
+
+    .faq {
+      background: rgba(255,255,255,.94);
+      border: 1px solid #e4dccb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(36,55,70,.08);
+    }
+
+    .faq h2 {
+      margin: 0 0 20px;
+    }
+
+    .question {
+      border-bottom: 1px solid #e8e0d2;
+    }
+
+    .question:last-child {
+      border-bottom: none;
+    }
+
+    .question button {
+      width: 100%;
+      padding: 18px 0;
+      border: none;
+      background: transparent;
+      color: #243746;
+      font: inherit;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .question button::after {
+      content: "+";
+      font-size: 1.4rem;
+      color: #b9781e;
+    }
+
+    .question.ouverte button::after {
+      content: "−";
+    }
+
+    .reponse {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+
+    .question.ouverte .reponse {
+      max-height: 420px;
+    }
+
+    .reponse p {
+      margin: 0 0 16px;
+      color: #65717a;
+    }
+
+    .reponse ul {
+      margin: 0 0 16px;
+      padding-left: 20px;
+      color: #65717a;
+    }
+
+    .assistance {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+    }
+
+    .carte-contact {
+      background: #243746;
+      color: #fff;
+      border-radius: 18px;
       padding: 30px;
     }
 
-    .message-entete {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #e8e0d2;
-      margin-bottom: 18px;
+    .carte-contact h2 {
+      margin: 0 0 12px;
     }
 
-    .message-entete h3 {
-      margin: 0 0 6px;
-      font-size: 1.25rem;
+    .carte-contact p {
+      color: #d9e2e8;
     }
 
-    .message-meta {
-      color: #77828a;
-      font-size: .88rem;
-    }
-
-    .actions-message {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .bouton-action {
-      padding: 9px 14px;
-      border: 1px solid #d9d0bf;
-      border-radius: 8px;
-      background: #fff;
-      color: #243746;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .bouton-action:hover {
-      border-color: #b9781e;
-      color: #805113;
-    }
-
-    .bouton-action.danger:hover {
-      border-color: #c0392b;
-      color: #c0392b;
-    }
-
-    .contenu-message {
-      white-space: pre-wrap;
-    }
-
-    .redaction {
-      padding: 20px;
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      height: 100%;
-    }
-
-    .redaction.ouverte {
-      display: flex;
-    }
-
-    .redaction input,
-    .redaction textarea {
-      width: 100%;
-      padding: 13px 15px;
-      border: 1px solid #d9d0bf;
-      border-radius: 10px;
-      font: inherit;
-      background: #fff;
-    }
-
-    .redaction textarea {
-      flex: 1;
-      min-height: 220px;
-      resize: vertical;
-    }
-
-    .actions-redaction {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .bouton-principal {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #243746;
-      color: #fff;
-      font: inherit;
+    .carte-contact a {
+      color: #e7c393;
+      text-decoration: none;
       font-weight: 700;
-      cursor: pointer;
     }
 
-    .bouton-principal:hover {
-      background: #31485a;
+    .carte-contact a:hover {
+      text-decoration: underline;
     }
 
-    .bouton-principal:disabled {
-      opacity: .65;
-      cursor: not-allowed;
-    }
-
-    .bouton-ia {
-      padding: 12px 18px;
-      border: 1px solid #b9781e;
-      border-radius: 10px;
+    .carte-urgence {
       background: #fcfaf4;
-      color: #805113;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
+      border: 1px solid #e4dccb;
+      border-radius: 18px;
+      padding: 30px;
     }
 
-    .bouton-ia:hover {
-      background: #b9781e;
-      color: #fff;
+    .carte-urgence h2 {
+      margin: 0 0 12px;
     }
 
-    .notifications {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      z-index: 10000;
-      display: grid;
-      gap: 10px;
-      width: min(360px, calc(100vw - 36px));
-    }
-
-    .notification {
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: #243746;
-      color: #fff;
-      box-shadow: 0 14px 35px rgba(0,0,0,.25);
-      animation: apparition .25s ease;
-    }
-
-    .notification.succes {
-      background: #256b45;
-    }
-
-    .notification.erreur {
-      background: #923b32;
-    }
-
-    @keyframes apparition {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .carte-urgence p {
+      color: #65717a;
     }
 
     footer {
@@ -427,7 +310,7 @@
     }
 
     .footer-grille {
-      max-width: 1500px;
+      max-width: 1400px;
       margin: auto;
       display: grid;
       grid-template-columns: 1.4fr 1fr 1fr;
@@ -449,42 +332,34 @@
     }
 
     .footer-bas {
-      max-width: 1500px;
+      max-width: 1400px;
       margin: 28px auto 0;
       padding-top: 18px;
       border-top: 1px solid rgba(255,255,255,.15);
       font-size: .88rem;
     }
 
-    @media (max-width: 1150px) {
-      .messagerie {
-        grid-template-columns: 220px 1fr;
-      }
-
-      .lecture {
-        display: none;
-      }
-
-      .lecture.visible-mobile {
-        display: block;
-        position: fixed;
-        inset: 0;
-        z-index: 1000;
-        background: #fff;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .messagerie {
+    @media (max-width: 900px) {
+      .assistance {
         grid-template-columns: 1fr;
-      }
-
-      main {
-        padding: 18px 14px 40px;
       }
 
       .footer-grille {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        padding: 22px 14px 45px;
+      }
+
+      .introduction h1 {
+        font-size: 1.65rem;
+      }
+
+      .recherche-aide {
+        flex-direction: column;
       }
     }
   </style>
@@ -499,131 +374,422 @@
         Agence <span>Mitantsoa</span>
       </a>
 
-      <nav aria-label="Navigation espace client">
+      <nav aria-label="Navigation principale">
         <ul>
           <li><a href="mon-espace.html">Accueil</a></li>
           <li><a href="mes-documents.html">Mes documents</a></li>
-          <li><a href="messagerie.html" aria-current="page">Messagerie</a></li>
+          <li><a href="messagerie.html">Messagerie</a></li>
           <li><a href="info-compte.html">Mon compte</a></li>
-          <li><a href="aide.html">Aide</a></li>
+          <li><a href="aide.html" aria-current="page">Aide</a></li>
         </ul>
       </nav>
-
-      <button type="button" id="bouton-deconnexion" class="bouton-deconnexion">
-        Se déconnecter
-      </button>
     </div>
   </header>
 
   <main>
-    <div class="messagerie">
+    <div class="conteneur">
 
-      <aside class="colonne">
-        <div class="colonne-titre">
-          <h2>Messagerie</h2>
-        </div>
+      <section class="introduction">
+        <h1>Centre d’aide et d’assistance</h1>
 
-        <div class="dossiers">
-          <button type="button" class="dossier actif" data-dossier="recus">
-            <span>Messages reçus</span>
-            <span class="badge" id="badge-recus">0</span>
-          </button>
+        <p>
+          Retrouvez les réponses aux questions les plus fréquentes concernant
+          votre compte, vos documents, la messagerie, la sécurité et l’utilisation
+          de l’espace client de l’Agence Mitantsoa.
+        </p>
 
-          <button type="button" class="dossier" data-dossier="non-lus">
-            <span>Non lus</span>
-            <span class="badge" id="badge-non-lus">0</span>
-          </button>
+        <div class="recherche-aide">
+          <input
+            type="search"
+            id="champ-recherche"
+            placeholder="Rechercher une aide : mot de passe, document, messagerie…"
+            aria-label="Rechercher dans l’aide"
+          >
 
-          <button type="button" class="dossier" data-dossier="envoyes">
-            <span>Messages envoyés</span>
-          </button>
-
-          <button type="button" class="dossier" data-dossier="brouillons">
-            <span>Brouillons</span>
-          </button>
-
-          <button type="button" class="dossier" data-dossier="corbeille">
-            <span>Corbeille</span>
-          </button>
-
-          <button type="button" class="dossier" id="bouton-nouveau-message">
-            <span>Nouveau message</span>
+          <button type="button" id="bouton-recherche">
+            Rechercher
           </button>
         </div>
-      </aside>
-
-      <section class="colonne">
-        <div class="colonne-titre">
-          <h2 id="titre-dossier">Messages reçus</h2>
-        </div>
-
-        <div class="liste-messages" id="liste-messages"></div>
       </section>
 
-      <section class="colonne">
-        <div class="lecture" id="lecture-message">
-          <div class="lecture-vide">
+      <section class="grille-aide">
+        <article class="carte-aide">
+          <div class="icone">👤</div>
+          <h2>Mon compte</h2>
+          <p>
+            Modifiez vos informations personnelles, consultez votre profil
+            et gérez les données liées à votre espace client.
+          </p>
+          <a href="info-compte.html">Gérer mon compte</a>
+        </article>
+
+        <article class="carte-aide">
+          <div class="icone">📁</div>
+          <h2>Mes documents</h2>
+          <p>
+            Consultez vos documents, utilisez votre coffre électronique
+            et transférez des justificatifs à l’agence.
+          </p>
+          <a href="mes-documents.html">Accéder à mes documents</a>
+        </article>
+
+        <article class="carte-aide">
+          <div class="icone">✉️</div>
+          <h2>Messagerie</h2>
+          <p>
+            Échangez avec l’agence, consultez vos messages,
+            vos brouillons et vos notifications.
+          </p>
+          <a href="messagerie.html">Ouvrir la messagerie</a>
+        </article>
+
+        <article class="carte-aide">
+          <div class="icone">🔐</div>
+          <h2>Sécurité</h2>
+          <p>
+            Protégez votre compte avec un mot de passe solide,
+            ne partagez jamais votre code et déconnectez-vous après usage.
+          </p>
+          <a href="#securite">Conseils de sécurité</a>
+        </article>
+      </section>
+
+      <section class="faq" id="faq">
+        <h2>Questions fréquentes</h2>
+
+        <div class="question">
+          <button type="button">
+            Comment créer un compte client ?
+          </button>
+
+          <div class="reponse">
             <p>
-              Sélectionnez un message pour le lire,<br>
-              ou créez un nouveau message.
+              Pour créer un compte, rendez-vous sur la page d’inscription
+              et renseignez votre nom, prénom, adresse e-mail et mot de passe.
+            </p>
+
+            <ul>
+              <li>Votre adresse e-mail doit être valide.</li>
+              <li>Le mot de passe doit contenir au moins 6 caractères.</li>
+              <li>Après inscription, vous pouvez accéder à votre espace client.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            Je n’arrive pas à me connecter à mon compte
+          </button>
+
+          <div class="reponse">
+            <p>
+              Vérifiez d’abord votre adresse e-mail et votre mot de passe.
+              Si vous avez oublié votre mot de passe, utilisez la fonction
+              « Mot de passe oublié ».
+            </p>
+
+            <ul>
+              <li>Vérifiez qu’il n’y a pas d’espace avant ou après votre e-mail.</li>
+              <li>Vérifiez que votre mot de passe ne contient pas d’erreur de saisie.</li>
+              <li>Essayez de vous connecter depuis un autre navigateur.</li>
+              <li>Si le problème persiste, contactez l’agence.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            Comment modifier mes informations personnelles ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Rendez-vous dans la rubrique <strong>Mon compte</strong>.
+              Vous pouvez y consulter et modifier vos informations personnelles.
+            </p>
+
+            <ul>
+              <li>Nom et prénom</li>
+              <li>Adresse e-mail</li>
+              <li>Numéro de téléphone</li>
+              <li>Adresse postale</li>
+              <li>Préférences de contact</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            Comment utiliser le coffre électronique ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Le coffre électronique protège l’accès à vos documents personnels
+              grâce à un code à 4 chiffres.
+            </p>
+
+            <ul>
+              <li>Lors de la première utilisation, créez votre code.</li>
+              <li>Confirmez ensuite votre code pour éviter toute erreur.</li>
+              <li>À chaque connexion, saisissez ce code pour déverrouiller le coffre.</li>
+              <li>Ne communiquez jamais ce code à une autre personne.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            J’ai oublié le code de mon coffre
+          </button>
+
+          <div class="reponse">
+            <p>
+              Pour des raisons de sécurité, l’agence ne peut pas connaître
+              votre code personnel.
+            </p>
+
+            <p>
+              Contactez l’agence depuis la messagerie ou par e-mail.
+              Après vérification de votre identité, un nouveau code
+              pourra être configuré.
             </p>
           </div>
         </div>
 
-        <div class="redaction" id="redaction-message">
-          <h2>Nouveau message</h2>
+        <div class="question">
+          <button type="button">
+            Comment transférer un document à l’agence ?
+          </button>
 
-          <div class="champ">
-            <label for="destinataire">Destinataire</label>
-            <input
-              type="email"
-              id="destinataire"
-              value="contact@agencemitantsoa.fr"
-              readonly
-            >
+          <div class="reponse">
+            <p>
+              Dans la rubrique <strong>Mes documents</strong>, utilisez la zone
+              « Transférer un document à l’agence ».
+            </p>
+
+            <ul>
+              <li>Cliquez sur la zone de dépôt ou glissez votre fichier.</li>
+              <li>Vérifiez le nom et la taille du document sélectionné.</li>
+              <li>Cliquez sur « Transférer à l’agence ».</li>
+              <li>Le document est enregistré et l’agence est notifiée.</li>
+            </ul>
           </div>
+        </div>
 
-          <div class="champ">
-            <label for="objet-message">Objet</label>
-            <input
-              type="text"
-              id="objet-message"
-              placeholder="Objet de votre message"
-            >
+        <div class="question">
+          <button type="button">
+            Quels formats de documents sont acceptés ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Les formats suivants sont généralement acceptés :
+            </p>
+
+            <ul>
+              <li>PDF</li>
+              <li>JPG</li>
+              <li>JPEG</li>
+              <li>PNG</li>
+              <li>WEBP</li>
+              <li>DOC</li>
+              <li>DOCX</li>
+            </ul>
+
+            <p>
+              La taille maximale recommandée est de 10 Mo par fichier.
+            </p>
           </div>
+        </div>
 
-          <div class="champ">
-            <label for="contenu-message">Message</label>
-            <textarea
-              id="contenu-message"
-              placeholder="Écrivez votre message ici…"
-            ></textarea>
+        <div class="question">
+          <button type="button">
+            Comment envoyer un message à l’agence ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Dans la rubrique <strong>Messagerie</strong>, cliquez sur
+              « Nouveau message ».
+            </p>
+
+            <ul>
+              <li>Renseignez l’objet de votre message.</li>
+              <li>Écrivez votre message dans la zone prévue.</li>
+              <li>Ajoutez éventuellement une pièce jointe.</li>
+              <li>Cliquez sur « Envoyer ».</li>
+            </ul>
+
+            <p>
+              Un accusé de réception est envoyé à votre adresse e-mail.
+            </p>
           </div>
+        </div>
 
-          <div class="actions-redaction">
-            <button type="button" id="bouton-envoyer" class="bouton-principal">
-              Envoyer
-            </button>
+        <div class="question">
+          <button type="button">
+            Où trouver mes messages envoyés ?
+          </button>
 
-            <button type="button" id="bouton-brouillon" class="bouton-action">
-              Enregistrer le brouillon
-            </button>
+          <div class="reponse">
+            <p>
+              Dans la messagerie, ouvrez le dossier
+              <strong>Messages envoyés</strong>.
+            </p>
 
-            <button type="button" id="bouton-correction-ia" class="bouton-ia">
-              Corriger avec l’IA
-            </button>
+            <p>
+              Vous y retrouverez les messages que vous avez envoyés à l’agence,
+              ainsi que les brouillons enregistrés.
+            </p>
+          </div>
+        </div>
 
-            <button type="button" id="bouton-annuler" class="bouton-action">
-              Annuler
-            </button>
+        <div class="question">
+          <button type="button">
+            Comment supprimer un message ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Ouvrez le message concerné, puis cliquez sur
+              « Mettre à la corbeille ».
+            </p>
+
+            <p>
+              Le message sera déplacé dans la corbeille.
+              Depuis la corbeille, vous pouvez le restaurer
+              ou le supprimer définitivement.
+            </p>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            Comment activer les notifications ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Dans la messagerie, cliquez sur l’icône de cloche,
+              puis sur « Activer les alertes ».
+            </p>
+
+            <p>
+              Votre navigateur peut vous demander l’autorisation
+              d’afficher des notifications. Acceptez-la pour recevoir
+              une alerte lorsqu’un nouveau message arrive.
+            </p>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            Comment consulter les documents officiels ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Dans la rubrique <strong>Mes documents</strong>, descendez jusqu’à
+              la section « Documents officiels de l’agence ».
+            </p>
+
+            <ul>
+              <li>Conditions générales</li>
+              <li>Politique de confidentialité</li>
+              <li>Mentions légales</li>
+              <li>Charte client</li>
+            </ul>
+
+            <p>
+              Cliquez sur un document pour l’ouvrir au format PDF.
+            </p>
+          </div>
+        </div>
+
+        <div class="question" id="securite">
+          <button type="button">
+            Comment protéger mon compte ?
+          </button>
+
+          <div class="reponse">
+            <p>
+              Pour protéger votre compte :
+            </p>
+
+            <ul>
+              <li>Utilisez un mot de passe unique et difficile à deviner.</li>
+              <li>Ne partagez jamais votre mot de passe ou votre code de coffre.</li>
+              <li>Déconnectez-vous après utilisation, surtout sur un appareil partagé.</li>
+              <li>Ne cliquez pas sur des liens suspects reçus par e-mail.</li>
+              <li>Contactez l’agence si vous suspectez une utilisation frauduleuse.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="question">
+          <button type="button">
+            La page ne fonctionne pas correctement
+          </button>
+
+          <div class="reponse">
+            <p>
+              Si une page ne s’affiche pas correctement :
+            </p>
+
+            <ul>
+              <li>Rechargez la page avec Ctrl + F5.</li>
+              <li>Videz le cache du navigateur.</li>
+              <li>Désactivez temporairement les extensions de blocage.</li>
+              <li>Essayez un autre navigateur.</li>
+              <li>Vérifiez votre connexion Internet.</li>
+            </ul>
           </div>
         </div>
       </section>
 
+      <section class="assistance">
+        <article class="carte-contact">
+          <h2>Besoin d’une assistance personnalisée ?</h2>
+
+          <p>
+            Si vous ne trouvez pas la réponse à votre question,
+            contactez l’équipe de l’Agence Mitantsoa.
+          </p>
+
+          <p>
+            <strong>E-mail :</strong>
+            <a href="mailto:jrayan.mitantsoanyhaja@gmail.com">
+              jrayan.mitantsoanyhaja@gmail.com
+            </a>
+          </p>
+
+          <p>
+            <strong>Messagerie :</strong>
+            <a href="messagerie.html">Envoyer un message</a>
+          </p>
+        </article>
+
+        <article class="carte-urgence">
+          <h2>Urgence ou sécurité</h2>
+
+          <p>
+            En cas d’urgence médicale, de danger immédiat
+            ou de situation de violence, contactez immédiatement
+            les services d’urgence.
+          </p>
+
+          <p>
+            <strong>Urgences :</strong> 112<br>
+            <strong>Police :</strong> 17<br>
+            <strong>Pompiers :</strong> 18<br>
+            <strong>SAMU :</strong> 15
+          </p>
+        </article>
+      </section>
+
     </div>
   </main>
-
-  <div class="notifications" id="notifications" aria-live="polite"></div>
 
   <footer>
     <div class="footer-grille">
@@ -639,7 +805,7 @@
         <h3>Espace client</h3>
         <p><a href="mon-espace.html">Accueil</a></p>
         <p><a href="mes-documents.html">Mes documents</a></p>
-        <p><a href="info-compte.html">Mon compte</a></p>
+        <p><a href="messagerie.html">Messagerie</a></p>
       </div>
 
       <div>
@@ -655,593 +821,5 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import {
-      initializeFirestore,
-      collection,
-      query,
-      where,
-      orderBy,
-      onSnapshot,
-      addDoc,
-      updateDoc,
-      deleteDoc,
-      doc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
-      authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
-      projectId: "connexion-mitantsoa-angence",
-      storageBucket: "connexion-mitantsoa-angence.firebasestorage.app",
-      messagingSenderId: "857962704410",
-      appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const db = initializeFirestore(app, {
-      experimentalAutoDetectLongPolling: true
-    });
-
-    const EMAIL_AGENCE = "contact@agencemitantsoa.fr";
-    const URL_SERVEUR = "https://mitantsoaagency.onrender.com";
-
-    let utilisateurActuel = null;
-    let dossierActif = "recus";
-    let messageActif = null;
-    let messagesCharges = [];
-    let arretEcoute = null;
-    let deconnexionEnCours = false;
-
-    const boutonsDossier = document.querySelectorAll(".dossier[data-dossier]");
-    const listeMessages = document.getElementById("liste-messages");
-    const titreDossier = document.getElementById("titre-dossier");
-    const lectureMessage = document.getElementById("lecture-message");
-    const redactionMessage = document.getElementById("redaction-message");
-    const notifications = document.getElementById("notifications");
-
-    function notifier(texte, type = "info") {
-      const element = document.createElement("div");
-      element.className = "notification " + type;
-      element.textContent = texte;
-
-      notifications.appendChild(element);
-
-      setTimeout(() => element.remove(), 4500);
-    }
-
-    function formaterDate(valeur) {
-      if (!valeur) return "";
-
-      const date = valeur.toDate ? valeur.toDate() : new Date(valeur);
-
-      return date.toLocaleDateString("fr-FR", {
-        day: "2-digit",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-    }
-
-    function changerDossier(dossier) {
-      dossierActif = dossier;
-      messageActif = null;
-
-      boutonsDossier.forEach((bouton) => {
-        bouton.classList.toggle(
-          "actif",
-          bouton.dataset.dossier === dossier
-        );
-      });
-
-      const titres = {
-        recus: "Messages reçus",
-        "non-lus": "Messages non lus",
-        envoyes: "Messages envoyés",
-        brouillons: "Brouillons",
-        corbeille: "Corbeille"
-      };
-
-      titreDossier.textContent = titres[dossier] || "Messages";
-
-      afficherListe();
-      ecouterMessages();
-    }
-
-    function ecouterMessages() {
-      if (!utilisateurActuel) return;
-
-      if (arretEcoute) {
-        arretEcoute();
-        arretEcoute = null;
-      }
-
-      let requete;
-
-      if (dossierActif === "recus" || dossierActif === "non-lus") {
-        requete = query(
-          collection(db, "messages"),
-          where("destinataireUid", "==", utilisateurActuel.uid),
-          orderBy("dateCreation", "desc")
-        );
-      } else {
-        requete = query(
-          collection(db, "messages"),
-          where("expediteurUid", "==", utilisateurActuel.uid),
-          orderBy("dateCreation", "desc")
-        );
-      }
-
-      arretEcoute = onSnapshot(
-        requete,
-        (resultat) => {
-          messagesCharges = resultat.docs
-            .map((document) => ({
-              id: document.id,
-              ...document.data()
-            }))
-            .filter((message) => {
-              if (dossierActif === "recus") {
-                return message.statut !== "corbeille";
-              }
-
-              if (dossierActif === "non-lus") {
-                return message.statut !== "corbeille" && !message.luParClient;
-              }
-
-              if (dossierActif === "envoyes") {
-                return message.statut !== "corbeille";
-              }
-
-              if (dossierActif === "brouillons") {
-                return message.statut === "brouillon";
-              }
-
-              if (dossierActif === "corbeille") {
-                return message.statut === "corbeille";
-              }
-
-              return false;
-            });
-
-          afficherListe();
-          mettreAJourBadges();
-        },
-        (erreur) => {
-          console.error(erreur);
-          notifier(
-            "Impossible de charger la messagerie. Vérifiez les règles Firestore.",
-            "erreur"
-          );
-        }
-      );
-    }
-
-    function afficherListe() {
-      listeMessages.innerHTML = "";
-
-      if (messagesCharges.length === 0) {
-        listeMessages.innerHTML =
-          '<p class="lecture-vide">Aucun message dans ce dossier.</p>';
-        return;
-      }
-
-      messagesCharges.forEach((message) => {
-        const bouton = document.createElement("button");
-        bouton.type = "button";
-
-        bouton.className =
-          "message-liste" +
-          (message.luParClient ? "" : " non-lu") +
-          (messageActif === message.id ? " actif" : "");
-
-        bouton.innerHTML = `
-          <div class="message-haut">
-            <span class="message-expediteur">
-              ${message.expediteurEmail || "Agence Mitantsoa"}
-            </span>
-
-            <span class="message-date">
-              ${formaterDate(message.dateCreation)}
-            </span>
-          </div>
-
-          <strong>${message.objet || "(Sans objet)"}</strong>
-
-          <p class="message-apercu">
-            ${message.contenu || ""}
-          </p>
-        `;
-
-        bouton.addEventListener("click", () => ouvrirMessage(message.id));
-        listeMessages.appendChild(bouton);
-      });
-    }
-
-    async function ouvrirMessage(id) {
-      const message = messagesCharges.find((element) => element.id === id);
-
-      if (!message) return;
-
-      messageActif = id;
-
-      redactionMessage.classList.remove("ouverte");
-      lectureMessage.classList.add("visible-mobile");
-
-      const estCorbeille = message.statut === "corbeille";
-
-      lectureMessage.innerHTML = `
-        <div class="message-entete">
-          <div>
-            <h3>${message.objet || "(Sans objet)"}</h3>
-
-            <p class="message-meta">
-              ${message.expediteurEmail || "Agence Mitantsoa"} ·
-              ${formaterDate(message.dateCreation)}
-            </p>
-          </div>
-
-          <div class="actions-message">
-            ${
-              estCorbeille
-                ? `
-                  <button
-                    type="button"
-                    class="bouton-action"
-                    data-action="restaurer"
-                  >
-                    Restaurer
-                  </button>
-
-                  <button
-                    type="button"
-                    class="bouton-action danger"
-                    data-action="supprimer-definitivement"
-                  >
-                    Supprimer définitivement
-                  </button>
-                `
-                : `
-                  <button
-                    type="button"
-                    class="bouton-action"
-                    data-action="corbeille"
-                  >
-                    Mettre à la corbeille
-                  </button>
-                `
-            }
-          </div>
-        </div>
-
-        <div class="contenu-message">
-          ${message.contenu || ""}
-        </div>
-      `;
-
-      const boutonCorbeille = lectureMessage.querySelector(
-        '[data-action="corbeille"]'
-      );
-
-      const boutonRestaurer = lectureMessage.querySelector(
-        '[data-action="restaurer"]'
-      );
-
-      const boutonSupprimer = lectureMessage.querySelector(
-        '[data-action="supprimer-definitivement"]'
-      );
-
-      if (boutonCorbeille) {
-        boutonCorbeille.addEventListener("click", () =>
-          deplacerVersCorbeille(message.id)
-        );
-      }
-
-      if (boutonRestaurer) {
-        boutonRestaurer.addEventListener("click", () =>
-          restaurerMessage(message.id)
-        );
-      }
-
-      if (boutonSupprimer) {
-        boutonSupprimer.addEventListener("click", () =>
-          supprimerDefinitivement(message.id)
-        );
-      }
-
-      if (
-        message.destinataireUid === utilisateurActuel.uid &&
-        !message.luParClient
-      ) {
-        try {
-          await updateDoc(doc(db, "messages", message.id), {
-            luParClient: true,
-            dateModification: serverTimestamp()
-          });
-        } catch (erreur) {
-          console.error(erreur);
-        }
-      }
-    }
-
-    async function deplacerVersCorbeille(id) {
-      try {
-        await updateDoc(doc(db, "messages", id), {
-          statut: "corbeille",
-          dateModification: serverTimestamp()
-        });
-
-        messageActif = null;
-
-        lectureMessage.innerHTML =
-          '<div class="lecture-vide"><p>Message déplacé dans la corbeille.</p></div>';
-
-        notifier("Message déplacé dans la corbeille.", "succes");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de déplacer ce message.", "erreur");
-      }
-    }
-
-    async function restaurerMessage(id) {
-      try {
-        await updateDoc(doc(db, "messages", id), {
-          statut: "envoye",
-          dateModification: serverTimestamp()
-        });
-
-        notifier("Message restauré.", "succes");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de restaurer ce message.", "erreur");
-      }
-    }
-
-    async function supprimerDefinitivement(id) {
-      try {
-        await deleteDoc(doc(db, "messages", id));
-
-        messageActif = null;
-
-        lectureMessage.innerHTML =
-          '<div class="lecture-vide"><p>Message supprimé définitivement.</p></div>';
-
-        notifier("Message supprimé définitivement.", "erreur");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de supprimer ce message.", "erreur");
-      }
-    }
-
-    function mettreAJourBadges() {
-      const recus = messagesCharges.filter(
-        (message) =>
-          message.destinataireUid === utilisateurActuel.uid &&
-          message.statut !== "corbeille"
-      );
-
-      const nonLus = recus.filter(
-        (message) => !message.luParClient
-      );
-
-      document.getElementById("badge-recus").textContent = recus.length;
-      document.getElementById("badge-non-lus").textContent = nonLus.length;
-    }
-
-    function ouvrirRedaction() {
-      lectureMessage.classList.remove("visible-mobile");
-      redactionMessage.classList.add("ouverte");
-
-      document.getElementById("objet-message").value = "";
-      document.getElementById("contenu-message").value = "";
-
-      messageActif = null;
-    }
-
-    boutonsDossier.forEach((bouton) => {
-      bouton.addEventListener("click", () => {
-        changerDossier(bouton.dataset.dossier);
-      });
-    });
-
-    document.getElementById("bouton-nouveau-message")
-      .addEventListener("click", ouvrirRedaction);
-
-    document.getElementById("bouton-annuler")
-      .addEventListener("click", () => {
-        redactionMessage.classList.remove("ouverte");
-      });
-
-    document.getElementById("bouton-brouillon")
-      .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
-
-        if (!objet && !contenu) {
-          notifier(
-            "Ajoutez un objet ou un message avant d’enregistrer.",
-            "erreur"
-          );
-          return;
-        }
-
-        try {
-          await addDoc(collection(db, "messages"), {
-            expediteurUid: utilisateurActuel.uid,
-            expediteurEmail: utilisateurActuel.email,
-            expediteurNom: utilisateurActuel.displayName || "",
-            destinataireEmail: EMAIL_AGENCE,
-            destinataireUid: "agence-mitantsoa",
-            objet: objet,
-            contenu: contenu,
-            statut: "brouillon",
-            luParAgence: false,
-            luParClient: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          });
-
-          document.getElementById("objet-message").value = "";
-          document.getElementById("contenu-message").value = "";
-
-          redactionMessage.classList.remove("ouverte");
-          changerDossier("brouillons");
-
-          notifier("Brouillon enregistré.", "succes");
-        } catch (erreur) {
-          console.error(erreur);
-          notifier("Impossible d’enregistrer le brouillon.", "erreur");
-        }
-      });
-
-    document.getElementById("bouton-envoyer")
-      .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
-
-        if (!objet || !contenu) {
-          notifier(
-            "Veuillez renseigner l’objet et le message.",
-            "erreur"
-          );
-          return;
-        }
-
-        const bouton = document.getElementById("bouton-envoyer");
-        bouton.disabled = true;
-
-        notifier("Envoi du message en cours…", "info");
-
-        try {
-          const token = await utilisateurActuel.getIdToken();
-
-          const reference = await addDoc(collection(db, "messages"), {
-            expediteurUid: utilisateurActuel.uid,
-            expediteurEmail: utilisateurActuel.email,
-            expediteurNom: utilisateurActuel.displayName || "",
-            destinataireEmail: EMAIL_AGENCE,
-            destinataireUid: "agence-mitantsoa",
-            objet: objet,
-            contenu: contenu,
-            statut: "envoye",
-            luParAgence: false,
-            luParClient: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          });
-
-          const reponse = await fetch(
-            URL_SERVEUR + "/api/messagerie/envoyer",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-              },
-              body: JSON.stringify({
-                messageId: reference.id,
-                objet: objet,
-                contenu: contenu
-              })
-            }
-          );
-
-          if (!reponse.ok) {
-            throw new Error("Envoi des e-mails impossible.");
-          }
-
-          document.getElementById("objet-message").value = "";
-          document.getElementById("contenu-message").value = "";
-
-          redactionMessage.classList.remove("ouverte");
-          changerDossier("envoyes");
-
-          notifier(
-            "Message envoyé. Un accusé de réception vous a été envoyé.",
-            "succes"
-          );
-        } catch (erreur) {
-          console.error(erreur);
-          notifier(
-            "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
-            "erreur"
-          );
-        } finally {
-          bouton.disabled = false;
-        }
-      });
-
-    document.getElementById("bouton-correction-ia")
-      .addEventListener("click", () => {
-        const champ = document.getElementById("contenu-message");
-        const texte = champ.value.trim();
-
-        if (!texte) {
-          notifier(
-            "Écrivez d’abord votre message avant la correction.",
-            "erreur"
-          );
-          return;
-        }
-
-        const texteCorrige = texte
-          .replace(/\s+/g, " ")
-          .replace(/\s+([,.;:!?])/g, "$1")
-          .replace(/([,.;:!?])(?=[^\s])/g, "$1 ")
-          .replace(
-            /^([a-zàâäéèêëîïôöùûüç])/,
-            (lettre) => lettre.toUpperCase()
-          );
-
-        champ.value = texteCorrige;
-
-        notifier("Correction automatique appliquée.", "succes");
-      });
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        if (!deconnexionEnCours) {
-          window.location.replace("connexion.html");
-        }
-        return;
-      }
-
-      utilisateurActuel = user;
-
-      changerDossier("recus");
-    });
-
-    document.getElementById("bouton-deconnexion")
-      .addEventListener("click", async () => {
-        deconnexionEnCours = true;
-
-        const bouton = document.getElementById("bouton-deconnexion");
-        bouton.disabled = true;
-        bouton.textContent = "Déconnexion…";
-
-        try {
-          await signOut(auth);
-          window.location.replace("index.html");
-        } catch (erreur) {
-          console.error(erreur);
-
-          deconnexionEnCours = false;
-          bouton.disabled = false;
-          bouton.textContent = "Se déconnecter";
-        }
-      });
-  </script>
-</body>
-</html>
+  <script>
+    const questions =
