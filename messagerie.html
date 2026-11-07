@@ -725,22 +725,34 @@
   <script type="module">
     import { initializeApp } from
       "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    
+  
     import {
       getAuth,
       onAuthStateChanged,
       signOut
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    
+  
     import {
-      initializeFirestore, collection, query, where, orderBy,
-      onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp
+      initializeFirestore,
+      collection,
+      query,
+      where,
+      orderBy,
+      onSnapshot,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      doc,
+      serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    
+  
     import {
-      getStorage, ref as refStockage, uploadBytes, getDownloadURL
+      getStorage,
+      ref as refStockage,
+      uploadBytes,
+      getDownloadURL
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-    
+  
     const firebaseConfig = {
       apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
       authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
@@ -749,81 +761,81 @@
       messagingSenderId: "857962704410",
       appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
     };
-    
+  
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    
+  
     const db = initializeFirestore(app, {
       experimentalAutoDetectLongPolling: true
     });
-
-    const champPieceJointe = document.getElementById("piece-jointe");
-    const nomPieceJointe = document.getElementById("nom-piece-jointe");
-    
-    champPieceJointe.addEventListener("change", () => {
-      const fichier = champPieceJointe.files[0];
-    
-      if (fichier) {
-        nomPieceJointe.textContent = "Fichier sélectionné : " + fichier.name;
-      } else {
-        nomPieceJointe.textContent = "";
-      }
-    });
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
-      authDomain: "connexion-mitantsoa-angence.firebaseapp.com",
-      projectId: "connexion-mitantsoa-angence",
-      storageBucket: "connexion-mitantsoa-angence.firebasestorage.app",
-      messagingSenderId: "857962704410",
-      appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
-    };
-
+  
+    const storage = getStorage(app);
+  
     const EMAIL_AGENCE = "contact@agencemitantsoa.fr";
     const URL_SERVEUR = "https://mitantsoaagency.onrender.com";
-
+  
     let utilisateurActuel = null;
     let dossierActif = "recus";
     let messageActif = null;
     let messagesCharges = [];
     let arretEcoute = null;
     let deconnexionEnCours = false;
-
+    let messageEnAttente = null;
+  
+    let nonLusNotifs = [];
+    let arretNotifications = null;
+    let premiereCharge = true;
+  
     const boutonsDossier = document.querySelectorAll(".dossier[data-dossier]");
     const listeMessages = document.getElementById("liste-messages");
     const titreDossier = document.getElementById("titre-dossier");
     const lectureMessage = document.getElementById("lecture-message");
     const redactionMessage = document.getElementById("redaction-message");
     const notifications = document.getElementById("notifications");
-
+  
+    const champPieceJointe = document.getElementById("piece-jointe");
+    const nomPieceJointe = document.getElementById("nom-piece-jointe");
+  
+    const panneauNotifications = document.getElementById("panneau-notifications");
+    const boutonCloche = document.getElementById("bouton-cloche");
+    const listeNotifications = document.getElementById("liste-notifications");
+    const boutonToutLire = document.getElementById("tout-lire");
+    const boutonActiverAlertes = document.getElementById("activer-alertes");
+    const champRecherche = document.getElementById("recherche");
+  
+    const echapper = (texte) => {
+      return String(texte ?? "").replace(/[&<>"']/g, (caractere) => {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        }[caractere];
+      });
+    };
+  
+    const urlSure = (url) => {
+      return /^https:\/\//i.test(url || "") ? url : "#";
+    };
+  
     function notifier(texte, type = "info") {
+      if (!notifications) return;
+  
       const element = document.createElement("div");
       element.className = "notification " + type;
       element.textContent = texte;
-
+  
       notifications.appendChild(element);
-
+  
       setTimeout(() => element.remove(), 4500);
     }
-
-        const echapper = (t) => String(t ?? "").replace(/[&<>"']/g, (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const urlSure = (u) => /^https:\/\//i.test(u || "") ? u : "#";
-
-    async function envoyerPieceJointe(fichier, idMessage) {
-      if (!fichier) return "";
-      if (fichier.size > 10 * 1024 * 1024) throw new Error("Fichier trop lourd (10 Mo maximum).");
-      const nom = fichier.name.replace(/[^\w.\-]+/g, "_");
-      const emplacement = refStockage(storage, `messages/${utilisateurActuel.uid}/${idMessage}/${nom}`);
-      await uploadBytes(emplacement, fichier);
-      return await getDownloadURL(emplacement);
-    }
-
+  
     function formaterDate(valeur) {
       if (!valeur) return "";
-
+  
       const date = valeur.toDate ? valeur.toDate() : new Date(valeur);
-
+  
       return date.toLocaleDateString("fr-FR", {
         day: "2-digit",
         month: "short",
@@ -831,18 +843,18 @@
         minute: "2-digit"
       });
     }
-
+  
     function changerDossier(dossier) {
       dossierActif = dossier;
       messageActif = null;
-
+  
       boutonsDossier.forEach((bouton) => {
         bouton.classList.toggle(
           "actif",
           bouton.dataset.dossier === dossier
         );
       });
-
+  
       const titres = {
         recus: "Messages reçus",
         "non-lus": "Messages non lus",
@@ -850,23 +862,23 @@
         brouillons: "Brouillons",
         corbeille: "Corbeille"
       };
-
+  
       titreDossier.textContent = titres[dossier] || "Messages";
-
+  
       afficherListe();
       ecouterMessages();
     }
-
+  
     function ecouterMessages() {
       if (!utilisateurActuel) return;
-
+  
       if (arretEcoute) {
         arretEcoute();
         arretEcoute = null;
       }
-
+  
       let requete;
-
+  
       if (dossierActif === "recus" || dossierActif === "non-lus") {
         requete = query(
           collection(db, "messages"),
@@ -880,49 +892,52 @@
           orderBy("dateCreation", "desc")
         );
       }
-
+  
       arretEcoute = onSnapshot(
         requete,
         (resultat) => {
           messagesCharges = resultat.docs
-            .map((document) => ({
-              id: document.id,
-              ...document.data()
+            .map((documentFirebase) => ({
+              id: documentFirebase.id,
+              ...documentFirebase.data()
             }))
             .filter((message) => {
               if (dossierActif === "recus") {
                 return message.statut !== "corbeille";
               }
-
+  
               if (dossierActif === "non-lus") {
                 return message.statut !== "corbeille" && !message.luParClient;
               }
-
+  
               if (dossierActif === "envoyes") {
                 return message.statut !== "corbeille";
               }
-
+  
               if (dossierActif === "brouillons") {
                 return message.statut === "brouillon";
               }
-
+  
               if (dossierActif === "corbeille") {
                 return message.statut === "corbeille";
               }
-
+  
               return false;
             });
-
+  
           afficherListe();
-          if (messageEnAttente) {
-            const id = messageEnAttente;
-            messageEnAttente = null;
-            ouvrirMessage(id);
-          }
           mettreAJourBadges();
+  
+          if (messageEnAttente) {
+            const identifiant = messageEnAttente;
+            messageEnAttente = null;
+  
+            ouvrirMessage(identifiant);
+          }
         },
         (erreur) => {
           console.error(erreur);
+  
           notifier(
             "Impossible de charger la messagerie. Vérifiez les règles Firestore.",
             "erreur"
@@ -930,61 +945,108 @@
         }
       );
     }
-
-        function afficherListe() {
-      const terme = (document.getElementById("recherche")?.value || "").toLowerCase();
-      const visibles = messagesCharges.filter((m) =>
-        !terme || ((m.objet || "") + " " + (m.contenu || "") + " " + (m.expediteurEmail || "")).toLowerCase().includes(terme));
-
+  
+    function afficherListe() {
+      if (!listeMessages) return;
+  
+      const termeRecherche = champRecherche
+        ? champRecherche.value.toLowerCase()
+        : "";
+  
+      const messagesVisibles = messagesCharges.filter((message) => {
+        if (!termeRecherche) return true;
+  
+        const texte = [
+          message.objet,
+          message.contenu,
+          message.expediteurEmail,
+          message.expediteurNom
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+  
+        return texte.includes(termeRecherche);
+      });
+  
       listeMessages.innerHTML = "";
-      if (visibles.length === 0) {
-        listeMessages.innerHTML = '<p class="lecture-vide">Aucun message.</p>';
+  
+      if (messagesVisibles.length === 0) {
+        listeMessages.innerHTML =
+          '<p class="lecture-vide">Aucun message dans ce dossier.</p>';
+  
         return;
       }
-
-      visibles.forEach((message) => {
+  
+      messagesVisibles.forEach((message) => {
         const bouton = document.createElement("button");
         bouton.type = "button";
-        bouton.className = "message-liste" + (message.luParClient ? "" : " non-lu") +
+  
+        bouton.className =
+          "message-liste" +
+          (message.luParClient ? "" : " non-lu") +
           (messageActif === message.id ? " actif" : "");
-        const moi = message.expediteurUid === utilisateurActuel.uid;
-        const expediteur = moi ? "Moi" : (message.expediteurNom || message.expediteurEmail || "Agence Mitantsoa");
+  
+        const estMoi =
+          message.expediteurUid === utilisateurActuel.uid;
+  
+        const expediteur = estMoi
+          ? "Moi"
+          : message.expediteurNom ||
+            message.expediteurEmail ||
+            "Agence Mitantsoa";
+  
         bouton.innerHTML = `
-          <span class="avatar">${echapper(expediteur.charAt(0).toUpperCase())}</span>
-          <span class="ligne-corps">
-            <span class="message-expediteur">${echapper(expediteur)}</span>
-            <span class="ligne-texte"><strong>${echapper(message.objet || "(Sans objet)")}</strong>
-              <span class="message-apercu"> — ${echapper((message.contenu || "").slice(0, 90))}</span></span>
-          </span>
-          <span class="message-date">${echapper(formaterDate(message.dateCreation))}</span>`;
-        bouton.addEventListener("click", () => ouvrirMessage(message.id));
+          <div class="message-haut">
+            <span class="message-expediteur">
+              ${echapper(expediteur)}
+            </span>
+  
+            <span class="message-date">
+              ${echapper(formaterDate(message.dateCreation))}
+            </span>
+          </div>
+  
+          <strong>${echapper(message.objet || "(Sans objet)")}</strong>
+  
+          <p class="message-apercu">
+            ${echapper((message.contenu || "").slice(0, 120))}
+          </p>
+        `;
+  
+        bouton.addEventListener("click", () => {
+          ouvrirMessage(message.id);
+        });
+  
         listeMessages.appendChild(bouton);
       });
     }
-
-    async function ouvrirMessage(id) {
-      const message = messagesCharges.find((element) => element.id === id);
-
+  
+    async function ouvrirMessage(identifiant) {
+      const message = messagesCharges.find(
+        (element) => element.id === identifiant
+      );
+  
       if (!message) return;
-
-      messageActif = id;
-
+  
+      messageActif = identifiant;
+  
       redactionMessage.classList.remove("ouverte");
       lectureMessage.classList.add("visible-mobile");
-
+  
       const estCorbeille = message.statut === "corbeille";
-
+  
       lectureMessage.innerHTML = `
         <div class="message-entete">
           <div>
             <h3>${echapper(message.objet || "(Sans objet)")}</h3>
-
+  
             <p class="message-meta">
               ${echapper(message.expediteurEmail || "Agence Mitantsoa")} ·
               ${echapper(formaterDate(message.dateCreation))}
             </p>
           </div>
-
+  
           <div class="actions-message">
             ${
               estCorbeille
@@ -996,7 +1058,7 @@
                   >
                     Restaurer
                   </button>
-
+  
                   <button
                     type="button"
                     class="bouton-action danger"
@@ -1017,11 +1079,11 @@
             }
           </div>
         </div>
-
+  
         <div class="contenu-message">
           ${echapper(message.contenu || "")}
         </div>
-
+  
         ${
           message.pieceJointeURL
             ? `
@@ -1039,37 +1101,37 @@
             : ""
         }
       `;
-
+  
       const boutonCorbeille = lectureMessage.querySelector(
         '[data-action="corbeille"]'
       );
-
+  
       const boutonRestaurer = lectureMessage.querySelector(
         '[data-action="restaurer"]'
       );
-
+  
       const boutonSupprimer = lectureMessage.querySelector(
         '[data-action="supprimer-definitivement"]'
       );
-
+  
       if (boutonCorbeille) {
-        boutonCorbeille.addEventListener("click", () =>
-          deplacerVersCorbeille(message.id)
-        );
+        boutonCorbeille.addEventListener("click", () => {
+          deplacerVersCorbeille(message.id);
+        });
       }
-
+  
       if (boutonRestaurer) {
-        boutonRestaurer.addEventListener("click", () =>
-          restaurerMessage(message.id)
-        );
+        boutonRestaurer.addEventListener("click", () => {
+          restaurerMessage(message.id);
+        });
       }
-
+  
       if (boutonSupprimer) {
-        boutonSupprimer.addEventListener("click", () =>
-          supprimerDefinitivement(message.id)
-        );
+        boutonSupprimer.addEventListener("click", () => {
+          supprimerDefinitivement(message.id);
+        });
       }
-
+  
       if (
         message.destinataireUid === utilisateurActuel.uid &&
         !message.luParClient
@@ -1084,108 +1146,286 @@
         }
       }
     }
-
-    async function deplacerVersCorbeille(id) {
+  
+    async function deplacerVersCorbeille(identifiant) {
       try {
-        await updateDoc(doc(db, "messages", id), {
+        await updateDoc(doc(db, "messages", identifiant), {
           statut: "corbeille",
           dateModification: serverTimestamp()
         });
-
+  
         messageActif = null;
-
+  
         lectureMessage.innerHTML =
           '<div class="lecture-vide"><p>Message déplacé dans la corbeille.</p></div>';
-
+  
         notifier("Message déplacé dans la corbeille.", "succes");
       } catch (erreur) {
         console.error(erreur);
         notifier("Impossible de déplacer ce message.", "erreur");
       }
     }
-
-    async function restaurerMessage(id) {
+  
+    async function restaurerMessage(identifiant) {
       try {
-        await updateDoc(doc(db, "messages", id), {
+        await updateDoc(doc(db, "messages", identifiant), {
           statut: "envoye",
           dateModification: serverTimestamp()
         });
-
+  
         notifier("Message restauré.", "succes");
       } catch (erreur) {
         console.error(erreur);
         notifier("Impossible de restaurer ce message.", "erreur");
       }
     }
-
-    async function supprimerDefinitivement(id) {
+  
+    async function supprimerDefinitivement(identifiant) {
       try {
-        await deleteDoc(doc(db, "messages", id));
-
+        await deleteDoc(doc(db, "messages", identifiant));
+  
         messageActif = null;
-
+  
         lectureMessage.innerHTML =
           '<div class="lecture-vide"><p>Message supprimé définitivement.</p></div>';
-
+  
         notifier("Message supprimé définitivement.", "erreur");
       } catch (erreur) {
         console.error(erreur);
         notifier("Impossible de supprimer ce message.", "erreur");
       }
     }
-
+  
     function mettreAJourBadges() {
-      const recus = messagesCharges.filter(
+      if (!utilisateurActuel) return;
+  
+      const messagesRecus = messagesCharges.filter(
         (message) =>
           message.destinataireUid === utilisateurActuel.uid &&
           message.statut !== "corbeille"
       );
-
-      const nonLus = recus.filter(
+  
+      const messagesNonLus = messagesRecus.filter(
         (message) => !message.luParClient
       );
-
-      document.getElementById("badge-recus").textContent = recus.length;
-      document.getElementById("badge-non-lus").textContent = nonLus.length;
+  
+      const badgeRecus = document.getElementById("badge-recus");
+      const badgeNonLus = document.getElementById("badge-non-lus");
+  
+      if (badgeRecus) {
+        badgeRecus.textContent = messagesRecus.length;
+      }
+  
+      if (badgeNonLus) {
+        badgeNonLus.textContent = messagesNonLus.length;
+      }
     }
-
+  
     function ouvrirRedaction() {
+      if (!redactionMessage) return;
+  
       lectureMessage.classList.remove("visible-mobile");
       redactionMessage.classList.add("ouverte");
-
+  
       document.getElementById("objet-message").value = "";
       document.getElementById("contenu-message").value = "";
-
+  
+      if (champPieceJointe) {
+        champPieceJointe.value = "";
+      }
+  
+      if (nomPieceJointe) {
+        nomPieceJointe.textContent = "";
+      }
+  
       messageActif = null;
     }
-
+  
+    async function envoyerPieceJointe(fichier, identifiantMessage) {
+      if (!fichier) return "";
+  
+      if (fichier.size > 10 * 1024 * 1024) {
+        throw new Error("Fichier trop lourd. Taille maximale : 10 Mo.");
+      }
+  
+      const extension = fichier.name.split(".").pop();
+      const nomSecurise = fichier.name.replace(/[^\w.\-]+/g, "_");
+  
+      const emplacement = refStockage(
+        storage,
+        "messages/" +
+          utilisateurActuel.uid +
+          "/" +
+          identifiantMessage +
+          "/" +
+          nomSecurise
+      );
+  
+      await uploadBytes(emplacement, fichier);
+  
+      return await getDownloadURL(emplacement);
+    }
+  
+    function ecouterNotifications() {
+      if (!utilisateurActuel) return;
+  
+      if (arretNotifications) {
+        arretNotifications();
+        arretNotifications = null;
+      }
+  
+      premiereCharge = true;
+  
+      const requete = query(
+        collection(db, "messages"),
+        where("destinataireUid", "==", utilisateurActuel.uid),
+        where("luParClient", "==", false)
+      );
+  
+      arretNotifications = onSnapshot(
+        requete,
+        (resultat) => {
+          if (!premiereCharge) {
+            resultat.docChanges().forEach((changement) => {
+              if (changement.type !== "added") return;
+  
+              const message = changement.doc.data();
+  
+              if (message.statut === "corbeille") return;
+  
+              notifier(
+                "Nouveau message : " +
+                  (message.objet || "(Sans objet)"),
+                "info"
+              );
+  
+              alerteNavigateur(message);
+            });
+          }
+  
+          premiereCharge = false;
+  
+          nonLusNotifs = resultat.docs
+            .map((documentFirebase) => ({
+              id: documentFirebase.id,
+              ...documentFirebase.data()
+            }))
+            .filter((message) => message.statut !== "corbeille")
+            .sort((a, b) => {
+              const dateA = a.dateCreation?.seconds || 0;
+              const dateB = b.dateCreation?.seconds || 0;
+  
+              return dateB - dateA;
+            });
+  
+          dessinerNotifications();
+        },
+        (erreur) => {
+          console.error(erreur);
+        }
+      );
+    }
+  
+    function alerteNavigateur(message) {
+      if (!("Notification" in window)) return;
+      if (Notification.permission !== "granted") return;
+      if (document.visibilityState === "visible") return;
+  
+      new Notification("Agence Mitantsoa : nouveau message", {
+        body: message.objet || "(Sans objet)",
+        icon: "logo-mitantsoa.png"
+      });
+    }
+  
+    function dessinerNotifications() {
+      const badgeCloche = document.getElementById("badge-cloche");
+  
+      if (badgeCloche) {
+        const nombre = nonLusNotifs.length;
+  
+        badgeCloche.textContent = nombre > 9 ? "9+" : nombre;
+        badgeCloche.hidden = nombre === 0;
+      }
+  
+      if (listeNotifications) {
+        if (nonLusNotifs.length === 0) {
+          listeNotifications.innerHTML =
+            '<p class="notif-vide">Aucune nouvelle notification.</p>';
+        } else {
+          listeNotifications.innerHTML = nonLusNotifs
+            .slice(0, 10)
+            .map((message) => `
+              <button
+                type="button"
+                class="notif"
+                data-id="${echapper(message.id)}"
+              >
+                <span class="notif-texte">
+                  <strong>
+                    ${echapper(message.objet || "(Sans objet)")}
+                  </strong>
+  
+                  <span>
+                    ${echapper((message.contenu || "").slice(0, 70))}
+                  </span>
+                </span>
+  
+                <span class="message-date">
+                  ${echapper(formaterDate(message.dateCreation))}
+                </span>
+              </button>
+            `)
+            .join("");
+        }
+      }
+    }
+  
+    if (champPieceJointe && nomPieceJointe) {
+      champPieceJointe.addEventListener("change", () => {
+        const fichier = champPieceJointe.files[0];
+  
+        nomPieceJointe.textContent = fichier
+          ? "Fichier sélectionné : " + fichier.name
+          : "";
+      });
+    }
+  
     boutonsDossier.forEach((bouton) => {
       bouton.addEventListener("click", () => {
         changerDossier(bouton.dataset.dossier);
       });
     });
-
-    document.getElementById("bouton-nouveau-message")
+  
+    document
+      .getElementById("bouton-nouveau-message")
       .addEventListener("click", ouvrirRedaction);
-
-    document.getElementById("bouton-annuler")
+  
+    document
+      .getElementById("bouton-annuler")
       .addEventListener("click", () => {
         redactionMessage.classList.remove("ouverte");
       });
-
-    document.getElementById("bouton-brouillon")
+  
+    document
+      .getElementById("bouton-brouillon")
       .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
-
+        const objet = document
+          .getElementById("objet-message")
+          .value.trim();
+  
+        const contenu = document
+          .getElementById("contenu-message")
+          .value.trim();
+  
         if (!objet && !contenu) {
           notifier(
             "Ajoutez un objet ou un message avant d’enregistrer.",
             "erreur"
           );
+  
           return;
         }
-
+  
         try {
           await addDoc(collection(db, "messages"), {
             expediteurUid: utilisateurActuel.uid,
@@ -1195,145 +1435,174 @@
             destinataireUid: "agence-mitantsoa",
             objet: objet,
             contenu: contenu,
+            pieceJointeURL: "",
+            pieceJointeNom: "",
             statut: "brouillon",
             luParAgence: false,
             luParClient: true,
             dateCreation: serverTimestamp(),
             dateModification: serverTimestamp()
           });
-
+  
           document.getElementById("objet-message").value = "";
           document.getElementById("contenu-message").value = "";
-
+  
+          if (champPieceJointe) {
+            champPieceJointe.value = "";
+          }
+  
+          if (nomPieceJointe) {
+            nomPieceJointe.textContent = "";
+          }
+  
           redactionMessage.classList.remove("ouverte");
           changerDossier("brouillons");
-
+  
           notifier("Brouillon enregistré.", "succes");
         } catch (erreur) {
           console.error(erreur);
           notifier("Impossible d’enregistrer le brouillon.", "erreur");
         }
       });
-
-    document.getElementById("bouton-envoyer")
-    .addEventListener("click", async () => {
-      const objet = document.getElementById("objet-message").value.trim();
-      const contenu = document.getElementById("contenu-message").value.trim();
-      const fichier = document.getElementById("piece-jointe").files[0];
   
-      if (!objet || !contenu) {
-        notifier(
-          "Veuillez renseigner l’objet et le message.",
-          "erreur"
-        );
-        return;
-      }
+    document
+      .getElementById("bouton-envoyer")
+      .addEventListener("click", async () => {
+        const objet = document
+          .getElementById("objet-message")
+          .value.trim();
   
-      const bouton = document.getElementById("bouton-envoyer");
-      bouton.disabled = true;
+        const contenu = document
+          .getElementById("contenu-message")
+          .value.trim();
   
-      notifier("Envoi du message en cours…", "info");
+        const fichier = champPieceJointe
+          ? champPieceJointe.files[0]
+          : null;
   
-      try {
-        const token = await utilisateurActuel.getIdToken();
+        if (!objet || !contenu) {
+          notifier(
+            "Veuillez renseigner l’objet et le message.",
+            "erreur"
+          );
   
-        const reference = await addDoc(collection(db, "messages"), {
-          expediteurUid: utilisateurActuel.uid,
-          expediteurEmail: utilisateurActuel.email,
-          expediteurNom: utilisateurActuel.displayName || "",
-          destinataireEmail: "jrayan.mitantsoanyhaja@gmail.com",
-          destinataireUid: "agence-mitantsoa",
-          objet: objet,
-          contenu: contenu,
-          pieceJointeURL: "",
-          pieceJointeNom: "",
-          statut: "envoye",
-          luParAgence: false,
-          luParClient: true,
-          dateCreation: serverTimestamp(),
-          dateModification: serverTimestamp()
-        });
+          return;
+        }
   
-        const urlPieceJointe = await envoyerPieceJointe(
-          fichier,
-          reference.id
-        );
+        const bouton = document.getElementById("bouton-envoyer");
+        bouton.disabled = true;
   
-        if (urlPieceJointe) {
-          await updateDoc(doc(db, "messages", reference.id), {
-            pieceJointeURL: urlPieceJointe,
-            pieceJointeNom: fichier.name,
+        notifier("Envoi du message en cours…", "info");
+  
+        try {
+          const token = await utilisateurActuel.getIdToken();
+  
+          const reference = await addDoc(collection(db, "messages"), {
+            expediteurUid: utilisateurActuel.uid,
+            expediteurEmail: utilisateurActuel.email,
+            expediteurNom: utilisateurActuel.displayName || "",
+            destinataireEmail: "jrayan.mitantsoanyhaja@gmail.com",
+            destinataireUid: "agence-mitantsoa",
+            objet: objet,
+            contenu: contenu,
+            pieceJointeURL: "",
+            pieceJointeNom: "",
+            statut: "envoye",
+            luParAgence: false,
+            luParClient: true,
+            dateCreation: serverTimestamp(),
             dateModification: serverTimestamp()
           });
-        }
   
-        const reponse = await fetch(
-          URL_SERVEUR + "/api/messagerie/envoyer",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify({
-              messageId: reference.id,
-              objet: objet,
-              contenu: contenu,
+          const urlPieceJointe = await envoyerPieceJointe(
+            fichier,
+            reference.id
+          );
+  
+          if (urlPieceJointe) {
+            await updateDoc(doc(db, "messages", reference.id), {
               pieceJointeURL: urlPieceJointe,
-              pieceJointeNom: fichier ? fichier.name : ""
-            })
+              pieceJointeNom: fichier.name,
+              dateModification: serverTimestamp()
+            });
           }
-        );
   
-        if (!reponse.ok) {
-          throw new Error("Envoi des e-mails impossible.");
+          const reponse = await fetch(
+            URL_SERVEUR + "/api/messagerie/envoyer",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({
+                messageId: reference.id,
+                objet: objet,
+                contenu: contenu,
+                pieceJointeURL: urlPieceJointe,
+                pieceJointeNom: fichier ? fichier.name : ""
+              })
+            }
+          );
+  
+          if (!reponse.ok) {
+            throw new Error("Envoi des e-mails impossible.");
+          }
+  
+          document.getElementById("objet-message").value = "";
+          document.getElementById("contenu-message").value = "";
+  
+          if (champPieceJointe) {
+            champPieceJointe.value = "";
+          }
+  
+          if (nomPieceJointe) {
+            nomPieceJointe.textContent = "";
+          }
+  
+          redactionMessage.classList.remove("ouverte");
+          changerDossier("envoyes");
+  
+          notifier(
+            "Message envoyé. Un accusé de réception vous a été envoyé.",
+            "succes"
+          );
+        } catch (erreur) {
+          console.error(erreur);
+  
+          notifier(
+            "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
+            "erreur"
+          );
+        } finally {
+          bouton.disabled = false;
         }
+      });
   
-        document.getElementById("objet-message").value = "";
-        document.getElementById("contenu-message").value = "";
-        document.getElementById("piece-jointe").value = "";
-        nomPieceJointe.textContent = "";
-  
-        redactionMessage.classList.remove("ouverte");
-        changerDossier("envoyes");
-  
-        notifier(
-          "Message envoyé. Un accusé de réception vous a été envoyé.",
-          "succes"
-        );
-      } catch (erreur) {
-        console.error(erreur);
-        notifier(
-          "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
-          "erreur"
-        );
-      } finally {
-        bouton.disabled = false;
-      }
-    });
-
-    document.getElementById("bouton-correction-ia")
+    document
+      .getElementById("bouton-correction-ia")
       .addEventListener("click", async () => {
         const champ = document.getElementById("contenu-message");
         const texte = champ.value.trim();
-    
+  
         if (!texte) {
           notifier(
             "Écrivez d’abord votre message avant de demander une correction.",
             "erreur"
           );
+  
           return;
         }
-    
+  
         const bouton = document.getElementById("bouton-correction-ia");
-        const texteOriginal = bouton.textContent;
-    
+        const texteBouton = bouton.textContent;
+  
         bouton.disabled = true;
         bouton.textContent = "ChatGPT corrige…";
-    
+  
         try {
           const token = await utilisateurActuel.getIdToken();
-    
+  
           const reponse = await fetch(
             URL_SERVEUR + "/api/ia/corriger",
             {
@@ -1347,159 +1616,158 @@
               })
             }
           );
-    
+  
           const donnees = await reponse.json();
-    
+  
           if (!reponse.ok) {
-            throw new Error(donnees.erreur || "Correction impossible.");
+            throw new Error(
+              donnees.erreur || "Correction impossible."
+            );
           }
-    
+  
           champ.value = donnees.texteCorrige;
-    
+  
           notifier("ChatGPT a corrigé votre message.", "succes");
         } catch (erreur) {
           console.error(erreur);
+  
           notifier(
             "ChatGPT n’a pas pu corriger le message. Réessayez plus tard.",
             "erreur"
           );
         } finally {
           bouton.disabled = false;
-          bouton.textContent = texteOriginal;
+          bouton.textContent = texteBouton;
         }
       });
-
-        // ----- Notifications : cloche, compteur, alertes -----
-    let deconnexionEnCours = false;
-    let messageEnAttente = null;
-    
-    let nonLusNotifs = [];
-    let arretNotifications = null;
-    let premiereCharge = true;
-
-    function ecouterNotifications() {
-      if (arretNotifications) arretNotifications();
-      premiereCharge = true;
-      const requete = query(
-        collection(db, "messages"),
-        where("destinataireUid", "==", utilisateurActuel.uid),
-        where("luParClient", "==", false)
-      );
-      arretNotifications = onSnapshot(requete, (resultat) => {
-        if (!premiereCharge) {
-          resultat.docChanges().forEach((c) => {
-            if (c.type !== "added" || c.doc.data().statut === "corbeille") return;
-            const m = c.doc.data();
-            notifier("Nouveau message : " + (m.objet || "(Sans objet)"), "info");
-            alerteNavigateur(m);
-          });
+  
+    if (boutonCloche && panneauNotifications) {
+      const basculerPanneau = (ouvert) => {
+        panneauNotifications.hidden = !ouvert;
+        boutonCloche.setAttribute("aria-expanded", String(ouvert));
+      };
+  
+      boutonCloche.addEventListener("click", (evenement) => {
+        evenement.stopPropagation();
+        basculerPanneau(panneauNotifications.hidden);
+      });
+  
+      document.addEventListener("click", (evenement) => {
+        if (!panneauNotifications.contains(evenement.target)) {
+          basculerPanneau(false);
         }
-        premiereCharge = false;
-        nonLusNotifs = resultat.docs
-          .map((d) => ({ id: d.id, ...d.data() }))
-          .filter((m) => m.statut !== "corbeille")
-          .sort((a, b) => (b.dateCreation?.seconds || 0) - (a.dateCreation?.seconds || 0));
-        dessinerNotifications();
-      }, (e) => console.error(e));
+      });
+  
+      document.addEventListener("keydown", (evenement) => {
+        if (evenement.key === "Escape") {
+          basculerPanneau(false);
+        }
+      });
     }
-
-    function alerteNavigateur(m) {
-      if (!("Notification" in window) || Notification.permission !== "granted") return;
-      if (document.visibilityState === "visible") return;
-      new Notification("Agence Mitantsoa : nouveau message", { body: m.objet || "(Sans objet)", icon: "logo-mitantsoa.png" });
+  
+    if (listeNotifications) {
+      listeNotifications.addEventListener("click", (evenement) => {
+        const bouton = evenement.target.closest(".notif");
+  
+        if (!bouton) return;
+  
+        const identifiant = bouton.dataset.id;
+  
+        if (panneauNotifications) {
+          panneauNotifications.hidden = true;
+        }
+  
+        if (
+          dossierActif === "recus" &&
+          messagesCharges.some(
+            (message) => message.id === identifiant
+          )
+        ) {
+          ouvrirMessage(identifiant);
+        } else {
+          messageEnAttente = identifiant;
+          changerDossier("recus");
+        }
+      });
     }
-
-    function dessinerNotifications() {
-      const n = nonLusNotifs.length;
-      const pastille = document.getElementById("badge-cloche");
-      pastille.textContent = n > 9 ? "9+" : n;
-      pastille.hidden = n === 0;
-      document.getElementById("badge-recus").textContent = n;
-      document.getElementById("badge-non-lus").textContent = n;
-      document.title = (n ? "(" + n + ") " : "") + "Messagerie — Agence Mitantsoa";
-
-      const zone = document.getElementById("liste-notifications");
-      if (!n) {
-        zone.innerHTML = '<p class="notif-vide">Aucune nouvelle notification.</p>';
-        return;
-      }
-      zone.innerHTML = nonLusNotifs.slice(0, 10).map((m) => `
-        <button type="button" class="notif" data-id="${echapper(m.id)}">
-          <span class="avatar">${echapper((m.expediteurNom || m.expediteurEmail || "A").charAt(0).toUpperCase())}</span>
-          <span class="notif-texte"><strong>${echapper(m.objet || "(Sans objet)")}</strong>
-            <span>${echapper((m.contenu || "").slice(0, 70))}</span></span>
-          <span class="message-date">${echapper(formaterDate(m.dateCreation))}</span>
-        </button>`).join("");
+  
+    if (boutonToutLire) {
+      boutonToutLire.addEventListener("click", async () => {
+        try {
+          await Promise.all(
+            nonLusNotifs.map((message) =>
+              updateDoc(doc(db, "messages", message.id), {
+                luParClient: true,
+                dateModification: serverTimestamp()
+              })
+            )
+          );
+        } catch (erreur) {
+          console.error(erreur);
+          notifier(
+            "Impossible de tout marquer comme lu.",
+            "erreur"
+          );
+        }
+      });
     }
-
-    const panneau = document.getElementById("panneau-notifications");
-    const cloche = document.getElementById("bouton-cloche");
-    const basculerPanneau = (ouvert) => {
-      panneau.hidden = !ouvert;
-      cloche.setAttribute("aria-expanded", String(ouvert));
-    };
-    cloche.addEventListener("click", (e) => { e.stopPropagation(); basculerPanneau(panneau.hidden); });
-    document.addEventListener("click", (e) => { if (!panneau.contains(e.target)) basculerPanneau(false); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") basculerPanneau(false); });
-
-    document.getElementById("liste-notifications").addEventListener("click", (e) => {
-      const bouton = e.target.closest(".notif");
-      if (!bouton) return;
-      const id = bouton.dataset.id;
-      basculerPanneau(false);
-      if (dossierActif === "recus" && messagesCharges.some((m) => m.id === id)) {
-        ouvrirMessage(id);
-      } else {
-        messageEnAttente = id;
-        changerDossier("recus");
-      }
-    });
-
-    document.getElementById("tout-lire").addEventListener("click", async () => {
-      try {
-        await Promise.all(nonLusNotifs.map((m) =>
-          updateDoc(doc(db, "messages", m.id), { luParClient: true, dateModification: serverTimestamp() })));
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de tout marquer comme lu.", "erreur");
-      }
-    });
-
-    document.getElementById("activer-alertes").addEventListener("click", async () => {
-      if (!("Notification" in window)) return notifier("Ce navigateur ne gère pas les alertes.", "erreur");
-      const reponse = await Notification.requestPermission();
-      notifier(reponse === "granted" ? "Alertes activées." : "Alertes refusées.", reponse === "granted" ? "succes" : "info");
-    });
-
-    document.getElementById("recherche").addEventListener("input", afficherListe);
-    
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
+  
+    if (boutonActiverAlertes) {
+      boutonActiverAlertes.addEventListener("click", async () => {
+        if (!("Notification" in window)) {
+          notifier(
+            "Ce navigateur ne gère pas les alertes.",
+            "erreur"
+          );
+  
+          return;
+        }
+  
+        const reponse = await Notification.requestPermission();
+  
+        notifier(
+          reponse === "granted"
+            ? "Alertes activées."
+            : "Alertes refusées.",
+          reponse === "granted" ? "succes" : "info"
+        );
+      });
+    }
+  
+    if (champRecherche) {
+      champRecherche.addEventListener("input", afficherListe);
+    }
+  
+    onAuthStateChanged(auth, (utilisateur) => {
+      if (!utilisateur) {
         if (!deconnexionEnCours) {
           window.location.replace("connexion.html");
         }
+  
         return;
       }
-
-      utilisateurActuel = user;
-
+  
+      utilisateurActuel = utilisateur;
+  
       changerDossier("recus");
+      ecouterNotifications();
     });
-
-    document.getElementById("bouton-deconnexion")
+  
+    document
+      .getElementById("bouton-deconnexion")
       .addEventListener("click", async () => {
         deconnexionEnCours = true;
-
+  
         const bouton = document.getElementById("bouton-deconnexion");
         bouton.disabled = true;
         bouton.textContent = "Déconnexion…";
-
+  
         try {
           await signOut(auth);
           window.location.replace("index.html");
         } catch (erreur) {
           console.error(erreur);
-
+  
           deconnexionEnCours = false;
           bouton.disabled = false;
           bouton.textContent = "Se déconnecter";
