@@ -501,6 +501,39 @@
       color: #65717a;
       font-size: .9rem;
     }
+
+    /* Liste façon Gmail */
+    .message-liste{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border:0;border-bottom:1px solid #eee7da;border-radius:0;background:#fff;text-align:left;cursor:pointer;transform:none;font-weight:400;color:#5b564b}
+    .message-liste:hover{transform:none;background:#f6f1e7;box-shadow:inset 3px 0 0 #b9781e}
+    .message-liste.non-lu{background:#fffdf8;border-left:0;font-weight:700;color:#2a2620}
+    .message-liste.actif{background:#efe6d3}
+    .avatar{flex:none;width:36px;height:36px;border-radius:50%;background:#24463b;color:#fff;display:grid;place-items:center;font-weight:700}
+    .ligne-corps{flex:1;min-width:0;display:flex;flex-direction:column}
+    .ligne-texte{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .message-apercu{font-weight:400;color:#77828a}
+    .contenu-message{white-space:pre-wrap;line-height:1.6}
+    .recherche{width:100%;margin-top:10px;padding:10px 14px;border:1px solid #e8e0d2;border-radius:999px;background:#f6f1e7}
+    .bouton-rediger{margin:14px 12px 4px;padding:14px 20px;border:0;border-radius:16px;background:#b9781e;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(185,120,30,.35)}
+    .bouton-rediger:hover{background:#9c6416}
+    
+    /* Fenêtre de rédaction flottante, en bas à droite */
+    .redaction{display:none;position:fixed;right:24px;bottom:0;width:min(540px,96vw);max-height:82vh;overflow:auto;z-index:900;background:#fff;border-radius:14px 14px 0 0;box-shadow:0 12px 40px rgba(0,0,0,.28);padding:16px 18px;flex-direction:column;gap:10px}
+    .redaction.ouverte{display:flex}
+    @media (max-width:760px){.redaction{right:0;width:100%;border-radius:0}}
+    
+    /* Cloche et notifications */
+    .cloche-zone{position:relative}
+    .cloche{position:relative;background:none;border:0;font-size:1.35rem;cursor:pointer;padding:6px 8px}
+    .badge-cloche{position:absolute;top:-2px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#c0392b;color:#fff;font-size:.7rem;font-weight:700;display:grid;place-items:center}
+    .badge-cloche[hidden],.panneau-notifications[hidden]{display:none}
+    .panneau-notifications{position:absolute;right:0;top:calc(100% + 10px);width:min(380px,92vw);background:#fff;border:1px solid #e8e0d2;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.18);z-index:1200;overflow:hidden}
+    .panneau-titre{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fcfaf4;border-bottom:1px solid #e8e0d2}
+    .notif{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;border:0;border-bottom:1px solid #f1ebdd;background:#fffdf8;text-align:left;cursor:pointer}
+    .notif:hover{background:#f6f1e7}
+    .notif-texte{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .notif-vide{padding:22px;text-align:center;color:#77828a}
+    .lien-petit{background:none;border:0;color:#b9781e;font-weight:600;cursor:pointer;font-size:.85rem}
+    .alerte-nav{display:block;width:100%;padding:12px;border-top:1px solid #e8e0d2}
   </style>
 </head>
 
@@ -528,10 +561,26 @@
         Se déconnecter
       </button>
     </div>
+
+    <div class="cloche-zone">
+      <button type="button" id="bouton-cloche" class="cloche" aria-label="Notifications" aria-expanded="false">
+        🔔<span id="badge-cloche" class="badge-cloche" hidden>0</span>
+      </button>
+      <div id="panneau-notifications" class="panneau-notifications" hidden>
+        <div class="panneau-titre">
+          <strong>Notifications</strong>
+          <button type="button" id="tout-lire" class="lien-petit">Tout marquer comme lu</button>
+        </div>
+        <div id="liste-notifications"></div>
+        <button type="button" id="activer-alertes" class="lien-petit alerte-nav">Activer les alertes du navigateur</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <div class="messagerie">
+
+      <button type="button" class="bouton-rediger" id="bouton-nouveau-message">✏️ Rédiger</button>
 
       <aside class="colonne">
         <div class="colonne-titre">
@@ -570,6 +619,7 @@
       <section class="colonne">
         <div class="colonne-titre">
           <h2 id="titre-dossier">Messages reçus</h2>
+          <input type="search" id="recherche" class="recherche" placeholder="Rechercher dans les messages" aria-label="Rechercher">
         </div>
 
         <div class="liste-messages" id="liste-messages"></div>
@@ -672,32 +722,14 @@
   </footer>
 
   <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
     import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import {
-      initializeFirestore,
-      collection,
-      query,
-      where,
-      orderBy,
-      onSnapshot,
-      addDoc,
-      updateDoc,
-      getStorage,
-      deleteDoc,
-      ref,
-      doc,
-      uploadBytes,
-      getDownloadURL,
-      serverTimestamp
+      initializeFirestore, collection, query, where, orderBy,
+      onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    
+    import {
+      getStorage, ref as refStockage, uploadBytes, getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
     const storage = getStorage(app);
 
@@ -755,6 +787,19 @@
       notifications.appendChild(element);
 
       setTimeout(() => element.remove(), 4500);
+    }
+
+        const echapper = (t) => String(t ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const urlSure = (u) => /^https:\/\//i.test(u || "") ? u : "#";
+
+    async function envoyerPieceJointe(fichier, idMessage) {
+      if (!fichier) return "";
+      if (fichier.size > 10 * 1024 * 1024) throw new Error("Fichier trop lourd (10 Mo maximum).");
+      const nom = fichier.name.replace(/[^\w.\-]+/g, "_");
+      const emplacement = refStockage(storage, `messages/${utilisateurActuel.uid}/${idMessage}/${nom}`);
+      await uploadBytes(emplacement, fichier);
+      return await getDownloadURL(emplacement);
     }
 
     function formaterDate(valeur) {
@@ -852,7 +897,12 @@
             });
 
           afficherListe();
-          mettreAJourBadges();
+          if (messageEnAttente) {
+            const id = messageEnAttente;
+            messageEnAttente = null;
+            ouvrirMessage(id);
+          }
+          function mettreAJourBadges() {}
         },
         (erreur) => {
           console.error(erreur);
@@ -864,42 +914,32 @@
       );
     }
 
-    function afficherListe() {
-      listeMessages.innerHTML = "";
+        function afficherListe() {
+      const terme = (document.getElementById("recherche")?.value || "").toLowerCase();
+      const visibles = messagesCharges.filter((m) =>
+        !terme || ((m.objet || "") + " " + (m.contenu || "") + " " + (m.expediteurEmail || "")).toLowerCase().includes(terme));
 
-      if (messagesCharges.length === 0) {
-        listeMessages.innerHTML =
-          '<p class="lecture-vide">Aucun message dans ce dossier.</p>';
+      listeMessages.innerHTML = "";
+      if (visibles.length === 0) {
+        listeMessages.innerHTML = '<p class="lecture-vide">Aucun message.</p>';
         return;
       }
 
-      messagesCharges.forEach((message) => {
+      visibles.forEach((message) => {
         const bouton = document.createElement("button");
         bouton.type = "button";
-
-        bouton.className =
-          "message-liste" +
-          (message.luParClient ? "" : " non-lu") +
+        bouton.className = "message-liste" + (message.luParClient ? "" : " non-lu") +
           (messageActif === message.id ? " actif" : "");
-
+        const moi = message.expediteurUid === utilisateurActuel.uid;
+        const expediteur = moi ? "Moi" : (message.expediteurNom || message.expediteurEmail || "Agence Mitantsoa");
         bouton.innerHTML = `
-          <div class="message-haut">
-            <span class="message-expediteur">
-              ${message.expediteurEmail || "Agence Mitantsoa"}
-            </span>
-
-            <span class="message-date">
-              ${formaterDate(message.dateCreation)}
-            </span>
-          </div>
-
-          <strong>${message.objet || "(Sans objet)"}</strong>
-
-          <p class="message-apercu">
-            ${message.contenu || ""}
-          </p>
-        `;
-
+          <span class="avatar">${echapper(expediteur.charAt(0).toUpperCase())}</span>
+          <span class="ligne-corps">
+            <span class="message-expediteur">${echapper(expediteur)}</span>
+            <span class="ligne-texte"><strong>${echapper(message.objet || "(Sans objet)")}</strong>
+              <span class="message-apercu"> — ${echapper((message.contenu || "").slice(0, 90))}</span></span>
+          </span>
+          <span class="message-date">${echapper(formaterDate(message.dateCreation))}</span>`;
         bouton.addEventListener("click", () => ouvrirMessage(message.id));
         listeMessages.appendChild(bouton);
       });
@@ -920,11 +960,11 @@
       lectureMessage.innerHTML = `
         <div class="message-entete">
           <div>
-            <h3>${message.objet || "(Sans objet)"}</h3>
+            <h3>${echapper(message.objet || "(Sans objet)")}</h3>
 
             <p class="message-meta">
-              ${message.expediteurEmail || "Agence Mitantsoa"} ·
-              ${formaterDate(message.dateCreation)}
+              ${echapper(message.expediteurEmail || "Agence Mitantsoa")} ·
+              ${echapper(formaterDate(message.dateCreation))}
             </p>
           </div>
 
@@ -962,7 +1002,7 @@
         </div>
 
         <div class="contenu-message">
-          ${message.contenu || ""}
+          ${echapper(message.contenu || "")}
         </div>
 
         ${
@@ -971,11 +1011,11 @@
               <p>
                 <strong>Pièce jointe :</strong>
                 <a
-                  href="${message.pieceJointeURL}"
+                  href="${urlSure(message.pieceJointeURL)}"
                   target="_blank"
                   rel="noopener"
                 >
-                  ${message.pieceJointeNom || "Ouvrir le fichier"}
+                  ${echapper(message.pieceJointeNom || "Ouvrir le fichier")}
                 </a>
               </p>
             `
@@ -1311,6 +1351,108 @@
           bouton.textContent = texteOriginal;
         }
       });
+
+        // ----- Notifications : cloche, compteur, alertes -----
+    let messageEnAttente = null;
+    let nonLusNotifs = [];
+    let arretNotifications = null;
+    let premiereCharge = true;
+
+    function ecouterNotifications() {
+      if (arretNotifications) arretNotifications();
+      premiereCharge = true;
+      const requete = query(
+        collection(db, "messages"),
+        where("destinataireUid", "==", utilisateurActuel.uid),
+        where("luParClient", "==", false)
+      );
+      arretNotifications = onSnapshot(requete, (resultat) => {
+        if (!premiereCharge) {
+          resultat.docChanges().forEach((c) => {
+            if (c.type !== "added" || c.doc.data().statut === "corbeille") return;
+            const m = c.doc.data();
+            notifier("Nouveau message : " + (m.objet || "(Sans objet)"), "info");
+            alerteNavigateur(m);
+          });
+        }
+        premiereCharge = false;
+        nonLusNotifs = resultat.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((m) => m.statut !== "corbeille")
+          .sort((a, b) => (b.dateCreation?.seconds || 0) - (a.dateCreation?.seconds || 0));
+        dessinerNotifications();
+      }, (e) => console.error(e));
+    }
+
+    function alerteNavigateur(m) {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+      if (document.visibilityState === "visible") return;
+      new Notification("Agence Mitantsoa : nouveau message", { body: m.objet || "(Sans objet)", icon: "logo-mitantsoa.png" });
+    }
+
+    function dessinerNotifications() {
+      const n = nonLusNotifs.length;
+      const pastille = document.getElementById("badge-cloche");
+      pastille.textContent = n > 9 ? "9+" : n;
+      pastille.hidden = n === 0;
+      document.getElementById("badge-recus").textContent = n;
+      document.getElementById("badge-non-lus").textContent = n;
+      document.title = (n ? "(" + n + ") " : "") + "Messagerie — Agence Mitantsoa";
+
+      const zone = document.getElementById("liste-notifications");
+      if (!n) {
+        zone.innerHTML = '<p class="notif-vide">Aucune nouvelle notification.</p>';
+        return;
+      }
+      zone.innerHTML = nonLusNotifs.slice(0, 10).map((m) => `
+        <button type="button" class="notif" data-id="${echapper(m.id)}">
+          <span class="avatar">${echapper((m.expediteurNom || m.expediteurEmail || "A").charAt(0).toUpperCase())}</span>
+          <span class="notif-texte"><strong>${echapper(m.objet || "(Sans objet)")}</strong>
+            <span>${echapper((m.contenu || "").slice(0, 70))}</span></span>
+          <span class="message-date">${echapper(formaterDate(m.dateCreation))}</span>
+        </button>`).join("");
+    }
+
+    const panneau = document.getElementById("panneau-notifications");
+    const cloche = document.getElementById("bouton-cloche");
+    const basculerPanneau = (ouvert) => {
+      panneau.hidden = !ouvert;
+      cloche.setAttribute("aria-expanded", String(ouvert));
+    };
+    cloche.addEventListener("click", (e) => { e.stopPropagation(); basculerPanneau(panneau.hidden); });
+    document.addEventListener("click", (e) => { if (!panneau.contains(e.target)) basculerPanneau(false); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") basculerPanneau(false); });
+
+    document.getElementById("liste-notifications").addEventListener("click", (e) => {
+      const bouton = e.target.closest(".notif");
+      if (!bouton) return;
+      const id = bouton.dataset.id;
+      basculerPanneau(false);
+      if (dossierActif === "recus" && messagesCharges.some((m) => m.id === id)) {
+        ouvrirMessage(id);
+      } else {
+        messageEnAttente = id;
+        changerDossier("recus");
+      }
+    });
+
+    document.getElementById("tout-lire").addEventListener("click", async () => {
+      try {
+        await Promise.all(nonLusNotifs.map((m) =>
+          updateDoc(doc(db, "messages", m.id), { luParClient: true, dateModification: serverTimestamp() })));
+      } catch (erreur) {
+        console.error(erreur);
+        notifier("Impossible de tout marquer comme lu.", "erreur");
+      }
+    });
+
+    document.getElementById("activer-alertes").addEventListener("click", async () => {
+      if (!("Notification" in window)) return notifier("Ce navigateur ne gère pas les alertes.", "erreur");
+      const reponse = await Notification.requestPermission();
+      notifier(reponse === "granted" ? "Alertes activées." : "Alertes refusées.", reponse === "granted" ? "succes" : "info");
+    });
+
+    document.getElementById("recherche").addEventListener("input", afficherListe);
     
     onAuthStateChanged(auth, (user) => {
       if (!user) {
