@@ -672,13 +672,20 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     import {
-      initializeFirestore,
       collection,
       query,
       where,
       orderBy,
       onSnapshot,
       addDoc,
+      getFirestore,
+      doc,
+      getDoc,
+      getDocs,
+      setDoc,
+      updateDoc,
+      serverTimestamp,
+      initializeFirestore,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -697,6 +704,8 @@
       messagingSenderId: "857962704410",
       appId: "1:857962704410:web:984c9936b3f22742fc6ba3"
     };
+
+    const db = getFirestore(app);
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -727,6 +736,19 @@
     const notifications = document.getElementById("notifications");
 
     const champsCode = document.querySelectorAll(".code-coffre input");
+
+    async function hasherCode(code) {
+      const donnees = new TextEncoder().encode(code);
+    
+      const empreinte = await crypto.subtle.digest(
+        "SHA-256",
+        donnees
+      );
+    
+      return Array.from(new Uint8Array(empreinte))
+        .map((octet) => octet.toString(16).padStart(2, "0"))
+        .join("");
+    }
 
     function notifier(texte, type = "info") {
       const element = document.createElement("div");
@@ -780,33 +802,48 @@
         return;
       }
 
-      const codeEnregistre = localStorage.getItem(
-        "mitantsoa_code_coffre_" + utilisateurActuel.uid
+      const referenceUtilisateur = doc(
+        db,
+        "users",
+        utilisateurActuel.uid
       );
-
+      
+      const documentUtilisateur = await getDoc(referenceUtilisateur);
+      
+      const codeEnregistre = documentUtilisateur.exists()
+        ? documentUtilisateur.data().codeCoffreHash || ""
+        : "";
+      
       if (!codeEnregistre) {
-        localStorage.setItem(
-          "mitantsoa_code_coffre_" + utilisateurActuel.uid,
-          code
+        const codeHash = await hasherCode(code);
+      
+        await setDoc(
+          referenceUtilisateur,
+          {
+            codeCoffreHash: codeHash,
+            dateCreationCodeCoffre: serverTimestamp()
+          },
+          { merge: true }
         );
-
+      
         coffreDeverrouille = true;
         afficherCoffre();
-
+      
         notifier("Code personnel créé. Coffre déverrouillé.", "succes");
         return;
       }
 
-      if (code === codeEnregistre) {
+      const codeHashSaisi = await hasherCode(code);
+
+      if (codeHashSaisi === codeEnregistre) {
         coffreDeverrouille = true;
         afficherCoffre();
-
+      
         notifier("Coffre déverrouillé.", "succes");
       } else {
         notifier("Code incorrect.", "erreur");
         viderCode();
       }
-    });
 
     boutonModifierCode.addEventListener("click", () => {
       coffreDeverrouille = false;
@@ -819,26 +856,53 @@
       notifier("Saisissez votre nouveau code à 4 chiffres.", "info");
     });
 
-    function afficherCoffre() {
+    async function afficherCoffre() {
       coffreVerrouille.hidden = true;
       coffreOuvert.hidden = false;
-
-      listeDocumentsCoffre.innerHTML = `
-        <button type="button" class="document-coffre">
-          <strong>Carte d’identité</strong>
-          <span>Document personnel</span>
-        </button>
-
-        <button type="button" class="document-coffre">
-          <strong>Justificatif de domicile</strong>
-          <span>Document personnel</span>
-        </button>
-
-        <button type="button" class="document-coffre">
-          <strong>Attestation</strong>
-          <span>Document personnel</span>
-        </button>
-      `;
+    
+      const referenceDocuments = collection(
+        db,
+        "users",
+        utilisateurActuel.uid,
+        "documentsPersonnels"
+      );
+    
+      const requete = query(
+        referenceDocuments,
+        orderBy("dateAjout", "desc")
+      );
+    
+      const resultat = await getDocs(requete);
+    
+      listeDocumentsCoffre.innerHTML = "";
+    
+      if (resultat.empty) {
+        listeDocumentsCoffre.innerHTML =
+          '<p>Aucun document personnel enregistré.</p>';
+    
+        return;
+      }
+    
+      resultat.forEach((documentFirebase) => {
+        const document = documentFirebase.data();
+    
+        const bouton = document.createElement("button");
+        bouton.type = "button";
+        bouton.className = "document-coffre";
+    
+        bouton.innerHTML = `
+          <strong>${document.nom || "Document"}</strong>
+          <span>${document.type || "Document personnel"}</span>
+        `;
+    
+        bouton.addEventListener("click", () => {
+          if (document.urlDocument) {
+            window.open(document.urlDocument, "_blank", "noopener");
+          }
+        });
+    
+        listeDocumentsCoffre.appendChild(bouton);
+      });
     }
 
     champDocument.addEventListener("change", () => {
@@ -965,10 +1029,18 @@
 
       utilisateurActuel = utilisateur;
 
-      const codeEnregistre = localStorage.getItem(
-        "mitantsoa_code_coffre_" + utilisateur.uid
+      const referenceUtilisateur = doc(
+        db,
+        "users",
+        utilisateur.uid
       );
-
+      
+      const documentUtilisateur = await getDoc(referenceUtilisateur);
+      
+      const codeEnregistre = documentUtilisateur.exists()
+        ? documentUtilisateur.data().codeCoffreHash || ""
+        : "";
+      
       if (!codeEnregistre) {
         notifier(
           "Créez votre code personnel à 4 chiffres.",
