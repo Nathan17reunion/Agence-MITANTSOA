@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://nathan17reunion.github.io/Agence-MITANTSOA/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://nathan17reunion.github.io/Agence-MITANTSOA/index.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://nathan17reunion.github.io/Agence-MITANTSOA/contact.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nathan17reunion.github.io/Agence-MITANTSOA/apropos.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nathan17reunion.github.io/Agence-MITANTSOA/services.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/</loc><priority>1.0</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/services.html</loc><priority>0.8</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/voyage.html</loc><priority>0.8</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/apropos.html</loc><priority>0.7</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/contact.html</loc><priority>0.7</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/blog.html</loc><priority>0.6</priority></url>
+  <url><loc>https://nathan17reunion.github.io/Agence-MITANTSOA/devis.html</loc><priority>0.6</priority></url>
 </urlset>
