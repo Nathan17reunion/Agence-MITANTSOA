@@ -453,6 +453,43 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .message-erreur {
+      color: #923b32;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    
+    .fichier-selectionne {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid #e8e0d2;
+      border-radius: 12px;
+      background: #fff;
+      margin-top: 12px;
+    }
+    
+    .fichier-selectionne .icone-fichier {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #fdf3e2;
+      color: #805113;
+      font-weight: 700;
+    }
+    
+    .fichier-selectionne strong {
+      display: block;
+    }
+    
+    .fichier-selectionne span {
+      color: #77828a;
+      font-size: .84rem;
+    }
   </style>
 </head>
 
@@ -495,29 +532,26 @@
 
           <div id="coffre-verrouille" class="coffre-verrouille">
             <div class="icone-coffre">🔒</div>
-
-            <h3>Coffre verrouillé</h3>
-            <p>
-              Saisissez votre code personnel à 4 chiffres
-              pour accéder à vos documents.
+          
+            <h3 id="titre-coffre">Créer le code du coffre</h3>
+          
+            <p id="texte-coffre">
+              Choisissez un code personnel à 4 chiffres.
+              Ce code protège l’accès à vos documents.
             </p>
-
+          
             <div class="code-coffre">
               <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 1">
               <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 2">
               <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 3">
               <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 4">
             </div>
-
-            <button type="button" id="bouton-deverrouiller" class="bouton-principal">
-              Déverrouiller le coffre
+          
+            <button type="button" id="bouton-valider-code" class="bouton-principal">
+              Valider le code
             </button>
-
-            <button type="button" id="bouton-creer-code" class="bouton-secondaire">
-              Créer mon code
-            </button>
-
-            <button type="button" id="bouton-modifier-code" class="bouton-secondaire">
+          
+            <button type="button" id="bouton-modifier-code" class="bouton-secondaire" hidden>
               Modifier mon code
             </button>
           </div>
@@ -555,7 +589,14 @@
               >
             </label>
 
-            <p id="nom-document-transfert"></p>
+            <div id="apercu-document" class="fichier-selectionne" hidden>
+              <div class="icone-fichier">📄</div>
+            
+              <div>
+                <strong id="nom-fichier-selectionne"></strong>
+                <span id="taille-fichier-selectionne"></span>
+              </div>
+            </div>
 
             <button type="button" id="bouton-transférer" class="bouton-principal">
               Transférer à l’agence
@@ -741,18 +782,8 @@
 
     const champsCode = document.querySelectorAll(".code-coffre input");
 
-    async function hasherCode(code) {
-      const donnees = new TextEncoder().encode(code);
-    
-      const empreinte = await crypto.subtle.digest(
-        "SHA-256",
-        donnees
-      );
-    
-      return Array.from(new Uint8Array(empreinte))
-        .map((octet) => octet.toString(16).padStart(2, "0"))
-        .join("");
-    }
+    let etapeCode = "creation";
+    let codeProvisoire = "";
 
     function notifier(texte, type = "info") {
       const element = document.createElement("div");
@@ -769,24 +800,24 @@
         .map((champ) => champ.value)
         .join("");
     }
-
+    
     function viderCode() {
       champsCode.forEach((champ) => {
         champ.value = "";
       });
-
+    
       champsCode[0].focus();
     }
-
+    
     champsCode.forEach((champ, index) => {
       champ.addEventListener("input", () => {
         champ.value = champ.value.replace(/\D/g, "").slice(0, 1);
-
+    
         if (champ.value && champsCode[index + 1]) {
           champsCode[index + 1].focus();
         }
       });
-
+    
       champ.addEventListener("keydown", (evenement) => {
         if (
           evenement.key === "Backspace" &&
@@ -797,68 +828,146 @@
         }
       });
     });
-
-    boutonDeverrouiller.addEventListener("click", () => {
-      const code = obtenirCodeSaisi();
-
-      if (code.length !== 4) {
-        notifier("Saisissez un code à 4 chiffres.", "erreur");
-        return;
-      }
-
-      const referenceUtilisateur = doc(
-        db,
-        "users",
-        utilisateurActuel.uid
+    
+    async function hasherCode(code) {
+      const donnees = new TextEncoder().encode(code);
+    
+      const empreinte = await crypto.subtle.digest(
+        "SHA-256",
+        donnees
       );
-      
-      const documentUtilisateur = await getDoc(referenceUtilisateur);
-      
-      const codeEnregistre = documentUtilisateur.exists()
-        ? documentUtilisateur.data().codeCoffreHash || ""
-        : "";
-      
-      if (!codeEnregistre) {
-        const codeHash = await hasherCode(code);
-      
-        await setDoc(
-          referenceUtilisateur,
-          {
-            codeCoffreHash: codeHash,
-            dateCreationCodeCoffre: serverTimestamp()
-          },
-          { merge: true }
-        );
-      
-        coffreDeverrouille = true;
-        afficherCoffre();
-      
-        notifier("Code personnel créé. Coffre déverrouillé.", "succes");
-        return;
-      }
-
-      const codeHashSaisi = await hasherCode(code);
-
-      if (codeHashSaisi === codeEnregistre) {
-        coffreDeverrouille = true;
-        afficherCoffre();
-      
-        notifier("Coffre déverrouillé.", "succes");
-      } else {
-        notifier("Code incorrect.", "erreur");
-        viderCode();
-      }
-
-    boutonModifierCode.addEventListener("click", () => {
-      coffreDeverrouille = false;
-
-      coffreVerrouille.hidden = false;
-      coffreOuvert.hidden = true;
-
+    
+      return Array.from(new Uint8Array(empreinte))
+        .map((octet) => octet.toString(16).padStart(2, "0"))
+        .join("");
+    }
+    
+    function afficherCreationCode() {
+      etapeCode = "creation";
+      codeProvisoire = "";
+    
+      document.getElementById("titre-coffre").textContent =
+        "Créer le code du coffre";
+    
+      document.getElementById("texte-coffre").textContent =
+        "Choisissez un code personnel à 4 chiffres.";
+    
+      document.getElementById("bouton-valider-code").textContent =
+        "Valider le code";
+    
       viderCode();
-
-      notifier("Saisissez votre nouveau code à 4 chiffres.", "info");
-    });
+    }
+    
+    function afficherConfirmationCode() {
+      etapeCode = "confirmation";
+    
+      document.getElementById("titre-coffre").textContent =
+        "Confirmer le code";
+    
+      document.getElementById("texte-coffre").textContent =
+        "Saisissez à nouveau votre code à 4 chiffres.";
+    
+      document.getElementById("bouton-valider-code").textContent =
+        "Confirmer le code";
+    
+      viderCode();
+    }
+    
+    function afficherDeverrouillage() {
+      etapeCode = "deverrouillage";
+    
+      document.getElementById("titre-coffre").textContent =
+        "Coffre verrouillé";
+    
+      document.getElementById("texte-coffre").textContent =
+        "Saisissez votre code personnel à 4 chiffres.";
+    
+      document.getElementById("bouton-valider-code").textContent =
+        "Déverrouiller le coffre";
+    
+      viderCode();
+    }
+    
+    document.getElementById("bouton-valider-code")
+      .addEventListener("click", async () => {
+        const code = obtenirCodeSaisi();
+    
+        if (code.length !== 4) {
+          notifier("Saisissez un code à 4 chiffres.", "erreur");
+          return;
+        }
+    
+        const referenceUtilisateur = doc(
+          db,
+          "clients",
+          utilisateurActuel.uid
+        );
+    
+        const documentUtilisateur = await getDoc(referenceUtilisateur);
+    
+        const codeEnregistre = documentUtilisateur.exists()
+          ? documentUtilisateur.data().codeCoffreHash || ""
+          : "";
+    
+        if (etapeCode === "creation") {
+          if (codeEnregistre) {
+            afficherDeverrouillage();
+            return;
+          }
+    
+          codeProvisoire = code;
+          afficherConfirmationCode();
+          return;
+        }
+    
+        if (etapeCode === "confirmation") {
+          if (code !== codeProvisoire) {
+            notifier(
+              "Les deux codes ne correspondent pas. Réessayez.",
+              "erreur"
+            );
+    
+            afficherCreationCode();
+            return;
+          }
+    
+          const codeHash = await hasherCode(code);
+    
+          await setDoc(
+            referenceUtilisateur,
+            {
+              codeCoffreHash: codeHash,
+              dateCreationCodeCoffre: serverTimestamp()
+            },
+            { merge: true }
+          );
+    
+          coffreDeverrouille = true;
+          afficherCoffre();
+    
+          notifier("Code du coffre créé avec succès.", "succes");
+          return;
+        }
+    
+        if (etapeCode === "deverrouillage") {
+          const codeHashSaisi = await hasherCode(code);
+    
+          if (codeHashSaisi === codeEnregistre) {
+            coffreDeverrouille = true;
+            afficherCoffre();
+    
+            notifier("Coffre déverrouillé.", "succes");
+          } else {
+            notifier("Code incorrect.", "erreur");
+            viderCode();
+          }
+        }
+      });
+    
+    document.getElementById("bouton-modifier-code")
+      .addEventListener("click", () => {
+        afficherCreationCode();
+      });
 
     async function afficherCoffre() {
       coffreVerrouille.hidden = true;
@@ -909,12 +1018,35 @@
       });
     }
 
+    const apercuDocument = document.getElementById("apercu-document");
+    const nomFichierSelectionne = document.getElementById("nom-fichier-selectionne");
+    const tailleFichierSelectionne = document.getElementById("taille-fichier-selectionne");
+    
+    function formaterTaille(taille) {
+      if (taille < 1024) return taille + " o";
+    
+      if (taille < 1024 * 1024) {
+        return (taille / 1024).toFixed(1) + " Ko";
+      }
+    
+      return (taille / (1024 * 1024)).toFixed(1) + " Mo";
+    }
+    
+    function afficherFichier(fichier) {
+      if (!fichier) {
+        apercuDocument.hidden = true;
+        nomFichierSelectionne.textContent = "";
+        tailleFichierSelectionne.textContent = "";
+        return;
+      }
+    
+      apercuDocument.hidden = false;
+      nomFichierSelectionne.textContent = fichier.name;
+      tailleFichierSelectionne.textContent = formaterTaille(fichier.size);
+    }
+    
     champDocument.addEventListener("change", () => {
-      const fichier = champDocument.files[0];
-
-      nomDocumentTransfert.textContent = fichier
-        ? "Document sélectionné : " + fichier.name
-        : "";
+      afficherFichier(champDocument.files[0]);
     });
 
     zoneDepot.addEventListener("dragover", (evenement) => {
@@ -933,9 +1065,9 @@
       if (evenement.dataTransfer.files.length > 0) {
         champDocument.files = evenement.dataTransfer.files;
 
-        nomDocumentTransfert.textContent =
-          "Document sélectionné : " +
-          evenement.dataTransfer.files[0].name;
+        champDocument.files = evenement.dataTransfer.files;
+
+        afficherFichier(evenement.dataTransfer.files[0]);
       }
     });
 
@@ -1005,7 +1137,7 @@
         }
 
         champDocument.value = "";
-        nomDocumentTransfert.textContent = "";
+        afficherFichier(null);
 
         notifier(
           "Document transféré à l’agence avec succès.",
@@ -1041,15 +1173,23 @@
       
       const documentUtilisateur = await getDoc(referenceUtilisateur);
       
+      const codeEnregistre = localStorage.getItem(
+      const referenceUtilisateur = doc(
+        db,
+        "clients",
+        utilisateur.uid
+      );
+      
+      const documentUtilisateur = await getDoc(referenceUtilisateur);
+      
       const codeEnregistre = documentUtilisateur.exists()
         ? documentUtilisateur.data().codeCoffreHash || ""
         : "";
       
       if (!codeEnregistre) {
-        notifier(
-          "Créez votre code personnel à 4 chiffres.",
-          "info"
-        );
+        afficherCreationCode();
+      } else {
+        afficherDeverrouillage();
       }
     });
 
