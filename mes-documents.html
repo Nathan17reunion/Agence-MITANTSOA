@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Messagerie — Agence Mitantsoa</title>
+  <title>Mes documents — Agence Mitantsoa</title>
 
   <link rel="icon" type="image/png" href="favicon.png?v=2">
 
@@ -107,247 +107,84 @@
     main {
       flex: 1;
       width: 100%;
-      padding: 26px 22px 48px;
+      padding: 28px 22px 48px;
     }
 
-    .messagerie {
+    .conteneur {
       max-width: 1500px;
       margin: auto;
       display: grid;
-      grid-template-columns: 260px minmax(320px, 1fr) minmax(380px, 1.25fr);
-      gap: 20px;
-      min-height: 72vh;
+      gap: 22px;
     }
 
-    .colonne {
+    .bloc-principal {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .carte {
       background: rgba(255,255,255,.94);
       border: 1px solid #e4dccb;
-      border-radius: 16px;
-      box-shadow: 0 16px 40px rgba(36,55,70,.07);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(36,55,70,.08);
+      padding: 26px;
     }
 
-    .colonne-titre {
-      padding: 18px 20px;
-      border-bottom: 1px solid #e8e0d2;
-      background: #fcfaf4;
+    .carte h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
     }
 
-    .colonne-titre h2 {
-      margin: 0;
-      font-size: 1.08rem;
-    }
-
-    .dossiers {
-      padding: 12px;
-      display: grid;
-      gap: 7px;
-    }
-
-    .dossier {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      background: transparent;
-      color: #243746;
-      font: inherit;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .dossier:hover {
-      background: #f3efe6;
-    }
-
-    .dossier.actif {
-      background: #243746;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .badge {
-      min-width: 26px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #b9781e;
-      color: #fff;
-      font-size: .78rem;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .dossier.actif .badge {
-      background: #e7c393;
-      color: #243746;
-    }
-
-    .liste-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
-
-    .message-liste {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 8px;
-      border: 1px solid #e8e0d2;
-      border-radius: 12px;
-      background: #fff;
-      color: #243746;
-      font: inherit;
-      text-align: left;
-      cursor: pointer;
-      transition: border-color .2s ease, transform .2s ease;
-    }
-
-    .message-liste:hover {
-      border-color: #b9781e;
-      transform: translateX(3px);
-    }
-
-    .message-liste.actif {
-      border-color: #b9781e;
-      background: #fdf8ee;
-    }
-
-    .message-liste.non-lu {
-      border-left: 5px solid #b9781e;
-      font-weight: 700;
-    }
-
-    .message-haut {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 5px;
-    }
-
-    .message-expediteur {
-      font-size: .95rem;
-    }
-
-    .message-date {
-      color: #77828a;
-      font-size: .8rem;
-      white-space: nowrap;
-    }
-
-    .message-apercu {
+    .carte p {
+      margin: 0 0 18px;
       color: #65717a;
-      font-size: .9rem;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
     }
 
-    .lecture {
-      padding: 22px;
-      overflow-y: auto;
-    }
-
-    .lecture-vide {
-      height: 100%;
+    .coffre-verrouille {
       display: grid;
       place-items: center;
-      color: #77828a;
+      min-height: 320px;
       text-align: center;
-      padding: 30px;
+      background:
+        linear-gradient(135deg, rgba(36,55,70,.06), rgba(231,195,147,.14));
+      border-radius: 14px;
+      padding: 28px;
     }
 
-    .message-entete {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #e8e0d2;
-      margin-bottom: 18px;
+    .icone-coffre {
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #243746;
+      color: #e7c393;
+      font-size: 2rem;
+      margin-bottom: 16px;
     }
 
-    .message-entete h3 {
-      margin: 0 0 6px;
-      font-size: 1.25rem;
-    }
-
-    .message-meta {
-      color: #77828a;
-      font-size: .88rem;
-    }
-
-    .actions-message {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .bouton-action {
-      padding: 9px 14px;
-      border: 1px solid #d9d0bf;
-      border-radius: 8px;
-      background: #fff;
-      color: #243746;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .bouton-action:hover {
-      border-color: #b9781e;
-      color: #805113;
-    }
-
-    .bouton-action.danger:hover {
-      border-color: #c0392b;
-      color: #c0392b;
-    }
-
-    .contenu-message {
-      white-space: pre-wrap;
-    }
-
-    .redaction {
-      padding: 20px;
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      height: 100%;
-    }
-
-    .redaction.ouverte {
-      display: flex;
-    }
-
-    .redaction input,
-    .redaction textarea {
-      width: 100%;
-      padding: 13px 15px;
-      border: 1px solid #d9d0bf;
-      border-radius: 10px;
-      font: inherit;
-      background: #fff;
-    }
-
-    .redaction textarea {
-      flex: 1;
-      min-height: 220px;
-      resize: vertical;
-    }
-
-    .actions-redaction {
+    .code-coffre {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      justify-content: center;
+      margin: 18px 0;
+    }
+
+    .code-coffre input {
+      width: 54px;
+      height: 58px;
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 700;
+      border: 1px solid #d9d0bf;
+      border-radius: 12px;
+      background: #fff;
     }
 
     .bouton-principal {
-      padding: 12px 20px;
+      padding: 13px 22px;
       border: none;
       border-radius: 10px;
       background: #243746;
@@ -366,20 +203,173 @@
       cursor: not-allowed;
     }
 
-    .bouton-ia {
+    .bouton-secondaire {
       padding: 12px 18px;
-      border: 1px solid #b9781e;
+      border: 1px solid #d9d0bf;
       border-radius: 10px;
-      background: #fcfaf4;
-      color: #805113;
+      background: #fff;
+      color: #243746;
       font: inherit;
-      font-weight: 700;
       cursor: pointer;
     }
 
-    .bouton-ia:hover {
-      background: #b9781e;
+    .bouton-secondaire:hover {
+      border-color: #b9781e;
+      color: #805113;
+    }
+
+    .documents-coffre {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .document-coffre {
+      padding: 18px;
+      border: 1px solid #e8e0d2;
+      border-radius: 14px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .document-coffre:hover {
+      border-color: #b9781e;
+      transform: translateY(-3px);
+    }
+
+    .document-coffre strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .document-coffre span {
+      color: #77828a;
+      font-size: .86rem;
+    }
+
+    .zone-transfert {
+      display: grid;
+      gap: 14px;
+    }
+
+    .zone-depot {
+      border: 2px dashed #b9781e;
+      border-radius: 14px;
+      background: #fcfaf4;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .zone-depot.survol {
+      background: #fdf3e2;
+      border-color: #243746;
+    }
+
+    .zone-depot strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .zone-depot span {
+      color: #77828a;
+      font-size: .9rem;
+    }
+
+    .liste-transferts {
+      display: grid;
+      gap: 10px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .transfert {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 15px;
+      border: 1px solid #e8e0d2;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .transfert strong {
+      display: block;
+    }
+
+    .transfert span {
+      color: #77828a;
+      font-size: .84rem;
+    }
+
+    .statut {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 700;
+      background: #eef3f6;
+      color: #243746;
+    }
+
+    .statut.envoye {
+      background: #e5f3ea;
+      color: #256b45;
+    }
+
+    .statut.en-cours {
+      background: #fdf3e2;
+      color: #805113;
+    }
+
+    .documents-officiels {
+      margin-top: 22px;
+    }
+
+    .grille-documents {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .document-officiel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid #e8e0d2;
+      border-radius: 14px;
+      background: #fff;
+      color: #243746;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .document-officiel:hover {
+      border-color: #b9781e;
+      transform: translateY(-3px);
+    }
+
+    .document-officiel strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .document-officiel span {
+      color: #77828a;
+      font-size: .85rem;
+    }
+
+    .badge-pdf {
+      padding: 6px 11px;
+      border-radius: 8px;
+      background: #c0392b;
       color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
     }
 
     .notifications {
@@ -398,7 +388,6 @@
       background: #243746;
       color: #fff;
       box-shadow: 0 14px 35px rgba(0,0,0,.25);
-      animation: apparition .25s ease;
     }
 
     .notification.succes {
@@ -407,17 +396,6 @@
 
     .notification.erreur {
       background: #923b32;
-    }
-
-    @keyframes apparition {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     footer {
@@ -456,31 +434,19 @@
       font-size: .88rem;
     }
 
-    @media (max-width: 1150px) {
-      .messagerie {
-        grid-template-columns: 220px 1fr;
-      }
-
-      .lecture {
-        display: none;
-      }
-
-      .lecture.visible-mobile {
-        display: block;
-        position: fixed;
-        inset: 0;
-        z-index: 1000;
-        background: #fff;
+    @media (max-width: 1050px) {
+      .bloc-principal {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 760px) {
-      .messagerie {
-        grid-template-columns: 1fr;
-      }
-
       main {
         padding: 18px 14px 40px;
+      }
+
+      .carte {
+        padding: 20px;
       }
 
       .footer-grille {
@@ -502,8 +468,8 @@
       <nav aria-label="Navigation espace client">
         <ul>
           <li><a href="mon-espace.html">Accueil</a></li>
-          <li><a href="mes-documents.html">Mes documents</a></li>
-          <li><a href="messagerie.html" aria-current="page">Messagerie</a></li>
+          <li><a href="mes-documents.html" aria-current="page">Mes documents</a></li>
+          <li><a href="messagerie.html">Messagerie</a></li>
           <li><a href="info-compte.html">Mon compte</a></li>
           <li><a href="aide.html">Aide</a></li>
         </ul>
@@ -516,107 +482,147 @@
   </header>
 
   <main>
-    <div class="messagerie">
+    <div class="conteneur">
 
-      <aside class="colonne">
-        <div class="colonne-titre">
-          <h2>Messagerie</h2>
-        </div>
+      <section class="bloc-principal">
 
-        <div class="dossiers">
-          <button type="button" class="dossier actif" data-dossier="recus">
-            <span>Messages reçus</span>
-            <span class="badge" id="badge-recus">0</span>
-          </button>
+        <article class="carte">
+          <h2>Coffre électronique personnel</h2>
+          <p>
+            Vos documents restent protégés par un code personnel.
+            Ils ne sont accessibles qu’après déverrouillage.
+          </p>
 
-          <button type="button" class="dossier" data-dossier="non-lus">
-            <span>Non lus</span>
-            <span class="badge" id="badge-non-lus">0</span>
-          </button>
+          <div id="coffre-verrouille" class="coffre-verrouille">
+            <div class="icone-coffre">🔒</div>
 
-          <button type="button" class="dossier" data-dossier="envoyes">
-            <span>Messages envoyés</span>
-          </button>
+            <h3>Coffre verrouillé</h3>
+            <p>
+              Saisissez votre code personnel à 4 chiffres
+              pour accéder à vos documents.
+            </p>
 
-          <button type="button" class="dossier" data-dossier="brouillons">
-            <span>Brouillons</span>
-          </button>
+            <div class="code-coffre">
+              <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 1">
+              <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 2">
+              <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 3">
+              <input type="password" maxlength="1" inputmode="numeric" aria-label="Chiffre 4">
+            </div>
 
-          <button type="button" class="dossier" data-dossier="corbeille">
-            <span>Corbeille</span>
-          </button>
+            <button type="button" id="bouton-deverrouiller" class="bouton-principal">
+              Déverrouiller le coffre
+            </button>
 
-          <button type="button" class="dossier" id="bouton-nouveau-message">
-            <span>Nouveau message</span>
-          </button>
-        </div>
-      </aside>
+            <button type="button" id="bouton-modifier-code" class="bouton-secondaire">
+              Modifier mon code
+            </button>
+          </div>
 
-      <section class="colonne">
-        <div class="colonne-titre">
-          <h2 id="titre-dossier">Messages reçus</h2>
-        </div>
+          <div id="coffre-ouvert" hidden>
+            <h3>Mes documents sécurisés</h3>
 
-        <div class="liste-messages" id="liste-messages"></div>
+            <div class="documents-coffre" id="liste-documents-coffre">
+              <p>Aucun document personnel enregistré.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="carte">
+          <h2>Transférer un document à l’agence</h2>
+          <p>
+            Envoyez un justificatif, une pièce d’identité,
+            un justificatif de domicile ou tout autre document demandé.
+          </p>
+
+          <div class="zone-transfert">
+            <label
+              for="document-transfert"
+              class="zone-depot"
+              id="zone-depot"
+            >
+              <strong>Glissez un fichier ici</strong>
+              <span>ou cliquez pour choisir un document</span>
+
+              <input
+                type="file"
+                id="document-transfert"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
+                hidden
+              >
+            </label>
+
+            <p id="nom-document-transfert"></p>
+
+            <button type="button" id="bouton-transférer" class="bouton-principal">
+              Transférer à l’agence
+            </button>
+
+            <div class="liste-transferts" id="liste-transferts">
+              <p>Aucun document transféré pour le moment.</p>
+            </div>
+          </div>
+        </article>
+
       </section>
 
-      <section class="colonne">
-        <div class="lecture" id="lecture-message">
-          <div class="lecture-vide">
-            <p>
-              Sélectionnez un message pour le lire,<br>
-              ou créez un nouveau message.
-            </p>
-          </div>
-        </div>
+      <section class="carte documents-officiels">
+        <h2>Documents officiels de l’agence</h2>
+        <p>
+          Consultez directement les documents officiels de l’Agence Mitantsoa.
+        </p>
 
-        <div class="redaction" id="redaction-message">
-          <h2>Nouveau message</h2>
+        <div class="grille-documents">
+          <a
+            class="document-officiel"
+            href="documents/conditions-generales.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            <div>
+              <strong>Conditions générales</strong>
+              <span>Conditions d’utilisation des services</span>
+            </div>
+            <span class="badge-pdf">PDF</span>
+          </a>
 
-          <div class="champ">
-            <label for="destinataire">Destinataire</label>
-            <input
-              type="email"
-              id="destinataire"
-              value="contact@agencemitantsoa.fr"
-              readonly
-            >
-          </div>
+          <a
+            class="document-officiel"
+            href="documents/politique-confidentialite.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            <div>
+              <strong>Politique de confidentialité</strong>
+              <span>Traitement et protection des données</span>
+            </div>
+            <span class="badge-pdf">PDF</span>
+          </a>
 
-          <div class="champ">
-            <label for="objet-message">Objet</label>
-            <input
-              type="text"
-              id="objet-message"
-              placeholder="Objet de votre message"
-            >
-          </div>
+          <a
+            class="document-officiel"
+            href="documents/mentions-legales.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            <div>
+              <strong>Mentions légales</strong>
+              <span>Informations juridiques de l’agence</span>
+            </div>
+            <span class="badge-pdf">PDF</span>
+          </a>
 
-          <div class="champ">
-            <label for="contenu-message">Message</label>
-            <textarea
-              id="contenu-message"
-              placeholder="Écrivez votre message ici…"
-            ></textarea>
-          </div>
-
-          <div class="actions-redaction">
-            <button type="button" id="bouton-envoyer" class="bouton-principal">
-              Envoyer
-            </button>
-
-            <button type="button" id="bouton-brouillon" class="bouton-action">
-              Enregistrer le brouillon
-            </button>
-
-            <button type="button" id="bouton-correction-ia" class="bouton-ia">
-              Corriger avec l’IA
-            </button>
-
-            <button type="button" id="bouton-annuler" class="bouton-action">
-              Annuler
-            </button>
-          </div>
+          <a
+            class="document-officiel"
+            href="documents/charte-client.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            <div>
+              <strong>Charte client</strong>
+              <span>Engagements et accompagnement</span>
+            </div>
+            <span class="badge-pdf">PDF</span>
+          </a>
         </div>
       </section>
 
@@ -638,7 +644,7 @@
       <div>
         <h3>Espace client</h3>
         <p><a href="mon-espace.html">Accueil</a></p>
-        <p><a href="mes-documents.html">Mes documents</a></p>
+        <p><a href="messagerie.html">Messagerie</a></p>
         <p><a href="info-compte.html">Mon compte</a></p>
       </div>
 
@@ -673,11 +679,15 @@
       orderBy,
       onSnapshot,
       addDoc,
-      updateDoc,
-      deleteDoc,
-      doc,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    import {
+      getStorage,
+      ref as refStockage,
+      uploadBytes,
+      getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAC4g13dQqwWB3hrtjU6a1dAP91FviHHMI",
@@ -695,22 +705,28 @@
       experimentalAutoDetectLongPolling: true
     });
 
-    const EMAIL_AGENCE = "contact@agencemitantsoa.fr";
+    const storage = getStorage(app);
+
     const URL_SERVEUR = "https://mitantsoaagency.onrender.com";
 
     let utilisateurActuel = null;
-    let dossierActif = "recus";
-    let messageActif = null;
-    let messagesCharges = [];
-    let arretEcoute = null;
+    let coffreDeverrouille = false;
     let deconnexionEnCours = false;
 
-    const boutonsDossier = document.querySelectorAll(".dossier[data-dossier]");
-    const listeMessages = document.getElementById("liste-messages");
-    const titreDossier = document.getElementById("titre-dossier");
-    const lectureMessage = document.getElementById("lecture-message");
-    const redactionMessage = document.getElementById("redaction-message");
+    const coffreVerrouille = document.getElementById("coffre-verrouille");
+    const coffreOuvert = document.getElementById("coffre-ouvert");
+    const listeDocumentsCoffre = document.getElementById("liste-documents-coffre");
+    const boutonDeverrouiller = document.getElementById("bouton-deverrouiller");
+    const boutonModifierCode = document.getElementById("bouton-modifier-code");
+
+    const zoneDepot = document.getElementById("zone-depot");
+    const champDocument = document.getElementById("document-transfert");
+    const nomDocumentTransfert = document.getElementById("nom-document-transfert");
+    const boutonTransferer = document.getElementById("bouton-transférer");
+    const listeTransferts = document.getElementById("liste-transferts");
     const notifications = document.getElementById("notifications");
+
+    const champsCode = document.querySelectorAll(".code-coffre input");
 
     function notifier(texte, type = "info") {
       const element = document.createElement("div");
@@ -722,505 +738,243 @@
       setTimeout(() => element.remove(), 4500);
     }
 
-    function formaterDate(valeur) {
-      if (!valeur) return "";
-
-      const date = valeur.toDate ? valeur.toDate() : new Date(valeur);
-
-      return date.toLocaleDateString("fr-FR", {
-        day: "2-digit",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
+    function obtenirCodeSaisi() {
+      return Array.from(champsCode)
+        .map((champ) => champ.value)
+        .join("");
     }
 
-    function changerDossier(dossier) {
-      dossierActif = dossier;
-      messageActif = null;
-
-      boutonsDossier.forEach((bouton) => {
-        bouton.classList.toggle(
-          "actif",
-          bouton.dataset.dossier === dossier
-        );
+    function viderCode() {
+      champsCode.forEach((champ) => {
+        champ.value = "";
       });
 
-      const titres = {
-        recus: "Messages reçus",
-        "non-lus": "Messages non lus",
-        envoyes: "Messages envoyés",
-        brouillons: "Brouillons",
-        corbeille: "Corbeille"
-      };
-
-      titreDossier.textContent = titres[dossier] || "Messages";
-
-      afficherListe();
-      ecouterMessages();
+      champsCode[0].focus();
     }
 
-    function ecouterMessages() {
-      if (!utilisateurActuel) return;
+    champsCode.forEach((champ, index) => {
+      champ.addEventListener("input", () => {
+        champ.value = champ.value.replace(/\D/g, "").slice(0, 1);
 
-      if (arretEcoute) {
-        arretEcoute();
-        arretEcoute = null;
-      }
-
-      let requete;
-
-      if (dossierActif === "recus" || dossierActif === "non-lus") {
-        requete = query(
-          collection(db, "messages"),
-          where("destinataireUid", "==", utilisateurActuel.uid),
-          orderBy("dateCreation", "desc")
-        );
-      } else {
-        requete = query(
-          collection(db, "messages"),
-          where("expediteurUid", "==", utilisateurActuel.uid),
-          orderBy("dateCreation", "desc")
-        );
-      }
-
-      arretEcoute = onSnapshot(
-        requete,
-        (resultat) => {
-          messagesCharges = resultat.docs
-            .map((document) => ({
-              id: document.id,
-              ...document.data()
-            }))
-            .filter((message) => {
-              if (dossierActif === "recus") {
-                return message.statut !== "corbeille";
-              }
-
-              if (dossierActif === "non-lus") {
-                return message.statut !== "corbeille" && !message.luParClient;
-              }
-
-              if (dossierActif === "envoyes") {
-                return message.statut !== "corbeille";
-              }
-
-              if (dossierActif === "brouillons") {
-                return message.statut === "brouillon";
-              }
-
-              if (dossierActif === "corbeille") {
-                return message.statut === "corbeille";
-              }
-
-              return false;
-            });
-
-          afficherListe();
-          mettreAJourBadges();
-        },
-        (erreur) => {
-          console.error(erreur);
-          notifier(
-            "Impossible de charger la messagerie. Vérifiez les règles Firestore.",
-            "erreur"
-          );
+        if (champ.value && champsCode[index + 1]) {
+          champsCode[index + 1].focus();
         }
-      );
-    }
-
-    function afficherListe() {
-      listeMessages.innerHTML = "";
-
-      if (messagesCharges.length === 0) {
-        listeMessages.innerHTML =
-          '<p class="lecture-vide">Aucun message dans ce dossier.</p>';
-        return;
-      }
-
-      messagesCharges.forEach((message) => {
-        const bouton = document.createElement("button");
-        bouton.type = "button";
-
-        bouton.className =
-          "message-liste" +
-          (message.luParClient ? "" : " non-lu") +
-          (messageActif === message.id ? " actif" : "");
-
-        bouton.innerHTML = `
-          <div class="message-haut">
-            <span class="message-expediteur">
-              ${message.expediteurEmail || "Agence Mitantsoa"}
-            </span>
-
-            <span class="message-date">
-              ${formaterDate(message.dateCreation)}
-            </span>
-          </div>
-
-          <strong>${message.objet || "(Sans objet)"}</strong>
-
-          <p class="message-apercu">
-            ${message.contenu || ""}
-          </p>
-        `;
-
-        bouton.addEventListener("click", () => ouvrirMessage(message.id));
-        listeMessages.appendChild(bouton);
       });
-    }
 
-    async function ouvrirMessage(id) {
-      const message = messagesCharges.find((element) => element.id === id);
-
-      if (!message) return;
-
-      messageActif = id;
-
-      redactionMessage.classList.remove("ouverte");
-      lectureMessage.classList.add("visible-mobile");
-
-      const estCorbeille = message.statut === "corbeille";
-
-      lectureMessage.innerHTML = `
-        <div class="message-entete">
-          <div>
-            <h3>${message.objet || "(Sans objet)"}</h3>
-
-            <p class="message-meta">
-              ${message.expediteurEmail || "Agence Mitantsoa"} ·
-              ${formaterDate(message.dateCreation)}
-            </p>
-          </div>
-
-          <div class="actions-message">
-            ${
-              estCorbeille
-                ? `
-                  <button
-                    type="button"
-                    class="bouton-action"
-                    data-action="restaurer"
-                  >
-                    Restaurer
-                  </button>
-
-                  <button
-                    type="button"
-                    class="bouton-action danger"
-                    data-action="supprimer-definitivement"
-                  >
-                    Supprimer définitivement
-                  </button>
-                `
-                : `
-                  <button
-                    type="button"
-                    class="bouton-action"
-                    data-action="corbeille"
-                  >
-                    Mettre à la corbeille
-                  </button>
-                `
-            }
-          </div>
-        </div>
-
-        <div class="contenu-message">
-          ${message.contenu || ""}
-        </div>
-      `;
-
-      const boutonCorbeille = lectureMessage.querySelector(
-        '[data-action="corbeille"]'
-      );
-
-      const boutonRestaurer = lectureMessage.querySelector(
-        '[data-action="restaurer"]'
-      );
-
-      const boutonSupprimer = lectureMessage.querySelector(
-        '[data-action="supprimer-definitivement"]'
-      );
-
-      if (boutonCorbeille) {
-        boutonCorbeille.addEventListener("click", () =>
-          deplacerVersCorbeille(message.id)
-        );
-      }
-
-      if (boutonRestaurer) {
-        boutonRestaurer.addEventListener("click", () =>
-          restaurerMessage(message.id)
-        );
-      }
-
-      if (boutonSupprimer) {
-        boutonSupprimer.addEventListener("click", () =>
-          supprimerDefinitivement(message.id)
-        );
-      }
-
-      if (
-        message.destinataireUid === utilisateurActuel.uid &&
-        !message.luParClient
-      ) {
-        try {
-          await updateDoc(doc(db, "messages", message.id), {
-            luParClient: true,
-            dateModification: serverTimestamp()
-          });
-        } catch (erreur) {
-          console.error(erreur);
+      champ.addEventListener("keydown", (evenement) => {
+        if (
+          evenement.key === "Backspace" &&
+          !champ.value &&
+          champsCode[index - 1]
+        ) {
+          champsCode[index - 1].focus();
         }
-      }
-    }
-
-    async function deplacerVersCorbeille(id) {
-      try {
-        await updateDoc(doc(db, "messages", id), {
-          statut: "corbeille",
-          dateModification: serverTimestamp()
-        });
-
-        messageActif = null;
-
-        lectureMessage.innerHTML =
-          '<div class="lecture-vide"><p>Message déplacé dans la corbeille.</p></div>';
-
-        notifier("Message déplacé dans la corbeille.", "succes");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de déplacer ce message.", "erreur");
-      }
-    }
-
-    async function restaurerMessage(id) {
-      try {
-        await updateDoc(doc(db, "messages", id), {
-          statut: "envoye",
-          dateModification: serverTimestamp()
-        });
-
-        notifier("Message restauré.", "succes");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de restaurer ce message.", "erreur");
-      }
-    }
-
-    async function supprimerDefinitivement(id) {
-      try {
-        await deleteDoc(doc(db, "messages", id));
-
-        messageActif = null;
-
-        lectureMessage.innerHTML =
-          '<div class="lecture-vide"><p>Message supprimé définitivement.</p></div>';
-
-        notifier("Message supprimé définitivement.", "erreur");
-      } catch (erreur) {
-        console.error(erreur);
-        notifier("Impossible de supprimer ce message.", "erreur");
-      }
-    }
-
-    function mettreAJourBadges() {
-      const recus = messagesCharges.filter(
-        (message) =>
-          message.destinataireUid === utilisateurActuel.uid &&
-          message.statut !== "corbeille"
-      );
-
-      const nonLus = recus.filter(
-        (message) => !message.luParClient
-      );
-
-      document.getElementById("badge-recus").textContent = recus.length;
-      document.getElementById("badge-non-lus").textContent = nonLus.length;
-    }
-
-    function ouvrirRedaction() {
-      lectureMessage.classList.remove("visible-mobile");
-      redactionMessage.classList.add("ouverte");
-
-      document.getElementById("objet-message").value = "";
-      document.getElementById("contenu-message").value = "";
-
-      messageActif = null;
-    }
-
-    boutonsDossier.forEach((bouton) => {
-      bouton.addEventListener("click", () => {
-        changerDossier(bouton.dataset.dossier);
       });
     });
 
-    document.getElementById("bouton-nouveau-message")
-      .addEventListener("click", ouvrirRedaction);
+    boutonDeverrouiller.addEventListener("click", () => {
+      const code = obtenirCodeSaisi();
 
-    document.getElementById("bouton-annuler")
-      .addEventListener("click", () => {
-        redactionMessage.classList.remove("ouverte");
-      });
-
-    document.getElementById("bouton-brouillon")
-      .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
-
-        if (!objet && !contenu) {
-          notifier(
-            "Ajoutez un objet ou un message avant d’enregistrer.",
-            "erreur"
-          );
-          return;
-        }
-
-        try {
-          await addDoc(collection(db, "messages"), {
-            expediteurUid: utilisateurActuel.uid,
-            expediteurEmail: utilisateurActuel.email,
-            expediteurNom: utilisateurActuel.displayName || "",
-            destinataireEmail: EMAIL_AGENCE,
-            destinataireUid: "agence-mitantsoa",
-            objet: objet,
-            contenu: contenu,
-            statut: "brouillon",
-            luParAgence: false,
-            luParClient: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          });
-
-          document.getElementById("objet-message").value = "";
-          document.getElementById("contenu-message").value = "";
-
-          redactionMessage.classList.remove("ouverte");
-          changerDossier("brouillons");
-
-          notifier("Brouillon enregistré.", "succes");
-        } catch (erreur) {
-          console.error(erreur);
-          notifier("Impossible d’enregistrer le brouillon.", "erreur");
-        }
-      });
-
-    document.getElementById("bouton-envoyer")
-      .addEventListener("click", async () => {
-        const objet = document.getElementById("objet-message").value.trim();
-        const contenu = document.getElementById("contenu-message").value.trim();
-
-        if (!objet || !contenu) {
-          notifier(
-            "Veuillez renseigner l’objet et le message.",
-            "erreur"
-          );
-          return;
-        }
-
-        const bouton = document.getElementById("bouton-envoyer");
-        bouton.disabled = true;
-
-        notifier("Envoi du message en cours…", "info");
-
-        try {
-          const token = await utilisateurActuel.getIdToken();
-
-          const reference = await addDoc(collection(db, "messages"), {
-            expediteurUid: utilisateurActuel.uid,
-            expediteurEmail: utilisateurActuel.email,
-            expediteurNom: utilisateurActuel.displayName || "",
-            destinataireEmail: EMAIL_AGENCE,
-            destinataireUid: "agence-mitantsoa",
-            objet: objet,
-            contenu: contenu,
-            statut: "envoye",
-            luParAgence: false,
-            luParClient: true,
-            dateCreation: serverTimestamp(),
-            dateModification: serverTimestamp()
-          });
-
-          const reponse = await fetch(
-            URL_SERVEUR + "/api/messagerie/envoyer",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-              },
-              body: JSON.stringify({
-                messageId: reference.id,
-                objet: objet,
-                contenu: contenu
-              })
-            }
-          );
-
-          if (!reponse.ok) {
-            throw new Error("Envoi des e-mails impossible.");
-          }
-
-          document.getElementById("objet-message").value = "";
-          document.getElementById("contenu-message").value = "";
-
-          redactionMessage.classList.remove("ouverte");
-          changerDossier("envoyes");
-
-          notifier(
-            "Message envoyé. Un accusé de réception vous a été envoyé.",
-            "succes"
-          );
-        } catch (erreur) {
-          console.error(erreur);
-          notifier(
-            "Le message n’a pas pu être envoyé. Vérifiez votre connexion ou réessayez.",
-            "erreur"
-          );
-        } finally {
-          bouton.disabled = false;
-        }
-      });
-
-    document.getElementById("bouton-correction-ia")
-      .addEventListener("click", () => {
-        const champ = document.getElementById("contenu-message");
-        const texte = champ.value.trim();
-
-        if (!texte) {
-          notifier(
-            "Écrivez d’abord votre message avant la correction.",
-            "erreur"
-          );
-          return;
-        }
-
-        const texteCorrige = texte
-          .replace(/\s+/g, " ")
-          .replace(/\s+([,.;:!?])/g, "$1")
-          .replace(/([,.;:!?])(?=[^\s])/g, "$1 ")
-          .replace(
-            /^([a-zàâäéèêëîïôöùûüç])/,
-            (lettre) => lettre.toUpperCase()
-          );
-
-        champ.value = texteCorrige;
-
-        notifier("Correction automatique appliquée.", "succes");
-      });
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        if (!deconnexionEnCours) {
-          window.location.replace("connexion.html");
-        }
+      if (code.length !== 4) {
+        notifier("Saisissez un code à 4 chiffres.", "erreur");
         return;
       }
 
-      utilisateurActuel = user;
+      const codeEnregistre = localStorage.getItem(
+        "mitantsoa_code_coffre_" + utilisateurActuel.uid
+      );
 
-      changerDossier("recus");
+      if (!codeEnregistre) {
+        localStorage.setItem(
+          "mitantsoa_code_coffre_" + utilisateurActuel.uid,
+          code
+        );
+
+        coffreDeverrouille = true;
+        afficherCoffre();
+
+        notifier("Code personnel créé. Coffre déverrouillé.", "succes");
+        return;
+      }
+
+      if (code === codeEnregistre) {
+        coffreDeverrouille = true;
+        afficherCoffre();
+
+        notifier("Coffre déverrouillé.", "succes");
+      } else {
+        notifier("Code incorrect.", "erreur");
+        viderCode();
+      }
+    });
+
+    boutonModifierCode.addEventListener("click", () => {
+      coffreDeverrouille = false;
+
+      coffreVerrouille.hidden = false;
+      coffreOuvert.hidden = true;
+
+      viderCode();
+
+      notifier("Saisissez votre nouveau code à 4 chiffres.", "info");
+    });
+
+    function afficherCoffre() {
+      coffreVerrouille.hidden = true;
+      coffreOuvert.hidden = false;
+
+      listeDocumentsCoffre.innerHTML = `
+        <button type="button" class="document-coffre">
+          <strong>Carte d’identité</strong>
+          <span>Document personnel</span>
+        </button>
+
+        <button type="button" class="document-coffre">
+          <strong>Justificatif de domicile</strong>
+          <span>Document personnel</span>
+        </button>
+
+        <button type="button" class="document-coffre">
+          <strong>Attestation</strong>
+          <span>Document personnel</span>
+        </button>
+      `;
+    }
+
+    champDocument.addEventListener("change", () => {
+      const fichier = champDocument.files[0];
+
+      nomDocumentTransfert.textContent = fichier
+        ? "Document sélectionné : " + fichier.name
+        : "";
+    });
+
+    zoneDepot.addEventListener("dragover", (evenement) => {
+      evenement.preventDefault();
+      zoneDepot.classList.add("survol");
+    });
+
+    zoneDepot.addEventListener("dragleave", () => {
+      zoneDepot.classList.remove("survol");
+    });
+
+    zoneDepot.addEventListener("drop", (evenement) => {
+      evenement.preventDefault();
+      zoneDepot.classList.remove("survol");
+
+      if (evenement.dataTransfer.files.length > 0) {
+        champDocument.files = evenement.dataTransfer.files;
+
+        nomDocumentTransfert.textContent =
+          "Document sélectionné : " +
+          evenement.dataTransfer.files[0].name;
+      }
+    });
+
+    boutonTransferer.addEventListener("click", async () => {
+      const fichier = champDocument.files[0];
+
+      if (!fichier) {
+        notifier("Choisissez d’abord un document.", "erreur");
+        return;
+      }
+
+      if (fichier.size > 10 * 1024 * 1024) {
+        notifier("Fichier trop lourd. Taille maximale : 10 Mo.", "erreur");
+        return;
+      }
+
+      boutonTransferer.disabled = true;
+
+      notifier("Transfert du document en cours…", "info");
+
+      try {
+        const token = await utilisateurActuel.getIdToken();
+
+        const nomSecurise = fichier.name.replace(/[^\w.\-]+/g, "_");
+
+        const emplacement = refStockage(
+          storage,
+          "documents-transferts/" +
+            utilisateurActuel.uid +
+            "/" +
+            Date.now() +
+            "_" +
+            nomSecurise
+        );
+
+        await uploadBytes(emplacement, fichier);
+
+        const urlDocument = await getDownloadURL(emplacement);
+
+        await addDoc(collection(db, "documents-transferts"), {
+          clientUid: utilisateurActuel.uid,
+          clientEmail: utilisateurActuel.email,
+          clientNom: utilisateurActuel.displayName || "",
+          nomFichier: fichier.name,
+          urlDocument: urlDocument,
+          statut: "envoye",
+          dateCreation: serverTimestamp()
+        });
+
+        const reponse = await fetch(
+          URL_SERVEUR + "/api/documents/transfert",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+              nomFichier: fichier.name,
+              urlDocument: urlDocument
+            })
+          }
+        );
+
+        if (!reponse.ok) {
+          throw new Error("Notification impossible.");
+        }
+
+        champDocument.value = "";
+        nomDocumentTransfert.textContent = "";
+
+        notifier(
+          "Document transféré à l’agence avec succès.",
+          "succes"
+        );
+      } catch (erreur) {
+        console.error(erreur);
+        notifier(
+          "Le document n’a pas pu être transféré. Réessayez.",
+          "erreur"
+        );
+      } finally {
+        boutonTransferer.disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, (utilisateur) => {
+      if (!utilisateur) {
+        if (!deconnexionEnCours) {
+          window.location.replace("connexion.html");
+        }
+
+        return;
+      }
+
+      utilisateurActuel = utilisateur;
+
+      const codeEnregistre = localStorage.getItem(
+        "mitantsoa_code_coffre_" + utilisateur.uid
+      );
+
+      if (!codeEnregistre) {
+        notifier(
+          "Créez votre code personnel à 4 chiffres.",
+          "info"
+        );
+      }
     });
 
     document.getElementById("bouton-deconnexion")
