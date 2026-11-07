@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nathan17reunion.github.io/Agence-MITANTSOA/sitemap.xml
