@@ -167,6 +167,55 @@ img, svg { max-width: 100%; display: block; }
   margin: 0 auto;
 }
 
+/* ===== Section « Nos domaines » ===== */
+.domaines { padding: var(--space-6, 64px) 0; }
+
+.domaines-entete { max-width: 640px; margin: 0 auto 32px; text-align: center; }
+.domaines-entete .sur-titre {
+  margin: 0 0 8px; color: var(--color-ochre, #B9781E); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; font-size: .8rem;
+}
+.domaines-entete h2 { margin: 0 0 10px; color: var(--color-green, #24463B); }
+.domaines-entete p:last-child { margin: 0; color: var(--color-text-soft, #5B564B); }
+
+.domaines-grille {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px; list-style: none; padding: 0; margin: 0;
+}
+
+.domaine-carte {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--color-cream, #FCFAF4);
+  border: 1px solid var(--color-border, #DACBA3);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(21, 46, 38, .07);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.domaine-carte:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(21, 46, 38, .14); }
+
+.domaine-carte img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+
+.domaine-corps { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 18px 20px 22px; }
+.domaine-corps h3 { margin: 0; color: var(--color-green, #24463B); }
+.domaine-corps p { margin: 0; line-height: 1.5; color: var(--color-text-soft, #5B564B); }
+
+.domaine-lien { margin-top: auto; padding-top: 8px; font-weight: 700; text-decoration: none; color: var(--color-ochre, #B9781E); }
+.domaine-lien:hover, .domaine-lien:focus-visible { text-decoration: underline; }
+
+/* Tablette : 2 colonnes */
+@media (max-width: 900px) {
+  .domaines-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Téléphone : les 3 cartes se font défiler du doigt, une par une */
+@media (max-width: 600px) {
+  .domaines-grille {
+    display: flex; gap: 16px; padding-bottom: 12px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+  }
+  .domaine-carte { flex: 0 0 82%; scroll-snap-align: center; }
+}
+
 /* ---------- Bandeau visuel avant le pied de page ---------- */
 
 .don-footer-banner {
